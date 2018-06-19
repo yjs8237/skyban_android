@@ -1,6 +1,8 @@
 package com.nycompany.skyban
 
 import android.app.Fragment
+import android.app.FragmentManager
+import android.app.FragmentTransaction
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -28,6 +30,27 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         when(newFragmentType){
             FragmentsAvailable.INORDER -> fragment = InorderFragment()
         }
+        var fm:FragmentManager =  fragmentManager
+        var transaction :FragmentTransaction = fm.beginTransaction()
+
+        if (newFragmentType != FragmentsAvailable.INORDER
+                && newFragmentType != FragmentsAvailable.OUTORDER
+                && newFragmentType != FragmentsAvailable.CHARGE
+                && newFragmentType != FragmentsAvailable.INFO
+                && newFragmentType != FragmentsAvailable.SETTING) {
+            transaction.addToBackStack(newFragmentType.toString())
+        } else {
+            while (fm.backStackEntryCount > 0) {
+                fm.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+            }
+        }
+
+        transaction.replace(R.id.fragmentContainer, fragment, newFragmentType.toString())
+        transaction.commitAllowingStateLoss()
+        fm.executePendingTransactions()
+
+        currentFragment = newFragmentType
+
     }
 
     override fun onClick(v: View?) {

@@ -8,10 +8,11 @@
     tools:context=".MainActivity">
 
     <LinearLayout
-        android:baselineAligned="false"
+        android:id="@+id/bottombar"
         android:layout_width="match_parent"
         android:layout_height="68dp"
         android:background="@android:color/holo_green_dark"
+        android:baselineAligned="false"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -57,6 +58,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="1.0"/>
         </android.support.constraint.ConstraintLayout>
+
         <android.support.constraint.ConstraintLayout
             android:id="@+id/outorder"
             android:layout_width="0dp"
@@ -97,6 +99,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="1.0"/>
         </android.support.constraint.ConstraintLayout>
+
         <android.support.constraint.ConstraintLayout
             android:id="@+id/info"
             android:layout_width="0dp"
@@ -137,6 +140,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="1.0"/>
         </android.support.constraint.ConstraintLayout>
+
         <android.support.constraint.ConstraintLayout
             android:id="@+id/charge"
             android:layout_width="0dp"
@@ -177,6 +181,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="1.0"/>
         </android.support.constraint.ConstraintLayout>
+
         <android.support.constraint.ConstraintLayout
             android:id="@+id/setting"
             android:layout_width="0dp"
@@ -220,4 +225,18 @@
 
 
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/fragmentContainer"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/bottombar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+    </LinearLayout>
+
+
 </android.support.constraint.ConstraintLayout>
