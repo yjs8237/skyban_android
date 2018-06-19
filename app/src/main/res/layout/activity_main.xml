@@ -18,12 +18,13 @@
         app:layout_constraintVertical_bias="1.0">
 
         <android.support.constraint.ConstraintLayout
+            android:id="@+id/inorder"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1">
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/img_inorder"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -34,7 +35,6 @@
                 app:srcCompat="@android:drawable/btn_star_big_on"/>
 
             <TextView
-                android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="21dp"
                 android:text="TextView"
@@ -42,11 +42,11 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.521"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView"
+                app:layout_constraintTop_toBottomOf="@+id/img_inorder"
                 app:layout_constraintVertical_bias="0.0"/>
 
             <View
-                android:id="@+id/history_select"
+                android:id="@+id/inorder_select"
                 android:layout_width="match_parent"
                 android:layout_height="4dp"
                 android:background="@color/colorAccent"
@@ -58,12 +58,13 @@
                 app:layout_constraintVertical_bias="1.0"/>
         </android.support.constraint.ConstraintLayout>
         <android.support.constraint.ConstraintLayout
+            android:id="@+id/outorder"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1">
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/imag_outorder"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -74,7 +75,6 @@
                 app:srcCompat="@android:drawable/btn_star_big_on"/>
 
             <TextView
-                android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="21dp"
                 android:text="TextView"
@@ -82,11 +82,11 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.521"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView"
+                app:layout_constraintTop_toBottomOf="@+id/imag_outorder"
                 app:layout_constraintVertical_bias="0.0"/>
 
             <View
-                android:id="@+id/history_select"
+                android:id="@+id/outorder_select"
                 android:layout_width="match_parent"
                 android:layout_height="4dp"
                 android:background="@color/colorAccent"
@@ -98,12 +98,13 @@
                 app:layout_constraintVertical_bias="1.0"/>
         </android.support.constraint.ConstraintLayout>
         <android.support.constraint.ConstraintLayout
+            android:id="@+id/info"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1">
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/img_info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -114,7 +115,6 @@
                 app:srcCompat="@android:drawable/btn_star_big_on"/>
 
             <TextView
-                android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="21dp"
                 android:text="TextView"
@@ -122,11 +122,11 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.521"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView"
+                app:layout_constraintTop_toBottomOf="@+id/img_info"
                 app:layout_constraintVertical_bias="0.0"/>
 
             <View
-                android:id="@+id/history_select"
+                android:id="@+id/info_select"
                 android:layout_width="match_parent"
                 android:layout_height="4dp"
                 android:background="@color/colorAccent"
@@ -138,12 +138,13 @@
                 app:layout_constraintVertical_bias="1.0"/>
         </android.support.constraint.ConstraintLayout>
         <android.support.constraint.ConstraintLayout
+            android:id="@+id/charge"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1">
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/img_charge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -154,7 +155,6 @@
                 app:srcCompat="@android:drawable/btn_star_big_on"/>
 
             <TextView
-                android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="21dp"
                 android:text="TextView"
@@ -162,11 +162,11 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.521"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView"
+                app:layout_constraintTop_toBottomOf="@+id/img_charge"
                 app:layout_constraintVertical_bias="0.0"/>
 
             <View
-                android:id="@+id/history_select"
+                android:id="@+id/charge_select"
                 android:layout_width="match_parent"
                 android:layout_height="4dp"
                 android:background="@color/colorAccent"
@@ -178,12 +178,13 @@
                 app:layout_constraintVertical_bias="1.0"/>
         </android.support.constraint.ConstraintLayout>
         <android.support.constraint.ConstraintLayout
+            android:id="@+id/setting"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1">
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/img_setting"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -194,7 +195,6 @@
                 app:srcCompat="@android:drawable/btn_star_big_on"/>
 
             <TextView
-                android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="21dp"
                 android:text="TextView"
@@ -202,11 +202,11 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.521"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView"
+                app:layout_constraintTop_toBottomOf="@+id/img_setting"
                 app:layout_constraintVertical_bias="0.0"/>
 
             <View
-                android:id="@+id/history_select"
+                android:id="@+id/setting_select"
                 android:layout_width="match_parent"
                 android:layout_height="4dp"
                 android:background="@color/colorAccent"
