@@ -1,5 +1,6 @@
 package com.nycompany.skyban
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_terms.*
@@ -15,7 +16,8 @@ class termsActivity : AppCompatActivity() {
         }
 
         agrrBtn.setOnClickListener{
-
+            startActivity(Intent().setClass(this, RegisterActivity::class.java))
+            finish()
         }
     }
 }
