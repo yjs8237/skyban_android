@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.View.OnClickListener
 import com.nycompany.skybanminitp.FragmentsAvailable
+import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity(), OnClickListener {
@@ -23,12 +24,19 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         } else{
             currentFragment = savedInstanceState.getSerializable("currentFragment") as FragmentsAvailable
         }
+
+        inorder.setOnClickListener(this)
+        outorder.setOnClickListener(this)
+        info.setOnClickListener(this)
+        charge.setOnClickListener(this)
+        setting.setOnClickListener(this)
     }
 
     private fun changeCurrentFragment(newFragmentType: FragmentsAvailable?, extras: Bundle?) {
         fragment = null
         when(newFragmentType){
             FragmentsAvailable.INORDER -> fragment = InorderFragment()
+            FragmentsAvailable.OUTORDER -> fragment = OutorderFragment()
         }
         var fm:FragmentManager =  fragmentManager
         var transaction :FragmentTransaction = fm.beginTransaction()
@@ -53,7 +61,22 @@ class MainActivity : AppCompatActivity(), OnClickListener {
 
     }
 
-    override fun onClick(v: View?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun onClick(v: View) {
+        resetSelection()
+        when(v.id) {
+            R.id.inorder -> {
+                changeCurrentFragment(FragmentsAvailable.INORDER, null)
+                inorder_select.visibility = View.VISIBLE
+            }
+            R.id.outorder -> {
+                changeCurrentFragment(FragmentsAvailable.OUTORDER, null)
+                outorder_select.visibility = View.VISIBLE
+            }
+        }
+    }
+
+    private fun resetSelection() {
+        inorder_select!!.visibility = View.INVISIBLE
+        outorder_select!!.visibility = View.INVISIBLE
     }
 }
