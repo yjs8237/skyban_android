@@ -7,6 +7,11 @@ import android.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_inorder.*
+import java.util.ArrayList
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -34,6 +39,40 @@ class InorderFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+    }
+
+    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        recycler_inorder.setHasFixedSize(true)
+        val layoutManager = LinearLayoutManager(activity.applicationContext)
+        recycler_inorder.setLayoutManager(layoutManager)
+
+        val inOrders: ArrayList<InoderDTO> = ArrayList()
+        inOrders.add(InoderDTO("mola","ggga2ggei","daechoong"))
+        inOrders.add(InoderDTO("mola1","22222","zzzzzzz"))
+        inOrders.add(InoderDTO("mola2","33333333333333","hhhhhhhhhhh"))
+        inOrders.add(InoderDTO("mola","ggga2ggei","daechoong"))
+        inOrders.add(InoderDTO("mola1","22222","zzzzzzz"))
+        inOrders.add(InoderDTO("mola2","33333333333333","hhhhhhhhhhh"))
+        inOrders.add(InoderDTO("mola","ggga2ggei","daechoong"))
+        inOrders.add(InoderDTO("mola1","22222","zzzzzzz"))
+        inOrders.add(InoderDTO("mola2","33333333333333","hhhhhhhhhhh"))
+        inOrders.add(InoderDTO("mola","ggga2ggei","daechoong"))
+        inOrders.add(InoderDTO("mola1","22222","zzzzzzz"))
+        inOrders.add(InoderDTO("mola2","33333333333333","hhhhhhhhhhh"))
+        inOrders.add(InoderDTO("mola","ggga2ggei","daechoong"))
+        inOrders.add(InoderDTO("mola1","22222","zzzzzzz"))
+        inOrders.add(InoderDTO("mola2","33333333333333","hhhhhhhhhhh"))
+        inOrders.add(InoderDTO("mola","ggga2ggei","daechoong"))
+        inOrders.add(InoderDTO("mola1","22222","zzzzzzz"))
+        inOrders.add(InoderDTO("mola2","33333333333333","hhhhhhhhhhh"))
+        RecyclerViewClickListener listener = (view, position) -> {
+            Toast.makeText(getContext(), "Position " + position, Toast.LENGTH_SHORT).show();
+        };
+
+        val adapter = InorderRecyclerViewAdapter(inOrders)
+        recycler_inorder.adapter = adapter
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
