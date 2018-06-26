@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_inorder.*
 import java.util.ArrayList
@@ -41,6 +42,8 @@ class InorderFragment : Fragment() {
         }
     }
 
+
+
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -67,11 +70,10 @@ class InorderFragment : Fragment() {
         inOrders.add(InoderDTO("mola","ggga2ggei","daechoong"))
         inOrders.add(InoderDTO("mola1","22222","zzzzzzz"))
         inOrders.add(InoderDTO("mola2","33333333333333","hhhhhhhhhhh"))
-        RecyclerViewClickListener listener = (view, position) -> {
-            Toast.makeText(getContext(), "Position " + position, Toast.LENGTH_SHORT).show();
-        };
 
-        val adapter = InorderRecyclerViewAdapter(inOrders)
+        val listener = { view:View, position:Int -> Toast.makeText(view.getContext(), "Position $position", Toast.LENGTH_SHORT).show() }
+
+        val adapter = InorderRecyclerViewAdapter(inOrders, listener)
         recycler_inorder.adapter = adapter
     }
 
