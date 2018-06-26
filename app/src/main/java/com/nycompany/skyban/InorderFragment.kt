@@ -42,8 +42,6 @@ class InorderFragment : Fragment() {
         }
     }
 
-
-
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -71,9 +69,10 @@ class InorderFragment : Fragment() {
         inOrders.add(InoderDTO("mola1","22222","zzzzzzz"))
         inOrders.add(InoderDTO("mola2","33333333333333","hhhhhhhhhhh"))
 
-        val listener = { view:View, position:Int -> Toast.makeText(view.getContext(), "Position $position", Toast.LENGTH_SHORT).show() }
-
-        val adapter = InorderRecyclerViewAdapter(inOrders, listener)
+        val adapter = InorderRecyclerViewAdapter(inOrders)
+        adapter.setClickListener (View.OnClickListener { view ->
+            Toast.makeText(view.getContext(), "Position ${recycler_inorder.indexOfChild(view)}", Toast.LENGTH_SHORT).show() }
+        )
         recycler_inorder.adapter = adapter
     }
 
