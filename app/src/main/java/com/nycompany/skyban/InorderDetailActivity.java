@@ -14,7 +14,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class InorderDetailActivity extends FragmentActivity implements OnMapReadyCallback {
 
-    private GoogleMap mMap;
+     private GoogleMap mMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
