@@ -4,13 +4,13 @@ import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.app.Fragment
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.widget.Toast
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_inorder.*
 import java.util.ArrayList
 
@@ -71,8 +71,10 @@ class InorderFragment : Fragment() {
 
         val adapter = InorderRecyclerViewAdapter(inOrders)
         adapter.setClickListener (View.OnClickListener { view ->
-            Toast.makeText(view.getContext(), "Position ${recycler_inorder.indexOfChild(view)}", Toast.LENGTH_SHORT).show() }
-        )
+            Toast.makeText(view.getContext(), "Position ${recycler_inorder.indexOfChild(view)}", Toast.LENGTH_SHORT).show()
+            val intent = Intent(activity, InorderDetailActivity::class.java)
+            startActivity(intent)
+        })
         recycler_inorder.adapter = adapter
     }
 
