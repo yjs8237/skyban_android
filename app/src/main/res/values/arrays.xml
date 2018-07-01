@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="bootstrap_dropdown_example_data">
+        <item>Samsung</item>
+        <item>Hyundai</item>
+        <item>LG</item>
+        <item>SK</item>
+        <item>KIA</item>
+    </string-array>
+
+</resources>

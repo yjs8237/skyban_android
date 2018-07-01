@@ -8,8 +8,40 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="EditTextStyle" parent="Widget.AppCompat.EditText">
+        <item name="android:textCursorDrawable">@color/white</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textColorHint">@color/white</item>
+        <item name="android:textColorHighlight">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.EditText">
+        <item name="colorControlNormal">@color/white</item>
+        <item name="colorControlActivated">@color/white</item>
+    </style>
+
     <style name="progressTheme">
-        <item name="colorAccent">@android:color/white</item>
+        <item name="colorAccent">@color/white</item>
+    </style>
+
+    <style name="MyButton" parent="Widget.AppCompat.Button.Colored">
+    </style>
+
+    <style name="MyButton.white" parent="ThemeOverlay.AppCompat.Light">
+        <item name="colorAccent">@color/white</item>
+        <item name="android:colorControlHighlight">@color/colorAccent</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:textStyle">bold</item>
+
+    </style>
+
+    <style name="MyButton.blue" parent="ThemeOverlay.AppCompat.Light">
+        <item name="colorAccent">@color/colorPrimaryDark</item>
+        <item name="android:colorControlHighlight">@color/colorAccent</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
