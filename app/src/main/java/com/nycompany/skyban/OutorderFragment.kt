@@ -48,8 +48,6 @@ class OutorderFragment : Fragment() {
         listener?.onFragmentInteraction(uri)
     }
 
-    
-
     override fun onDetach() {
         super.onDetach()
         listener = null
