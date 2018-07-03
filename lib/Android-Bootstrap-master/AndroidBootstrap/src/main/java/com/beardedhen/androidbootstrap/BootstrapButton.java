@@ -234,12 +234,12 @@ public class BootstrapButton extends AwesomeTextView implements BootstrapSizeVie
     }
 
     private boolean handleToggle(@NonNull MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+        if (event.getAction() == MotionEvent.ACTION_UP) {
             setSelected(!isSelected());
             return true;
         }
         else {
-            return false;
+            return true;
         }
     }
 
