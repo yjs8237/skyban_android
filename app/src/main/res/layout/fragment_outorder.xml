@@ -726,22 +726,36 @@
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
 
             <com.beardedhen.androidbootstrap.BootstrapEditText
+                android:id="@+id/bootstrapEditText1"
                 android:layout_width="0dp"
                 android:layout_height="200dp"
-                android:layout_marginBottom="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:inputType="textMultiLine"
-                android:hint="작업내용"
                 android:gravity="top"
+                android:hint="작업내용"
+                android:inputType="textMultiLine"
                 app:bootstrapBrand="info"
                 app:bootstrapSize="lg"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/bootstrapLabel13" />
+
+            <com.beardedhen.androidbootstrap.BootstrapButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_weight="1"
+                android:text="발주하기"
+                app:bootstrapBrand="danger"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/bootstrapEditText1" />
 
         </android.support.constraint.ConstraintLayout>
 

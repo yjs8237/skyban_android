@@ -4,6 +4,10 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'realm-android'
+
+apply plugin: 'kotlin-kapt'
+
 android {
     compileSdkVersion 26
     defaultConfig {
@@ -38,5 +42,9 @@ dependencies {
     implementation 'com.android.support:design:26.1.0'
     implementation 'com.android.support:cardview-v7:26.1.0'
     implementation 'com.google.android.gms:play-services-maps:15.0.1'
-    implementation project(':AndroidBootstrap')
+    //implementation project(':AndroidBootstrap')
+    implementation 'com.beardedhen:androidbootstrap:2.3.2'
+    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+    implementation 'com.squareup.retrofit2:converter-scalars:2.4.0'
 }

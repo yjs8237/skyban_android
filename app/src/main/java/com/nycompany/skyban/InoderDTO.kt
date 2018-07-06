@@ -1,3 +1,3 @@
 package com.nycompany.skyban
 
-class InoderDTO(var ver: String, var name: String, var api: String)
+data class InoderDTO(var ver: String? = null, var name: String? = null, var api: String? = null)
