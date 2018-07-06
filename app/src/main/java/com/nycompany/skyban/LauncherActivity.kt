@@ -14,14 +14,13 @@ class LauncherActivity : AppCompatActivity() {
 
         var mHandler = Handler()
         mHandler.postDelayed({
-            startActivity(Intent().setClass(this@LauncherActivity, LoginActivity::class.java))
             //Realm.deleteRealm(Realm.getDefaultConfiguration())
             val realm = Realm.getDefaultInstance()
             val data = realm.where(RealmUserInfo::class.java).findAll()
             if(data.size == 0) {
                 startActivity(Intent().setClass(this@LauncherActivity, LoginActivity::class.java))
             }else{
-                startActivity(Intent().setClass(this@LauncherActivity, MainActivity::class.java))
+                startActivity(Intent().setClass(this@LauncherActivity, LoginActivity::class.java))
             }
             realm.close()
             finish()

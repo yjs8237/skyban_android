@@ -5,6 +5,7 @@ import android.app.FragmentManager
 import android.app.FragmentTransaction
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.view.View
 import android.view.View.OnClickListener
 import com.nycompany.skybanminitp.FragmentsAvailable
@@ -23,6 +24,7 @@ class MainActivity : AppCompatActivity(), OnClickListener {
             changeCurrentFragment(FragmentsAvailable.INORDER, getIntent().extras)
         } else{
             currentFragment = savedInstanceState.getSerializable("currentFragment") as FragmentsAvailable
+            changeCurrentFragment(currentFragment, getIntent().extras)
         }
 
         inorder.setOnClickListener(this)
@@ -30,6 +32,11 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         info.setOnClickListener(this)
         charge.setOnClickListener(this)
         setting.setOnClickListener(this)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle?, outPersistentState: PersistableBundle?) {
+        outState?.putSerializable("currentFragment", currentFragment)
+        super.onSaveInstanceState(outState, outPersistentState)
     }
 
     private fun changeCurrentFragment(newFragmentType: FragmentsAvailable?, extras: Bundle?) {
@@ -58,7 +65,6 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         fm.executePendingTransactions()
 
         currentFragment = newFragmentType
-
     }
 
     override fun onClick(v: View) {
