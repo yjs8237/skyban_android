@@ -35,5 +35,14 @@ class Application : Application() {
 
         return builder
     }
+
+    fun buildDialog(c: Context, msg: String?): AlertDialog.Builder {
+        val builder = AlertDialog.Builder(c)
+        builder.setMessage(msg)
+
+        builder.setPositiveButton("Ok") { dialog, which -> dialog.dismiss() }
+
+        return builder
+    }
 }
 

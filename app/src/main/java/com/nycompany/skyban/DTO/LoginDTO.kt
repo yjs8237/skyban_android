@@ -1,9 +1,9 @@
-package com.nycompany.skyban
+package com.nycompany.skyban.DTO
 
 data class LoginDTO(
         var result: String? = null,
         var description: String? = null,
-        var user:User? = null
+        var user: User? = null
 )
 
 data class User(

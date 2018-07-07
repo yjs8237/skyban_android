@@ -1,7 +1,5 @@
 package com.nycompany.skyban
 
-import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import android.app.Fragment
 import android.content.Intent
@@ -9,11 +7,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.widget.Toast
+import com.nycompany.skyban.DTO.InoderDTO
+import com.nycompany.skyban.DTO.List
+import com.nycompany.skyban.EnumClazz.ResCode
+import com.nycompany.skyban.EnumClazz.codeToStr
 import kotlinx.android.synthetic.main.fragment_inorder.*
+import org.json.JSONObject
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.util.ArrayList
-
+import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection
+import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -42,40 +48,78 @@ class InorderFragment : Fragment() {
         }
     }
 
+    private var myAdapter: InorderRecyclerViewAdapter? = null
+    private var inOrders: ArrayList<List>? = ArrayList()
+    private var app:Application = Application()
+    val paramObject = JSONObject()
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        //var context: Context = activity
+        val server = RetrofitCreater.getInstance(view!!.context)?.create(ReqOderList::class.java)
 
         recycler_inorder.setHasFixedSize(true)
         val layoutManager = LinearLayoutManager(activity.applicationContext)
         recycler_inorder.setLayoutManager(layoutManager)
+        initRecyclerViewData(server)
 
-        val inOrders: ArrayList<InoderDTO> = ArrayList()
-        inOrders.add(InoderDTO("mola","ggga2ggei","daechoong"))
-        inOrders.add(InoderDTO("mola1","22222","zzzzzzz"))
-        inOrders.add(InoderDTO("mola2","33333333333333","hhhhhhhhhhh"))
-        inOrders.add(InoderDTO("mola","ggga2ggei","daechoong"))
-        inOrders.add(InoderDTO("mola1","22222","zzzzzzz"))
-        inOrders.add(InoderDTO("mola2","33333333333333","hhhhhhhhhhh"))
-        inOrders.add(InoderDTO("mola","ggga2ggei","daechoong"))
-        inOrders.add(InoderDTO("mola1","22222","zzzzzzz"))
-        inOrders.add(InoderDTO("mola2","33333333333333","hhhhhhhhhhh"))
-        inOrders.add(InoderDTO("mola","ggga2ggei","daechoong"))
-        inOrders.add(InoderDTO("mola1","22222","zzzzzzz"))
-        inOrders.add(InoderDTO("mola2","33333333333333","hhhhhhhhhhh"))
-        inOrders.add(InoderDTO("mola","ggga2ggei","daechoong"))
-        inOrders.add(InoderDTO("mola1","22222","zzzzzzz"))
-        inOrders.add(InoderDTO("mola2","33333333333333","hhhhhhhhhhh"))
-        inOrders.add(InoderDTO("mola","ggga2ggei","daechoong"))
-        inOrders.add(InoderDTO("mola1","22222","zzzzzzz"))
-        inOrders.add(InoderDTO("mola2","33333333333333","hhhhhhhhhhh"))
+        swipyrefreshlayout.setOnRefreshListener(SwipyRefreshLayout.OnRefreshListener { direction ->
+            if (direction == SwipyRefreshLayoutDirection.BOTTOM){
+                paramObject.put("search_type", "1")
+                paramObject.put("start_index", paramObject.get("start_index") as Int + 5)
+                paramObject.put("search_count",  5)
+                var reqString = paramObject.toString()
+                server?.postRequest(reqString)?.enqueue(object: Callback<InoderDTO> {
+                    override fun onFailure(call: Call<InoderDTO>?, t: Throwable?) {
+                        var msg = if(!app.isConnected(view!!.context)) getString(R.string.network_eror) else t.toString()
+                        app.buildDialog(view!!.context, "eror", msg).show()
+                    }
 
-        val adapter = InorderRecyclerViewAdapter(inOrders)
-        adapter.setClickListener (View.OnClickListener { view ->
-            Toast.makeText(view.getContext(), "Position ${recycler_inorder.indexOfChild(view)}", Toast.LENGTH_SHORT).show()
-            val intent = Intent(activity, InorderDetailActivity::class.java)
-            startActivity(intent)
+                    override fun onResponse(call: Call<InoderDTO>?, response: Response<InoderDTO>?) {
+                        if(response?.body()?.result == ResCode.Success.Code) {
+                            inOrders?.addAll<List>(response?.body()?.list!!)
+                            myAdapter?.notifyDataSetChanged()
+
+                            if (swipyrefreshlayout.isRefreshing()) swipyrefreshlayout.setRefreshing(false)
+                        }else{
+                            app.buildDialog(view!!.context, codeToStr(response?.body()?.result)).show()
+                        }
+                    }
+                })
+            }else{
+                initRecyclerViewData(server)
+                if (swipyrefreshlayout.isRefreshing()) swipyrefreshlayout.setRefreshing(false)
+            }
         })
-        recycler_inorder.adapter = adapter
+    }
+
+    fun initRecyclerViewData(server:ReqOderList?){
+        paramObject.put("search_type", "1")
+        paramObject.put("start_index", 0)
+        paramObject.put("search_count", 5)
+        var reqString = paramObject.toString()
+
+        server?.postRequest(reqString)?.enqueue(object: Callback<InoderDTO> {
+            override fun onFailure(call: Call<InoderDTO>?, t: Throwable?) {
+                var msg = if(!app.isConnected(view!!.context)) getString(R.string.network_eror) else t.toString()
+                app.buildDialog(view!!.context, "eror", msg).show()
+            }
+
+            override fun onResponse(call: Call<InoderDTO>?, response: Response<InoderDTO>?) {
+                if(response?.body()?.result == ResCode.Success.Code) {
+                    inOrders = response?.body()?.list
+
+                    myAdapter = InorderRecyclerViewAdapter(inOrders)
+                    myAdapter?.setClickListener (View.OnClickListener { view ->
+                        Toast.makeText(view.getContext(), "Position ${recycler_inorder.indexOfChild(view)}", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(activity, InorderDetailActivity::class.java)
+                        startActivity(intent)
+                    })
+                    recycler_inorder.adapter = myAdapter
+                }else{
+                    app.buildDialog(view!!.context, codeToStr(response?.body()?.result)).show()
+                }
+            }
+        })
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,

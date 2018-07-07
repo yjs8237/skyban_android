@@ -18,9 +18,9 @@ class LauncherActivity : AppCompatActivity() {
             val realm = Realm.getDefaultInstance()
             val data = realm.where(RealmUserInfo::class.java).findAll()
             if(data.size == 0) {
-                startActivity(Intent().setClass(this@LauncherActivity, LoginActivity::class.java))
+                startActivity(Intent().setClass(this@LauncherActivity, MainActivity::class.java))
             }else{
-                startActivity(Intent().setClass(this@LauncherActivity, LoginActivity::class.java))
+                startActivity(Intent().setClass(this@LauncherActivity, MainActivity::class.java))
             }
             realm.close()
             finish()

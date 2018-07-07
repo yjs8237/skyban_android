@@ -4,13 +4,16 @@ import android.content.Context
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import com.nycompany.skybanminitp.ResCode
+import com.nycompany.skyban.EnumClazz.*
+import com.nycompany.skyban.DTO.LoginDTO
+
 import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_login.*
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+
 
 class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,7 +52,7 @@ class LoginActivity : AppCompatActivity() {
                         startActivity(Intent().setClass(this@LoginActivity, MainActivity::class.java))
                         finish()
                     }else{
-                        app.buildDialog(context, "eror", response?.body()?.description).show()
+                        app.buildDialog(context, codeToStr(response?.body()?.result)).show()
                     }
                 }
             })

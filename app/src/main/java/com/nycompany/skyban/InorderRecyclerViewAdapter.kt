@@ -5,10 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import com.nycompany.skyban.DTO.InoderDTO
+import com.nycompany.skyban.DTO.List
 
 import java.util.ArrayList
 
-class InorderRecyclerViewAdapter(private val inOrders: ArrayList<InoderDTO>) : RecyclerView.Adapter<InorderRecyclerViewAdapter.ViewHolder>() {
+class InorderRecyclerViewAdapter(private val inOrders: ArrayList<List>?) : RecyclerView.Adapter<InorderRecyclerViewAdapter.ViewHolder>() {
     private var mListener: View.OnClickListener? = null
 
     fun setClickListener(callback: View.OnClickListener) {
@@ -23,14 +25,14 @@ class InorderRecyclerViewAdapter(private val inOrders: ArrayList<InoderDTO>) : R
 
     override fun onBindViewHolder(vh: InorderRecyclerViewAdapter.ViewHolder, i: Int) {
         //xml 데아터 바인딩
-        vh.tv_name.text = inOrders[i].name
-        vh.tv_version.text = inOrders[i].api
-        vh.tv_api_level.text = inOrders[i].ver
+        vh.tv_name.text = inOrders!![i].order_user_num
+        vh.tv_version.text = inOrders!![i].min_car_type
+        vh.tv_api_level.text = inOrders!![i].work_location
     }
 
     override fun getItemCount(): Int {
         //아이템을 측정하는 카운터
-        return inOrders.size
+        return inOrders!!.size
     }
 
     inner class ViewHolder(v: View, private val mListener: View.OnClickListener) : RecyclerView.ViewHolder(v), View.OnClickListener {
