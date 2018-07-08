@@ -3,6 +3,7 @@ package com.nycompany.skyban
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import com.nycompany.skyban.EnumClazz.*
 import com.nycompany.skyban.DTO.LoginDTO
 
@@ -28,29 +29,35 @@ class LoginActivity : AppCompatActivity() {
             editTextPhone.setText("01032228237")
             paramObject.put("cell_no", editTextPhone.text)
             paramObject.put("user_pwd", editTextPassword.text)
-            var reqString = paramObject.toString()
+            val reqString = paramObject.toString()
 
             server?.postRequest(reqString)?.enqueue(object:Callback<LoginDTO>{
-                override fun onFailure(call: Call<LoginDTO>?, t: Throwable?) {
-                    var msg = if(!util.isConnected()) getString(R.string.network_eror) else t.toString()
+                override fun onFailure(call: Call<LoginDTO>, t: Throwable) {
+                    val msg = if(!util.isConnected()) getString(R.string.network_eror) else t.toString()
                     util.buildDialog("eror", msg).show()
                 }
 
-                override fun onResponse(call: Call<LoginDTO>?, response: Response<LoginDTO>?) {
-                    if(response?.body()?.result == ResCode.Success.Code) {
-                        Realm.getDefaultInstance().use {
-                            val data = it.where(RealmUserInfo::class.java).findAll()
-                            it.beginTransaction()
-                            if (data.size > 0) it.deleteAll()
-                            var userInfo = setUserinfo(response)
-                            it.copyToRealm(userInfo)
-                            it.commitTransaction()
+                override fun onResponse(call: Call<LoginDTO>, response: Response<LoginDTO>) {
+                    response.body()?.let {
+                        if(it.result == ResCode.Success.Code) {
+                            Realm.getDefaultInstance().use {
+                                val data = it.where(RealmUserInfo::class.java).findAll()
+                                it.beginTransaction()
+                                if (data.size > 0) it.deleteAll()
+                                var userInfo = setUserinfo(response)
+                                it.copyToRealm(userInfo)
+                                it.commitTransaction()
+                            }
+                            startActivity(Intent().setClass(this@LoginActivity, MainActivity::class.java))
+                            finish()
+                        }else{
+                            it.description?.let {
+                                util.buildDialog(it).show()
+                                //util.buildDialog(resCodeMap[response?.body()?.result]).show()
+                            }
                         }
-                        startActivity(Intent().setClass(this@LoginActivity, MainActivity::class.java))
-                        finish()
-                    }else{
-                        util.buildDialog(response?.body()?.description).show()
-                        //util.buildDialog(resCodeMap[response?.body()?.result]).show()
+                    }?:run{
+                        Log.e(this::class.java.name, getString(R.string.response_body_eror))
                     }
                 }
             })

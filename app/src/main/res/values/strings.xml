@@ -7,4 +7,6 @@
     <string name="title_activity_inorder_detail">Map</string>
     <string name="title_activity_maps">Map</string>
     <string name="network_eror">네트워크 상태를 확인해주세요</string>
+    <string name="response_body_eror">cant parse response body</string>
 </resources>
+

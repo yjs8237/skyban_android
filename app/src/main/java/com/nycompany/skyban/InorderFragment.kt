@@ -47,14 +47,14 @@ class InorderFragment : Fragment() {
         }
     }
 
-    private var myAdapter: InorderRecyclerViewAdapter? = null
-    private var inOrders: ArrayList<List>? = ArrayList()
+    private var inOrders: ArrayList<List> = ArrayList()
     private val paramObject = JSONObject()
+    private val myAdapter by lazy{InorderRecyclerViewAdapter(inOrders)}
+    private val util by lazy{ContextUtil(activity)}
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         //var context: Context = activity
         val server = RetrofitCreater.getInstance(view!!.context)?.create(ReqOderList::class.java)
-        val util:ContextUtil = ContextUtil(activity)
 
         recycler_inorder.setHasFixedSize(true)
         val layoutManager = LinearLayoutManager(activity.applicationContext)
@@ -68,53 +68,56 @@ class InorderFragment : Fragment() {
                 paramObject.put("search_count",  20)
                 var reqString = paramObject.toString()
                 server?.postRequest(reqString)?.enqueue(object: Callback<InoderDTO> {
-                    override fun onFailure(call: Call<InoderDTO>?, t: Throwable?) {
+                    override fun onFailure(call: Call<InoderDTO>, t: Throwable) {
                         var msg = if(!util.isConnected()) getString(R.string.network_eror) else t.toString()
                         util.buildDialog("eror", msg).show()
                     }
 
-                    override fun onResponse(call: Call<InoderDTO>?, response: Response<InoderDTO>?) {
-                        if(response?.body()?.result == ResCode.Success.Code) {
-                            inOrders?.addAll<List>(response?.body()?.list!!)
-                            myAdapter?.notifyDataSetChanged()
-
-                            if (swipyrefreshlayout.isRefreshing()) swipyrefreshlayout.setRefreshing(false)
+                    override fun onResponse(call: Call<InoderDTO>, response: Response<InoderDTO>) {
+                        if(response.body()?.result == ResCode.Success.Code) {
+                            response.body()?.list?.let {
+                                inOrders.addAll<List>(it)
+                                myAdapter.notifyDataSetChanged()
+                            }
+                            if (swipyrefreshlayout.isRefreshing) swipyrefreshlayout.isRefreshing = false
                         }else{
-                            util.buildDialog(response?.body()?.description).show()
+                            util.buildDialog(response.body()?.description).show()
                         }
                     }
                 })
             }else{
                 initRecyclerViewData(server)
-                if (swipyrefreshlayout.isRefreshing()) swipyrefreshlayout.setRefreshing(false)
+                if (swipyrefreshlayout.isRefreshing) swipyrefreshlayout.isRefreshing = false
             }
         })
     }
 
     fun initRecyclerViewData(server:ReqOderList?){
-        val util:ContextUtil = ContextUtil(activity)
         paramObject.put("search_type", "1")
         paramObject.put("start_index", 0)
         paramObject.put("search_count", 20)
         var reqString = paramObject.toString()
 
         server?.postRequest(reqString)?.enqueue(object: Callback<InoderDTO> {
-            override fun onFailure(call: Call<InoderDTO>?, t: Throwable?) {
+            override fun onFailure(call: Call<InoderDTO>, t: Throwable) {
                 var msg = if(!util.isConnected()) getString(R.string.network_eror) else t.toString()
                 util.buildDialog("eror", msg).show()
             }
 
-            override fun onResponse(call: Call<InoderDTO>?, response: Response<InoderDTO>?) {
-                if(response?.body()?.result == ResCode.Success.Code) {
-                    inOrders = response?.body()?.list
+            override fun onResponse(call: Call<InoderDTO>, response: Response<InoderDTO>) {
+                if(response.body()?.result == ResCode.Success.Code) {
+                    response.body()?.list?.let {
+                        inOrders = it
+                    }
 
-                    myAdapter = InorderRecyclerViewAdapter(inOrders)
-                    myAdapter?.setClickListener (View.OnClickListener { view ->
+                    myAdapter.setClickListener (View.OnClickListener { view ->
                         Toast.makeText(view.getContext(), "Position ${recycler_inorder.indexOfChild(view)}", Toast.LENGTH_SHORT).show()
                         val intent = Intent(activity, InorderDetailActivity::class.java)
                         startActivity(intent)
                     })
-                    recycler_inorder.adapter = myAdapter
+                    recycler_inorder?.let {
+                        it.adapter = myAdapter
+                    }
                 }else{
                     util.buildDialog(response?.body()?.description).show()
                 }
