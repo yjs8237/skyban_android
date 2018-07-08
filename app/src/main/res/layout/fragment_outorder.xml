@@ -64,7 +64,7 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:roundedCorners="false"
+                app:roundedCorners="true"
                 app:showOutline="true">
 
                 <com.beardedhen.androidbootstrap.BootstrapButton
@@ -165,7 +165,7 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/bootstrapLabel3"
-                app:roundedCorners="false"
+                app:roundedCorners="true"
                 app:showOutline="true">
 
                 <com.beardedhen.androidbootstrap.BootstrapButton
@@ -205,7 +205,7 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/bootstrapButtonGroup2"
-                app:roundedCorners="false"
+                app:roundedCorners="true"
                 app:showOutline="true">
 
                 <com.beardedhen.androidbootstrap.BootstrapButton
@@ -253,7 +253,7 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/bootstrapLabel4"
                 app:layout_constraintTop_toBottomOf="@+id/bootstrapLabel4"
-                app:roundedCorners="false"
+                app:roundedCorners="true"
                 app:showOutline="true">
 
                 <com.beardedhen.androidbootstrap.BootstrapButton
@@ -750,7 +750,9 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
                 android:layout_weight="1"
+                app:bootstrapSize="lg"
                 android:text="발주하기"
+                app:roundedCorners="true"
                 app:bootstrapBrand="danger"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

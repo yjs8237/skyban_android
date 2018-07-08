@@ -1,6 +1,5 @@
 package com.nycompany.skyban
 
-import android.content.Context
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -16,18 +15,16 @@ import retrofit2.Response
 
 
 class LoginActivity : AppCompatActivity() {
+    private var util:ContextUtil = ContextUtil(this)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        var app:Application = Application()
-        var context:Context = this
-        if(!app.isConnected(this)) app.buildDialog(this, "eror",getString(R.string.network_eror)).show()
-
         setContentView(R.layout.activity_login)
+
+        if(!util.isConnected()) util.buildDialog("eror",getString(R.string.network_eror)).show()
 
         val server = RetrofitCreater.getInstance(this)?.create(ReqLogin::class.java)
         loginBtn.setOnClickListener{
             val paramObject = JSONObject()
-
             editTextPhone.setText("01032228237")
             paramObject.put("cell_no", editTextPhone.text)
             paramObject.put("user_pwd", editTextPassword.text)
@@ -35,8 +32,8 @@ class LoginActivity : AppCompatActivity() {
 
             server?.postRequest(reqString)?.enqueue(object:Callback<LoginDTO>{
                 override fun onFailure(call: Call<LoginDTO>?, t: Throwable?) {
-                    var msg = if(!app.isConnected(context)) getString(R.string.network_eror) else t.toString()
-                    app.buildDialog(context, "eror", msg).show()
+                    var msg = if(!util.isConnected()) getString(R.string.network_eror) else t.toString()
+                    util.buildDialog("eror", msg).show()
                 }
 
                 override fun onResponse(call: Call<LoginDTO>?, response: Response<LoginDTO>?) {
@@ -52,7 +49,8 @@ class LoginActivity : AppCompatActivity() {
                         startActivity(Intent().setClass(this@LoginActivity, MainActivity::class.java))
                         finish()
                     }else{
-                        app.buildDialog(context, codeToStr(response?.body()?.result)).show()
+                        util.buildDialog(response?.body()?.description).show()
+                        //util.buildDialog(resCodeMap[response?.body()?.result]).show()
                     }
                 }
             })

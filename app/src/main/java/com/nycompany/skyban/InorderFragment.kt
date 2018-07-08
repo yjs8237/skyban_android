@@ -11,7 +11,6 @@ import android.widget.Toast
 import com.nycompany.skyban.DTO.InoderDTO
 import com.nycompany.skyban.DTO.List
 import com.nycompany.skyban.EnumClazz.ResCode
-import com.nycompany.skyban.EnumClazz.codeToStr
 import kotlinx.android.synthetic.main.fragment_inorder.*
 import org.json.JSONObject
 import retrofit2.Call
@@ -50,12 +49,12 @@ class InorderFragment : Fragment() {
 
     private var myAdapter: InorderRecyclerViewAdapter? = null
     private var inOrders: ArrayList<List>? = ArrayList()
-    private var app:Application = Application()
-    val paramObject = JSONObject()
+    private val paramObject = JSONObject()
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         //var context: Context = activity
         val server = RetrofitCreater.getInstance(view!!.context)?.create(ReqOderList::class.java)
+        val util:ContextUtil = ContextUtil(activity)
 
         recycler_inorder.setHasFixedSize(true)
         val layoutManager = LinearLayoutManager(activity.applicationContext)
@@ -65,13 +64,13 @@ class InorderFragment : Fragment() {
         swipyrefreshlayout.setOnRefreshListener(SwipyRefreshLayout.OnRefreshListener { direction ->
             if (direction == SwipyRefreshLayoutDirection.BOTTOM){
                 paramObject.put("search_type", "1")
-                paramObject.put("start_index", paramObject.get("start_index") as Int + 5)
-                paramObject.put("search_count",  5)
+                paramObject.put("start_index", paramObject.get("start_index") as Int + 20)
+                paramObject.put("search_count",  20)
                 var reqString = paramObject.toString()
                 server?.postRequest(reqString)?.enqueue(object: Callback<InoderDTO> {
                     override fun onFailure(call: Call<InoderDTO>?, t: Throwable?) {
-                        var msg = if(!app.isConnected(view!!.context)) getString(R.string.network_eror) else t.toString()
-                        app.buildDialog(view!!.context, "eror", msg).show()
+                        var msg = if(!util.isConnected()) getString(R.string.network_eror) else t.toString()
+                        util.buildDialog("eror", msg).show()
                     }
 
                     override fun onResponse(call: Call<InoderDTO>?, response: Response<InoderDTO>?) {
@@ -81,7 +80,7 @@ class InorderFragment : Fragment() {
 
                             if (swipyrefreshlayout.isRefreshing()) swipyrefreshlayout.setRefreshing(false)
                         }else{
-                            app.buildDialog(view!!.context, codeToStr(response?.body()?.result)).show()
+                            util.buildDialog(response?.body()?.description).show()
                         }
                     }
                 })
@@ -93,15 +92,16 @@ class InorderFragment : Fragment() {
     }
 
     fun initRecyclerViewData(server:ReqOderList?){
+        val util:ContextUtil = ContextUtil(activity)
         paramObject.put("search_type", "1")
         paramObject.put("start_index", 0)
-        paramObject.put("search_count", 5)
+        paramObject.put("search_count", 20)
         var reqString = paramObject.toString()
 
         server?.postRequest(reqString)?.enqueue(object: Callback<InoderDTO> {
             override fun onFailure(call: Call<InoderDTO>?, t: Throwable?) {
-                var msg = if(!app.isConnected(view!!.context)) getString(R.string.network_eror) else t.toString()
-                app.buildDialog(view!!.context, "eror", msg).show()
+                var msg = if(!util.isConnected()) getString(R.string.network_eror) else t.toString()
+                util.buildDialog("eror", msg).show()
             }
 
             override fun onResponse(call: Call<InoderDTO>?, response: Response<InoderDTO>?) {
@@ -116,7 +116,7 @@ class InorderFragment : Fragment() {
                     })
                     recycler_inorder.adapter = myAdapter
                 }else{
-                    app.buildDialog(view!!.context, codeToStr(response?.body()?.result)).show()
+                    util.buildDialog(response?.body()?.description).show()
                 }
             }
         })

@@ -45,7 +45,7 @@ class InorderRecyclerViewAdapter(private val inOrders: ArrayList<List>?) : Recyc
 
             tv_name = v.findViewById<View>(R.id.textView13) as TextView
             tv_version = v.findViewById<View>(R.id.textView15) as TextView
-            tv_api_level = v.findViewById<View>(R.id.textView16) as TextView
+            tv_api_level = v.findViewById<View>(R.id.dasdtextView16) as TextView
         }
 
         override fun onClick(view: View) {
