@@ -7,7 +7,6 @@ import android.os.Handler
 import io.realm.Realm
 
 class LauncherActivity : AppCompatActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.launcher)
@@ -20,7 +19,7 @@ class LauncherActivity : AppCompatActivity() {
             if(data.size == 0) {
                 startActivity(Intent().setClass(this@LauncherActivity, LoginActivity::class.java))
             }else{
-                startActivity(Intent().setClass(this@LauncherActivity, MainActivity::class.java))
+                startActivity(Intent().setClass(this@LauncherActivity, LoginActivity::class.java))
             }
             realm.close()
             finish()

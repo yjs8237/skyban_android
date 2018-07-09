@@ -17,12 +17,11 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/textView5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
-            android:text="발주하기"
+            android:text="@string/title_inorder"
             android:textColor="@android:color/background_light"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"

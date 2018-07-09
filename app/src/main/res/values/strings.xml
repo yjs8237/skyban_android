@@ -8,5 +8,10 @@
     <string name="title_activity_maps">Map</string>
     <string name="network_eror">네트워크 상태를 확인해주세요</string>
     <string name="response_body_eror">cant parse response body</string>
+
+    <!-- 수주화면 -->
+    <string name="title_inorder">수주하기</string>
+    <string name="commission_y">수수료 있음</string>
+    <string name="commission_n">수수료 없음</string>
 </resources>
 

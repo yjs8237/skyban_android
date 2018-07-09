@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.widget.Toast
 import com.nycompany.skyban.DTO.InoderDTO
 import com.nycompany.skyban.DTO.List
@@ -47,56 +48,40 @@ class InorderFragment : Fragment() {
         }
     }
 
-    private var inOrders: ArrayList<List> = ArrayList()
-    private val paramObject = JSONObject()
+    private val inOrders: ArrayList<List> = ArrayList()
     private val myAdapter by lazy{InorderRecyclerViewAdapter(inOrders)}
-    private val util by lazy{ContextUtil(activity)}
+    private val jsonObj = JSONObject()
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         //var context: Context = activity
-        val server = RetrofitCreater.getInstance(view!!.context)?.create(ReqOderList::class.java)
-
-        recycler_inorder.setHasFixedSize(true)
         val layoutManager = LinearLayoutManager(activity.applicationContext)
+        layoutManager.orientation = LinearLayoutManager.VERTICAL
         recycler_inorder.setLayoutManager(layoutManager)
-        initRecyclerViewData(server)
+        recycler_inorder.setHasFixedSize(true)
+
+        setRecyclerView(true, makeJson(true))
 
         swipyrefreshlayout.setOnRefreshListener(SwipyRefreshLayout.OnRefreshListener { direction ->
-            if (direction == SwipyRefreshLayoutDirection.BOTTOM){
-                paramObject.put("search_type", "1")
-                paramObject.put("start_index", paramObject.get("start_index") as Int + 20)
-                paramObject.put("search_count",  20)
-                var reqString = paramObject.toString()
-                server?.postRequest(reqString)?.enqueue(object: Callback<InoderDTO> {
-                    override fun onFailure(call: Call<InoderDTO>, t: Throwable) {
-                        var msg = if(!util.isConnected()) getString(R.string.network_eror) else t.toString()
-                        util.buildDialog("eror", msg).show()
-                    }
+            if (direction == SwipyRefreshLayoutDirection.TOP) setRecyclerView(true, makeJson(true))
+            else setRecyclerView(false, makeJson(false))
 
-                    override fun onResponse(call: Call<InoderDTO>, response: Response<InoderDTO>) {
-                        if(response.body()?.result == ResCode.Success.Code) {
-                            response.body()?.list?.let {
-                                inOrders.addAll<List>(it)
-                                myAdapter.notifyDataSetChanged()
-                            }
-                            if (swipyrefreshlayout.isRefreshing) swipyrefreshlayout.isRefreshing = false
-                        }else{
-                            util.buildDialog(response.body()?.description).show()
-                        }
-                    }
-                })
-            }else{
-                initRecyclerViewData(server)
-                if (swipyrefreshlayout.isRefreshing) swipyrefreshlayout.isRefreshing = false
-            }
+            if (swipyrefreshlayout.isRefreshing) swipyrefreshlayout.isRefreshing = false
         })
     }
 
-    fun initRecyclerViewData(server:ReqOderList?){
-        paramObject.put("search_type", "1")
-        paramObject.put("start_index", 0)
-        paramObject.put("search_count", 20)
-        var reqString = paramObject.toString()
+    fun makeJson(isReset:Boolean):JSONObject{
+        jsonObj.put("search_type", "1")
+        jsonObj.put("search_count", 20)
+        if(isReset) jsonObj.put("start_index", 0)
+        else jsonObj.put("start_index", jsonObj.get("start_index") as Int + 20)
+
+        return  jsonObj
+    }
+
+    fun setRecyclerView(isReset:Boolean, jsonObj:JSONObject){
+        val server = RetrofitCreater.getInstance(view!!.context)?.create(ReqOderList::class.java)
+        var reqString = jsonObj.toString()
+        val util = ContextUtil(activity)
 
         server?.postRequest(reqString)?.enqueue(object: Callback<InoderDTO> {
             override fun onFailure(call: Call<InoderDTO>, t: Throwable) {
@@ -105,21 +90,35 @@ class InorderFragment : Fragment() {
             }
 
             override fun onResponse(call: Call<InoderDTO>, response: Response<InoderDTO>) {
-                if(response.body()?.result == ResCode.Success.Code) {
-                    response.body()?.list?.let {
-                        inOrders = it
+                response.body()?.let {
+                    if (response.body()?.result == ResCode.Success.Code) {
+                        if (isReset) {
+                            response.body()?.list?.let {
+                                inOrders.clear()
+                                inOrders.addAll(it)
+                                myAdapter.notifyDataSetChanged()
+                            }
+                            myAdapter.setClickListener(View.OnClickListener { view ->
+                                Toast.makeText(view.getContext(), "Position ${recycler_inorder.indexOfChild(view)}", Toast.LENGTH_SHORT).show()
+                                val intent = Intent(activity, InorderDetailActivity::class.java)
+                                startActivity(intent)
+                            })
+                            recycler_inorder?.let {
+                                it.adapter = myAdapter
+                            }
+                        } else {
+                            response.body()?.list?.let {
+                                inOrders.addAll<List>(it)
+                                myAdapter.notifyDataSetChanged()
+                            }
+                        }
+                    } else {
+                        it.description?.let {
+                            util.buildDialog(it).show()
+                        }
+                    } ?: run {
+                        Log.e(this::class.java.name, "postRequest method eror")
                     }
-
-                    myAdapter.setClickListener (View.OnClickListener { view ->
-                        Toast.makeText(view.getContext(), "Position ${recycler_inorder.indexOfChild(view)}", Toast.LENGTH_SHORT).show()
-                        val intent = Intent(activity, InorderDetailActivity::class.java)
-                        startActivity(intent)
-                    })
-                    recycler_inorder?.let {
-                        it.adapter = myAdapter
-                    }
-                }else{
-                    util.buildDialog(response?.body()?.description).show()
                 }
             }
         })

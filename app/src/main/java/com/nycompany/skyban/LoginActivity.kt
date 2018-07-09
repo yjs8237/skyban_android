@@ -51,8 +51,7 @@ class LoginActivity : AppCompatActivity() {
                             startActivity(Intent().setClass(this@LoginActivity, MainActivity::class.java))
                             finish()
                         }else{
-                            it.description?.let {
-                                util.buildDialog(it).show()
+                            it.description?.let { util.buildDialog(it).show()
                                 //util.buildDialog(resCodeMap[response?.body()?.result]).show()
                             }
                         }

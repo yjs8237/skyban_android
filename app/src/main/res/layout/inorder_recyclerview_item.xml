@@ -23,7 +23,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textView13"
+                android:id="@+id/textViewCommission_yn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="2dp"
@@ -33,7 +33,7 @@
                 android:textStyle="bold"/>
 
             <TextView
-                android:id="@+id/textView15"
+                android:id="@+id/textViewDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -43,7 +43,7 @@
                 android:textStyle="bold"/>
 
             <TextView
-                android:id="@+id/dasdtextView16"
+                android:id="@+id/textViewTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -53,7 +53,7 @@
                 android:textStyle="bold"/>
 
             <TextView
-                android:id="@+id/textdadView16"
+                android:id="@+id/textViewWorkProc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
