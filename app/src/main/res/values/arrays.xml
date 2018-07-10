@@ -9,6 +9,14 @@
         <item>KIA</item>
     </string-array>
 
+    <string-array name="work_proc">
+        <item>WP00|수주자매칭전</item>
+        <item>WP01|작업전</item>
+        <item>WP02|현장도착</item>
+        <item>WP03|작업중</item>
+        <item>WP04|작업완료</item>
+    </string-array>
+
     <string-array name="car_type">
         <item>T001|1T 차량</item>
         <item>T002|2.5T 차량</item>
@@ -18,12 +26,41 @@
         <item>T006|5T 이상</item>
     </string-array>
 
-    <string-array name="work_proc">
-        <item>WP00|수주자매칭전</item>
-        <item>WP01|작업전</item>
-        <item>WP02|현장도착</item>
-        <item>WP03|작업중</item>
-        <item>WP04|작업완료</item>
+    <string-array name="car_length">
+        <item>H001|2.3 이하</item>
+        <item>H002|2.4 이하</item>
+        <item>H003|2.5 이하</item>
+        <item>H001|2.6 이하</item>
+        <item>H005|2.7 이하</item>
+        <item>H006|2.8 이하</item>
+        <item>H007|2.9 이하</item>
+        <item>H008|3.0 이하</item>
+        <item>H009|3.1 이하</item>
+        <item>H010|3.2 이하</item>
+        <item>H011|3.3 이하</item>
+        <item>H012|3.4 이하</item>
+        <item>H013|3.5 이하</item>
+        <item>H014|3.6 이하</item>
+        <item>H015|3.7 이하</item>
+        <item>H016|3.8 이하</item>
+        <item>H017|3.9 이하</item>
+        <item>H018|4.0 이상</item>
+    </string-array>
+
+    <string-array name="car_option">
+        <item>P001|인버터</item>
+        <item>P002|굴절</item>
+        <item>P003|윈찌</item>
+        <item>P004|단축</item>
+    </string-array>
+
+    <string-array name="pay_date">
+        <item>S001|당일</item>
+        <item>S002|1주이내</item>
+        <item>S003|2주이내</item>
+        <item>P004|3주이내</item>
+        <item>P005|한달이내</item>
+        <item>P006|두달이내</item>
     </string-array>
 
     <string-array name="res_code">
