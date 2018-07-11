@@ -28,7 +28,7 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  *
  */
-class OutorderFragment : Fragment() {
+class OutorderFragment : Fragment(), View.OnClickListener{
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -74,17 +74,24 @@ class OutorderFragment : Fragment() {
             TimePickerDialog(activity, mTimeSetListener, mHour, mMinute, false).show()
         }
 
-        for (i in 0..(ButtonGroup_JobTimeBottom.childCount - 1)) {
-            (ButtonGroup_JobTimeBottom.getChildAt(i) as BootstrapButton)?.let {
-                it.setOnCheckedChangedListener { bootstrapButton, isChecked ->
-
-
-
-                }
-            }
-        }
+        Button_RadioDay.setOnClickListener(this)
+        Button_RadioMorning.setOnClickListener(this)
+        Button_RadioSunset.setOnClickListener(this)
+        Button_Radio1h.setOnClickListener(this)
+        Button_Radio2h.setOnClickListener(this)
+        Button_RadioNight.setOnClickListener(this)
+        Button_RadioDay.isSelected = true
     }
 
+    override fun onClick(btn: View?) {
+        Button_RadioDay.isSelected = false
+        Button_RadioMorning.isSelected = false
+        Button_RadioSunset.isSelected = false
+        Button_Radio1h.isSelected = false
+        Button_Radio2h.isSelected = false
+        Button_RadioNight.isSelected = false
+        btn?.isSelected = true
+    }
 
     override fun onDetach() {
         super.onDetach()

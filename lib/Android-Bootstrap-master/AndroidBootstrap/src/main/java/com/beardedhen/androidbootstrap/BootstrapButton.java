@@ -226,7 +226,7 @@ public class BootstrapButton extends AwesomeTextView implements BootstrapSizeVie
             if (parent instanceof BootstrapButtonGroup) {
                 ((BootstrapButtonGroup) parent).onRadioToggle(parentIndex);
             }
-            return true;
+            return false;
         }
         else {
             return true;
