@@ -95,13 +95,14 @@
                 app:layout_constraintTop_toBottomOf="@+id/bootstrapButtonGroup" />
 
             <com.beardedhen.androidbootstrap.BootstrapEditText
-                android:id="@+id/bootstrapEditText"
+                android:id="@+id/EditTextDay"
+                android:focusable="false"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:drawableRight="@drawable/googleg_standard_color_18"
+                android:drawableRight="@drawable/avobedown"
                 android:hint="작업날짜"
                 app:bootstrapBrand="info"
                 app:bootstrapSize="lg"
@@ -120,16 +121,17 @@
                 app:bootstrapHeading="h6"
                 app:bootstrapText="{fa_circle_o} 작업 시각"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/bootstrapEditText" />
+                app:layout_constraintTop_toBottomOf="@+id/EditTextDay" />
 
             <com.beardedhen.androidbootstrap.BootstrapEditText
-                android:id="@+id/bootstrapEditText2"
+                android:id="@+id/EditTextTime"
+                android:focusable="false"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:drawableRight="@drawable/googleg_standard_color_18"
+                android:drawableRight="@drawable/avobedown"
                 android:hint="작업시각"
                 app:bootstrapBrand="info"
                 app:bootstrapSize="lg"
@@ -146,11 +148,11 @@
                 app:bootstrapBrand="info"
                 app:bootstrapHeading="h6"
                 app:bootstrapText="{fa_circle_o} 작업 시간"
-                app:layout_constraintStart_toStartOf="@+id/bootstrapEditText2"
-                app:layout_constraintTop_toBottomOf="@+id/bootstrapEditText2" />
+                app:layout_constraintStart_toStartOf="@+id/EditTextTime"
+                app:layout_constraintTop_toBottomOf="@+id/EditTextTime" />
 
             <com.beardedhen.androidbootstrap.BootstrapButtonGroup
-                android:id="@+id/bootstrapButtonGroup2"
+                android:id="@+id/ButtonGroup_JobTimeTop"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
@@ -169,6 +171,7 @@
                 app:showOutline="true">
 
                 <com.beardedhen.androidbootstrap.BootstrapButton
+                    android:id="@+id/Button_RadioDay"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -176,12 +179,14 @@
                     app:checked="true" />
 
                 <com.beardedhen.androidbootstrap.BootstrapButton
+                    android:id="@+id/Button_RadioMorning"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="오전" />
 
                 <com.beardedhen.androidbootstrap.BootstrapButton
+                    android:id="@+id/Button_RadioSunset"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -190,7 +195,7 @@
             </com.beardedhen.androidbootstrap.BootstrapButtonGroup>
 
             <com.beardedhen.androidbootstrap.BootstrapButtonGroup
-                android:id="@+id/bootstrapButtonGroup3"
+                android:id="@+id/ButtonGroup_JobTimeBottom"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
@@ -204,7 +209,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/bootstrapButtonGroup2"
+                app:layout_constraintTop_toBottomOf="@+id/ButtonGroup_JobTimeTop"
                 app:roundedCorners="true"
                 app:showOutline="true">
 
@@ -236,8 +241,8 @@
                 app:bootstrapBrand="info"
                 app:bootstrapHeading="h6"
                 app:bootstrapText="{fa_circle_o} 추가요금"
-                app:layout_constraintStart_toStartOf="@+id/bootstrapButtonGroup3"
-                app:layout_constraintTop_toBottomOf="@+id/bootstrapButtonGroup3" />
+                app:layout_constraintStart_toStartOf="@+id/ButtonGroup_JobTimeBottom"
+                app:layout_constraintTop_toBottomOf="@+id/ButtonGroup_JobTimeBottom" />
 
             <com.beardedhen.androidbootstrap.BootstrapButtonGroup
                 android:id="@+id/bootstrapButtonGroup4"

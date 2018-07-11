@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
-import com.nycompany.skyban.DTO.InoderDTO
 import com.nycompany.skyban.DTO.List
 
 import java.util.ArrayList
@@ -43,8 +42,8 @@ class InorderRecyclerViewAdapter(private val inOrders: ArrayList<List>?) : Recyc
                 "${carLengthMap[inOrders!![i].min_car_length]?.let{ " - " + it}?:run{ "" }}"
         vh.textView_work_location.text = "장소 : ${inOrders!![i].work_location}"
         var op_invertor =  if (inOrders!![i].op_danchuk == "Y") "인버터" else null
-        var op_guljul =  if (inOrders!![i].op_danchuk == "Y") "굴절" else null
-        var op_winchi =  if (inOrders!![i].op_danchuk == "Y") "윈찌" else null
+        var op_guljul =  if (inOrders!![i].op_guljul == "Y") "굴절" else null
+        var op_winchi =  if (inOrders!![i].op_winchi == "Y") "윈찌" else null
         var op_danchuk =  if (inOrders!![i].op_danchuk == "Y") "단축" else null
         vh.textView_work_option.text = "옵션 : ${op_invertor?.let{it +" "}?:run{""}} ${op_guljul?.let{it +" "}?:run{""}} " +
                 "${op_winchi?.let{it +" "}?:run{""}} ${op_danchuk?.let{it +" "}?:run{""}}"
@@ -52,22 +51,23 @@ class InorderRecyclerViewAdapter(private val inOrders: ArrayList<List>?) : Recyc
         var payDateMap = util.parseStringArray(R.array.pay_date)
         vh.textView_word_duration.text = "결재기간 : ${payDateMap[inOrders!![i].pay_date]?.let{it}?:run{""}}"
 
-        if("WP04" == inOrders!![i].work_proc){
-            vh.linearLayout_left.setBackgroundResource(R.color.grey)
-            vh.linearLayout_right.setBackgroundResource(R.color.grey)
-            vh.textViewCommission_yn.setTextColor(context?.resources?.getColor(R.color.black)!!)
-            vh.textViewDate.setTextColor(context?.resources?.getColor(R.color.black)!!)
-            vh.textViewTime.setTextColor(context?.resources?.getColor(R.color.black)!!)
-            vh.textViewWorkProc.setTextColor(context?.resources?.getColor(R.color.black)!!)
-        }else{
-            vh.linearLayout_left.setBackgroundResource(R.color.sky)
-            vh.linearLayout_right.setBackgroundResource(R.color.white)
-            vh.textViewCommission_yn.setTextColor(context?.resources?.getColor(R.color.white)!!)
-            vh.textViewDate.setTextColor(context?.resources?.getColor(R.color.white)!!)
-            vh.textViewTime.setTextColor(context?.resources?.getColor(R.color.white)!!)
-            vh.textViewWorkProc.setTextColor(context?.resources?.getColor(R.color.white)!!)
+        inOrders!![i].work_proc?.let {
+            if ("WP04" == it) {
+                vh.linearLayout_left.setBackgroundResource(R.color.grey)
+                vh.linearLayout_right.setBackgroundResource(R.color.grey)
+                for (i in 0..(vh.linearLayout_left.childCount - 1)) {
+                    (vh.linearLayout_left.getChildAt(i) as TextView)?.let { it.setTextColor(context?.resources?.getColor(R.color.black)!!) }
+                }
+            } else {
+                vh.linearLayout_left.setBackgroundResource(R.color.sky)
+                vh.linearLayout_right.setBackgroundResource(R.color.white)
+                for (i in 0..(vh.linearLayout_left.childCount - 1)) {
+                    (vh.linearLayout_left.getChildAt(i) as TextView)?.let { it.setTextColor(context?.resources?.getColor(R.color.white)!!) }
+                }
+            }
         }
     }
+
 
     override fun getItemCount(): Int {
         //아이템을 측정하는 카운터

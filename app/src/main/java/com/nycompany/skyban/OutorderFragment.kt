@@ -1,12 +1,17 @@
 package com.nycompany.skyban
 
-import android.content.Context
+import android.app.DatePickerDialog
 import android.net.Uri
 import android.os.Bundle
 import android.app.Fragment
+import android.app.TimePickerDialog
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import com.beardedhen.androidbootstrap.BootstrapButton
+import kotlinx.android.synthetic.main.fragment_outorder.*
+import java.util.*
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -43,10 +48,43 @@ class OutorderFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_outorder, container, false)
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    fun onButtonPressed(uri: Uri) {
-        listener?.onFragmentInteraction(uri)
+    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val cal = GregorianCalendar()
+        val mYear = cal.get(Calendar.YEAR)
+        val mMonth = cal.get(Calendar.MONTH)
+        val mDay = cal.get(Calendar.DAY_OF_MONTH)
+        val mHour = cal.get(Calendar.HOUR_OF_DAY)
+        val mMinute = cal.get(Calendar.MINUTE)
+
+        val mDateSetListener = DatePickerDialog.OnDateSetListener { datePicker, year, monthOfYear, dayOfMonth ->
+            EditTextDay.setText(String.format("%d-%d-%d",year, monthOfYear + 1, dayOfMonth))
+        }
+
+        val mTimeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hourOfDay, minute ->
+            EditTextTime.setText(String.format("%d:%s", hourOfDay, if(minute > 9) minute.toString() else "0" + minute.toString()))
+        }
+
+        EditTextDay.setOnClickListener{
+            DatePickerDialog(activity, mDateSetListener, mYear, mMonth, mDay).show()
+        }
+
+        EditTextTime.setOnClickListener{
+            TimePickerDialog(activity, mTimeSetListener, mHour, mMinute, false).show()
+        }
+
+        for (i in 0..(ButtonGroup_JobTimeBottom.childCount - 1)) {
+            (ButtonGroup_JobTimeBottom.getChildAt(i) as BootstrapButton)?.let {
+                it.setOnCheckedChangedListener { bootstrapButton, isChecked ->
+
+
+
+                }
+            }
+        }
     }
+
 
     override fun onDetach() {
         super.onDetach()
