@@ -26,7 +26,7 @@
         <item>T006|5T 이상</item>
     </string-array>
 
-    <string-array name="car_length">
+    <string-array name="car_height">
         <item>H001|2.3 이하</item>
         <item>H002|2.4 이하</item>
         <item>H003|2.5 이하</item>
@@ -45,6 +45,29 @@
         <item>H016|3.8 이하</item>
         <item>H017|3.9 이하</item>
         <item>H018|4.0 이상</item>
+    </string-array>
+
+    <string-array name="car_length">
+        <item>L001|16M</item>
+        <item>L002|18M</item>
+        <item>L003|20M</item>
+        <item>L004|22M</item>
+        <item>L005|24M</item>
+        <item>L006|25M</item>
+        <item>L007|26M</item>
+        <item>L008|28M</item>
+        <item>L009|30M</item>
+        <item>L010|31M</item>
+        <item>L011|32M</item>
+        <item>L012|35M</item>
+        <item>L013|38M</item>
+        <item>L014|40M</item>
+        <item>L015|45M</item>
+        <item>L016|48M</item>
+        <item>L017|50M</item>
+        <item>L018|58M</item>
+        <item>L019|70M</item>
+        <item>L020|75M</item>
     </string-array>
 
     <string-array name="car_option">

@@ -1,16 +1,21 @@
 package com.nycompany.skyban
 
+import android.app.Activity.RESULT_OK
 import android.app.DatePickerDialog
 import android.net.Uri
 import android.os.Bundle
 import android.app.Fragment
 import android.app.TimePickerDialog
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.beardedhen.androidbootstrap.BootstrapButton
+import io.realm.Realm
+import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.fragment_outorder.*
+import org.json.JSONObject
 import java.util.*
 
 
@@ -48,8 +53,15 @@ class OutorderFragment : Fragment(), View.OnClickListener{
         return inflater.inflate(R.layout.fragment_outorder, container, false)
     }
 
+    private val REQUEST_MAP = 101
+    private  val paramObject by lazy{JSONObject()}
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        Realm.getDefaultInstance().use {
+            val data = it.where(RealmUserInfo::class.java).findAll()
+            paramObject.put("cell_no", data[0]?.cell_no)
+        }
 
         val cal = GregorianCalendar()
         val mYear = cal.get(Calendar.YEAR)
@@ -58,12 +70,17 @@ class OutorderFragment : Fragment(), View.OnClickListener{
         val mHour = cal.get(Calendar.HOUR_OF_DAY)
         val mMinute = cal.get(Calendar.MINUTE)
 
+
         val mDateSetListener = DatePickerDialog.OnDateSetListener { datePicker, year, monthOfYear, dayOfMonth ->
             EditTextDay.setText(String.format("%d-%d-%d",year, monthOfYear + 1, dayOfMonth))
+            var dayTime= EditTextDay.text.toString() + " " + EditTextTime.text.toString()
+            paramObject.put("work_date", dayTime)
         }
 
         val mTimeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hourOfDay, minute ->
             EditTextTime.setText(String.format("%d:%s", hourOfDay, if(minute > 9) minute.toString() else "0" + minute.toString()))
+            var dayTime= EditTextDay.text.toString() + " " + EditTextTime.text.toString()
+            paramObject.put("work_date", dayTime)
         }
 
         EditTextDay.setOnClickListener{
@@ -81,6 +98,24 @@ class OutorderFragment : Fragment(), View.OnClickListener{
         Button_Radio2h.setOnClickListener(this)
         Button_RadioNight.setOnClickListener(this)
         Button_RadioDay.isSelected = true
+
+        EditText_Map.setOnClickListener {
+            val intent = Intent(activity, AddrSearchActivity::class.java)
+            startActivityForResult(intent, REQUEST_MAP)
+        }
+
+        var util = ContextUtil(activity)
+        DropDown_MinWeight.dropdownData = resources.getStringArray(R.array.car_type)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(REQUEST_MAP == requestCode)
+            if(resultCode == RESULT_OK){
+                EditText_Map.setText(data?.getStringExtra("addr"))
+                println(data?.getDoubleExtra("latitude", 0.0))
+                println(data?.getDoubleExtra("longitude", 0.0))
+            }
     }
 
     override fun onClick(btn: View?) {

@@ -296,7 +296,8 @@
                 app:layout_constraintTop_toBottomOf="@+id/bootstrapButtonGroup4" />
 
             <com.beardedhen.androidbootstrap.BootstrapEditText
-                android:id="@+id/bootstrapEditText3"
+                android:id="@+id/EditText_Map"
+                android:focusable="false"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
@@ -324,7 +325,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/bootstrapEditText3" />
+                app:layout_constraintTop_toBottomOf="@+id/EditText_Map" />
 
             <com.beardedhen.androidbootstrap.BootstrapLabel
                 android:id="@+id/bootstrapLabel6"
@@ -351,6 +352,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/bootstrapLabel6">
 
                 <com.beardedhen.androidbootstrap.BootstrapDropDown
+                    android:id="@+id/DropDown_MinWeight"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="4dp"
@@ -396,7 +398,7 @@
                     app:bootstrapBrand="primary"
                     app:bootstrapExpandDirection="down"
                     app:bootstrapSize="md"
-                    app:bootstrapText="최소톤수"
+                    app:bootstrapText="최대톤수"
                     app:dropdownResource="@array/bootstrap_dropdown_example_data"
                     app:roundedCorners="true" />
 
@@ -408,7 +410,7 @@
                     app:bootstrapBrand="primary"
                     app:bootstrapExpandDirection="down"
                     app:bootstrapSize="md"
-                    app:bootstrapText="최소길이"
+                    app:bootstrapText="최대길이"
                     app:dropdownResource="@array/bootstrap_dropdown_example_data"
                     app:roundedCorners="true" />
 
