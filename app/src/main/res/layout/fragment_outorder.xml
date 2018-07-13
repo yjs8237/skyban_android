@@ -313,6 +313,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/bootstrapLabel5" />
 
             <com.beardedhen.androidbootstrap.BootstrapEditText
+                android:maxLines="1"
                 android:id="@+id/bootstrapEditText5"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -351,29 +352,28 @@
                 app:layout_constraintStart_toStartOf="@+id/bootstrapLabel6"
                 app:layout_constraintTop_toBottomOf="@+id/bootstrapLabel6">
 
-                <com.beardedhen.androidbootstrap.BootstrapDropDown
-                    android:id="@+id/DropDown_MinWeight"
+                <com.beardedhen.androidbootstrap.BootstrapButton
+                    android:drawableRight="@drawable/avobedown_w"
+                    android:id="@+id/Button_MinType"
+                    android:layout_marginRight="4dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="4dp"
                     android:layout_weight="1"
+                    app:bootstrapSize="lg"
                     app:bootstrapBrand="primary"
-                    app:bootstrapExpandDirection="down"
-                    app:bootstrapSize="md"
-                    app:bootstrapText="최소톤수"
-                    app:dropdownResource="@array/bootstrap_dropdown_example_data"
+                    android:text="최소톤수"
                     app:roundedCorners="true" />
 
-                <com.beardedhen.androidbootstrap.BootstrapDropDown
+                <com.beardedhen.androidbootstrap.BootstrapButton
+                    android:drawableRight="@drawable/avobedown_w"
+                    android:id="@+id/Button_MinLength"
+                    android:layout_marginLeft="4dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="4dp"
                     android:layout_weight="1"
+                    android:text="최소길이"
+                    app:bootstrapSize="lg"
                     app:bootstrapBrand="primary"
-                    app:bootstrapExpandDirection="down"
-                    app:bootstrapSize="md"
-                    app:bootstrapText="최소길이"
-                    app:dropdownResource="@array/bootstrap_dropdown_example_data"
                     app:roundedCorners="true" />
 
             </LinearLayout>
@@ -390,28 +390,28 @@
                 app:layout_constraintStart_toStartOf="@+id/bootstrapLabel6"
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
-                <com.beardedhen.androidbootstrap.BootstrapDropDown
+                <com.beardedhen.androidbootstrap.BootstrapButton
+                    android:drawableRight="@drawable/avobedown_w"
+                    android:id="@+id/Button_MaxType"
+                    android:layout_marginRight="4dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="4dp"
                     android:layout_weight="1"
+                    app:bootstrapSize="lg"
                     app:bootstrapBrand="primary"
-                    app:bootstrapExpandDirection="down"
-                    app:bootstrapSize="md"
                     app:bootstrapText="최대톤수"
-                    app:dropdownResource="@array/bootstrap_dropdown_example_data"
                     app:roundedCorners="true" />
 
-                <com.beardedhen.androidbootstrap.BootstrapDropDown
+                <com.beardedhen.androidbootstrap.BootstrapButton
+                    android:drawableRight="@drawable/avobedown_w"
+                    android:id="@+id/Button_MaxLength"
+                    android:layout_marginLeft="4dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="4dp"
                     android:layout_weight="1"
+                    app:bootstrapSize="lg"
                     app:bootstrapBrand="primary"
-                    app:bootstrapExpandDirection="down"
-                    app:bootstrapSize="md"
                     app:bootstrapText="최대길이"
-                    app:dropdownResource="@array/bootstrap_dropdown_example_data"
                     app:roundedCorners="true" />
 
             </LinearLayout>

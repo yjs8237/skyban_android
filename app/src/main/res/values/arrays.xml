@@ -26,25 +26,46 @@
         <item>T006|5T 이상</item>
     </string-array>
 
-    <string-array name="car_height">
-        <item>H001|2.3 이하</item>
-        <item>H002|2.4 이하</item>
-        <item>H003|2.5 이하</item>
-        <item>H001|2.6 이하</item>
-        <item>H005|2.7 이하</item>
-        <item>H006|2.8 이하</item>
-        <item>H007|2.9 이하</item>
-        <item>H008|3.0 이하</item>
-        <item>H009|3.1 이하</item>
-        <item>H010|3.2 이하</item>
-        <item>H011|3.3 이하</item>
-        <item>H012|3.4 이하</item>
-        <item>H013|3.5 이하</item>
-        <item>H014|3.6 이하</item>
-        <item>H015|3.7 이하</item>
-        <item>H016|3.8 이하</item>
-        <item>H017|3.9 이하</item>
-        <item>H018|4.0 이상</item>
+    <string-array name="car_type_text">
+        <item>1T 차량</item>
+        <item>2.5T 차량</item>
+        <item>2.5T 차량</item>
+        <item>5T 단축</item>
+        <item>5T 40장축</item>
+        <item>5T 이상</item>
+    </string-array>
+
+    <string-array name="car_length_T001">
+        <item>16M</item>
+        <item>18M</item>
+        <item>20M</item>
+    </string-array>
+    <string-array name="car_length_T002">
+        <item>22M</item>
+        <item>24M</item>
+        <item>25M</item>
+    </string-array>
+    <string-array name="car_length_T003">
+        <item>26M</item>
+        <item>28M</item>
+        <item>30M</item>
+        <item>31M</item>
+    </string-array>
+    <string-array name="car_length_T004">
+        <item>32M</item>
+        <item>35M</item>
+        <item>38M</item>
+    </string-array>
+    <string-array name="car_length_T005">
+        <item>40M</item>
+        <item>45M</item>
+        <item>48M</item>
+        <item>50M</item>
+    </string-array>
+    <string-array name="car_length_T006">
+        <item>58M</item>
+        <item>70M</item>
+        <item>75M</item>
     </string-array>
 
     <string-array name="car_length">
@@ -69,6 +90,29 @@
         <item>L019|70M</item>
         <item>L020|75M</item>
     </string-array>
+
+    <string-array name="car_height">
+        <item>H001|2.3 이하</item>
+        <item>H002|2.4 이하</item>
+        <item>H003|2.5 이하</item>
+        <item>H001|2.6 이하</item>
+        <item>H005|2.7 이하</item>
+        <item>H006|2.8 이하</item>
+        <item>H007|2.9 이하</item>
+        <item>H008|3.0 이하</item>
+        <item>H009|3.1 이하</item>
+        <item>H010|3.2 이하</item>
+        <item>H011|3.3 이하</item>
+        <item>H012|3.4 이하</item>
+        <item>H013|3.5 이하</item>
+        <item>H014|3.6 이하</item>
+        <item>H015|3.7 이하</item>
+        <item>H016|3.8 이하</item>
+        <item>H017|3.9 이하</item>
+        <item>H018|4.0 이상</item>
+    </string-array>
+
+
 
     <string-array name="car_option">
         <item>P001|인버터</item>

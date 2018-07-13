@@ -1,15 +1,18 @@
 package com.nycompany.skyban
 
 import android.app.Activity.RESULT_OK
+import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.net.Uri
 import android.os.Bundle
 import android.app.Fragment
 import android.app.TimePickerDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import com.beardedhen.androidbootstrap.BootstrapButton
 import io.realm.Realm
@@ -34,27 +37,9 @@ private const val ARG_PARAM2 = "param2"
  *
  */
 class OutorderFragment : Fragment(), View.OnClickListener{
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-    private var listener: OnFragmentInteractionListener? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_outorder, container, false)
-    }
-
     private val REQUEST_MAP = 101
     private  val paramObject by lazy{JSONObject()}
+
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -104,8 +89,66 @@ class OutorderFragment : Fragment(), View.OnClickListener{
             startActivityForResult(intent, REQUEST_MAP)
         }
 
-        var util = ContextUtil(activity)
-        DropDown_MinWeight.dropdownData = resources.getStringArray(R.array.car_type)
+
+        Button_MaxType.setOnClickListener {
+            makeCarMinMaxDialog(true).show()
+        }
+
+        Button_MinType.setOnClickListener {
+            makeCarMinMaxDialog(false).show()
+        }
+    }
+
+    fun makeCarMinMaxDialog(isMaxBoolean: Boolean):AlertDialog.Builder{
+        var typeItems = resources.getStringArray(R.array.car_type_text)
+        var typeTitle = "최소톤수"
+        var lenghTitle = "최소길이"
+        var  typeButton = Button_MinType
+        var  lenghButton = Button_MinLength
+
+        if(isMaxBoolean){
+            typeTitle = "최대톤수"
+            lenghTitle = "최대길이"
+            typeButton = Button_MaxType
+            lenghButton = Button_MaxLength
+        }
+
+        var DilogType = AlertDialog.Builder(activity).apply {
+            setTitle(typeTitle)
+            lateinit var lengthItems: Array<String>
+            setItems(typeItems, DialogInterface.OnClickListener { dialogInterface, i ->
+                when (i) {
+                    0 -> lengthItems = resources.getStringArray(R.array.car_length_T001)
+                    1 -> lengthItems = resources.getStringArray(R.array.car_length_T002)
+                    2 -> lengthItems = resources.getStringArray(R.array.car_length_T003)
+                    3 -> lengthItems = resources.getStringArray(R.array.car_length_T004)
+                    4 -> lengthItems = resources.getStringArray(R.array.car_length_T005)
+                    5 -> lengthItems = resources.getStringArray(R.array.car_length_T006)
+                }
+                typeButton.text = typeItems[i]
+                lenghButton.text = lengthItems[0]
+
+                var dialogLenth = AlertDialog.Builder(activity).apply {
+                    setTitle(lenghTitle);
+                    setItems(lengthItems, DialogInterface.OnClickListener { dialogInterface, i ->
+                        lenghButton.text = lengthItems[i]
+                    })
+                }
+
+                lenghButton.setOnClickListener {
+                    dialogLenth.show()
+                }
+            })
+        }
+        return DilogType
+    }
+
+
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_outorder, container, false)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -130,42 +173,5 @@ class OutorderFragment : Fragment(), View.OnClickListener{
 
     override fun onDetach() {
         super.onDetach()
-        listener = null
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     *
-     *
-     * See the Android Training lesson [Communicating with Other Fragments]
-     * (http://developer.android.com/training/basics/fragments/communicating.html)
-     * for more information.
-     */
-    interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        fun onFragmentInteraction(uri: Uri)
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment OutorderFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-                OutorderFragment().apply {
-                    arguments = Bundle().apply {
-                        putString(ARG_PARAM1, param1)
-                        putString(ARG_PARAM2, param2)
-                    }
-                }
     }
 }
