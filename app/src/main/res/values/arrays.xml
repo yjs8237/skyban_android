@@ -112,8 +112,6 @@
         <item>H018|4.0 이상</item>
     </string-array>
 
-
-
     <string-array name="car_option">
         <item>P001|인버터</item>
         <item>P002|굴절</item>

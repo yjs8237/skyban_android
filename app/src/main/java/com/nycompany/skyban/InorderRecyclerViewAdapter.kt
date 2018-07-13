@@ -32,10 +32,10 @@ class InorderRecyclerViewAdapter(private val inOrders: ArrayList<List>?) : Recyc
         vh.textViewCommission_yn.text = if (inOrders!![i].commission_yn =="Y") context?.getString(R.string.commission_y)  else context?.getString(R.string.commission_n)
         vh.textViewDate.text = inOrders!![i].work_date!!.split(" ")[0]
         vh.textViewTime.text = inOrders!![i].work_date!!.split(" ")[1]
-        var workProcMap = util.parseStringArray(R.array.work_proc)
+        var workProcMap = util.getHashmapFromResoureces(R.array.work_proc)
         vh.textViewWorkProc.text = workProcMap[inOrders!![i].work_proc]
-        var carTypeMap = util.parseStringArray(R.array.car_type)
-        var carLengthMap = util.parseStringArray(R.array.car_length)
+        var carTypeMap = util.getHashmapFromResoureces(R.array.car_type)
+        var carLengthMap = util.getHashmapFromResoureces(R.array.car_length)
         vh.textView_car_length.text = "차량 : ${carTypeMap[inOrders!![i].min_car_type]}" +
                 "${carLengthMap[inOrders!![i].min_car_length]?.let{ " - " + it}?:run{ "" }} ~ " +
                 "${carTypeMap[inOrders!![i].max_car_type]}" +
@@ -48,7 +48,7 @@ class InorderRecyclerViewAdapter(private val inOrders: ArrayList<List>?) : Recyc
         vh.textView_work_option.text = "옵션 : ${op_invertor?.let{it +" "}?:run{""}} ${op_guljul?.let{it +" "}?:run{""}} " +
                 "${op_winchi?.let{it +" "}?:run{""}} ${op_danchuk?.let{it +" "}?:run{""}}"
         vh.textView_work_pay.text = "수당 : ${inOrders!![i].work_pay}"
-        var payDateMap = util.parseStringArray(R.array.pay_date)
+        var payDateMap = util.getHashmapFromResoureces(R.array.pay_date)
         vh.textView_word_duration.text = "결재기간 : ${payDateMap[inOrders!![i].pay_date]?.let{it}?:run{""}}"
 
         inOrders!![i].work_proc?.let {

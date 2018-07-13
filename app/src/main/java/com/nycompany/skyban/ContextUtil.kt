@@ -1,8 +1,11 @@
 package com.nycompany.skyban
 
 import android.content.Context
+import android.content.DialogInterface
 import android.net.ConnectivityManager
 import android.support.v7.app.AlertDialog
+import android.widget.Button
+import com.beardedhen.androidbootstrap.BootstrapButton
 
 class ContextUtil(context: Context) {
     var mContext:Context? = context
@@ -34,7 +37,19 @@ class ContextUtil(context: Context) {
         return builder
     }
 
-    fun parseStringArray(stringArrayResourceId:Int): HashMap<String, String> {
+    //key|value string
+    fun getArryFromResoureces(stringArrayResourceId:Int): Array<String?> {
+        val stringArray = mContext!!.resources.getStringArray(stringArrayResourceId)
+        val outputArray = arrayOfNulls<String>(stringArray.size)
+        for (i in 0..stringArray.size - 1) {
+            val splitResult = stringArray[i].split("\\|".toRegex(), 2).toTypedArray()
+            outputArray[i] = splitResult[1]
+        }
+        return outputArray
+    }
+
+    //key|value string
+    fun getHashmapFromResoureces(stringArrayResourceId:Int): HashMap<String, String> {
         val stringArray = mContext!!.resources.getStringArray(stringArrayResourceId)
         val outputArray = HashMap<String, String>(stringArray.size)
         for (entry in stringArray) {
