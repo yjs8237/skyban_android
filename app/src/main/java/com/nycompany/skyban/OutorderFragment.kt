@@ -12,6 +12,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.beardedhen.androidbootstrap.BootstrapButton
 import com.nycompany.skyban.DTO.OrderRegisterDTO
 import com.nycompany.skyban.EnumClazz.ResCode
 import io.realm.Realm
@@ -21,9 +22,6 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
-
-
-
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -63,6 +61,39 @@ class OutorderFragment : Fragment(), View.OnClickListener{
             paramObject.put("cell_no", data[0]?.cell_no)
         }
         inttUI()
+
+        //발주버튼
+        val server = RetrofitCreater.getInstance(activity)?.create(ReqOrderRegister::class.java)
+        Button_Order.setOnClickListener{
+            setJsonParmFromUI()
+            val reqString = paramObject.toString()
+
+            server?.postRequest(reqString)?.enqueue(object: Callback<OrderRegisterDTO> {
+                override fun onFailure(call: Call<OrderRegisterDTO>, t: Throwable) {
+                    val msg = if(!util.isConnected()) getString(R.string.network_eror) else t.toString()
+                    util.buildDialog("eror", msg).show()
+                }
+
+                override fun onResponse(call: Call<OrderRegisterDTO>, response: Response<OrderRegisterDTO>) {
+                    response.body()?.let {
+                        if(it.result == ResCode.Success.Code) {
+                            util.buildDialog("성공","성공적으로 발주 되었습니다").show()
+
+                            val fm = fragmentManager.beginTransaction()
+                            fm.remove(this@OutorderFragment).replace(R.id.fragmentContainer , OutorderFragment.newInstance()).commit()
+                            //발주리스트로 이동
+                            //startActivity(Intent().setClass(this@LoginActivity, MainActivity::class.java))
+                        }else{
+                            it.description?.let {
+                                util.buildDialog(it).show()
+                            }
+                        }
+                    }?:run{
+                        Log.e(this::class.java.name, getString(R.string.response_body_eror))
+                    }
+                }
+            })
+        }
     }
 
     fun inttUI(){
@@ -100,7 +131,7 @@ class OutorderFragment : Fragment(), View.OnClickListener{
         Button_RadioDay.isSelected = true
 
         //작업장소
-        EditText_Map.setOnClickListener {
+        EditText_Addr.setOnClickListener {
             val intent = Intent(activity, AddrSearchActivity::class.java)
             startActivityForResult(intent, REQUEST_MAP)
         }
@@ -137,43 +168,135 @@ class OutorderFragment : Fragment(), View.OnClickListener{
         Button_SelectPayDate.setOnClickListener {
             dialogDate.show()
         }
-
-        //발주버튼
-        val server = RetrofitCreater.getInstance(activity)?.create(ReqOrderRegister::class.java)
-        Button_Order.setOnClickListener{
-            //paramObject.put("user_pwd", editTextPassword.text)
-            var paramYN = if (Button_commission_y.isSelected) "Y" else "N"
-            paramObject.put("commission_yn", paramYN)
-            paramObject.put("work_date", EditTextDay.text.toString() + " " +  EditTextTime.text.toString() + ":00" )
-            paramObject.put("work_duration", "100")
-            val reqString = paramObject.toString()
-            //시간만 받으면 오전 오후는 어떻게?,,,,작업수당 ui가없음,,,,,,,수당 추가요금은 숫자로?,,,,,작업일시 벨리데이션 맴버만 있고 값이 없어도 체크안됨
-            server?.postRequest(reqString)?.enqueue(object: Callback<OrderRegisterDTO> {
-                override fun onFailure(call: Call<OrderRegisterDTO>, t: Throwable) {
-                    val msg = if(!util.isConnected()) getString(R.string.network_eror) else t.toString()
-                    util.buildDialog("eror", msg).show()
-                }
-
-                override fun onResponse(call: Call<OrderRegisterDTO>, response: Response<OrderRegisterDTO>) {
-                    response.body()?.let {
-                        if(it.result == ResCode.Success.Code) {
-                            val fm = fragmentManager.beginTransaction()
-                            fm.remove(this@OutorderFragment).replace(R.id.fragmentContainer , OutorderFragment.newInstance()).commit()
-                            //발주리스트로 이동, UIreset 필요
-                            //startActivity(Intent().setClass(this@LoginActivity, MainActivity::class.java))
-                        }else{
-                            it.description?.let {
-                                util.buildDialog(it).show()
-                            }
-                        }
-                    }?:run{
-                        Log.e(this::class.java.name, getString(R.string.response_body_eror))
-                    }
-                }
-            })
-        }
     }
 
+    fun setJsonParmFromUI(){
+        //수수료
+        val paramYN = if (Button_commission_y.isSelected) "Y" else "N"
+        paramObject.put("commission_yn", paramYN)
+
+        //작업일시
+        val day = EditTextDay.text.toString()
+        val time = EditTextTime.text.toString()
+        if(day != "" &&   time != ""){
+            paramObject.put("work_date", day + " " + time + ":00" )
+        }
+
+        //작업기간
+        var dic = util.getHashmapFromResoureces(R.array.work_duration)
+        (getSelectedView(ButtonGroup_JobTimeTop))?.let {
+            var value = MyUtil.getKey(dic, (it as BootstrapButton).text.toString())
+            paramObject.put("work_duration", value)
+        }?:run{
+            (getSelectedView(ButtonGroup_JobTimeBottom))?.let {
+                var value = MyUtil.getKey(dic, (it as BootstrapButton).text.toString())
+                paramObject.put("work_duration", value)
+            }
+        }
+
+        //get 작업수당
+        val pay = EditWorkPay.text.toString()
+        if(pay != ""){
+            paramObject.put("work_pay", pay)
+        }
+
+        //추가요금
+        dic = util.getHashmapFromResoureces(R.array.ext_charge)
+        (getSelectedView(ButtonGroup_Charge))?.let {
+            var value = MyUtil.getKey(dic, (it as BootstrapButton).text.toString())
+            paramObject.put("ext_charge", value)
+        }
+
+        //get 장소
+        val addr = EditText_Addr.text.toString()
+        val addrD = EditText_AddrD.text.toString()
+        if(addr != "" && addrD != ""){
+            paramObject.put("work_location", addr + " " + addrD )
+        }
+
+        //차량정보
+        dic = util.getHashmapFromResoureces(R.array.car_type)
+        MyUtil.getKey(dic, Button_SelectMinType.text.toString())?.let {
+            paramObject.put("min_car_type", it)
+        }
+        MyUtil.getKey(dic, Button_SelectMaxType.text.toString())?.let {
+            paramObject.put("max_car_type", it)
+        }
+        dic = util.getHashmapFromResoureces(R.array.car_length)
+        MyUtil.getKey(dic, Button_SelectMinLength.text.toString())?.let {
+            paramObject.put("min_car_length", it)
+        }
+        MyUtil.getKey(dic, Button_SelectMaxLength.text.toString())?.let {
+            paramObject.put("max_car_length", it)
+        }
+
+        //get 전고
+        dic = util.getHashmapFromResoureces(R.array.car_height)
+        MyUtil.getKey(dic, Button_SelectHeight.text.toString())?.let {
+            paramObject.put("car_height", it)
+        }
+
+        //차옵션
+        lateinit var strXY: String
+        if(Button_CheckInvertor.isSelected) strXY = "Y" else strXY = "N"
+        paramObject.put("op_invertor", strXY)
+        if(Button_CheckGuljul.isSelected) strXY = "Y" else strXY = "N"
+        paramObject.put("op_guljul", strXY)
+        if(Button_CheckWinchi.isSelected) strXY = "Y" else strXY = "N"
+        paramObject.put("op_winchi", strXY)
+        if(Button_CheckDanchuk.isSelected) strXY = "Y" else strXY = "N"
+        paramObject.put("op_danchuk", strXY)
+
+        //get 결제방법
+        dic = util.getHashmapFromResoureces(R.array.pay_type)
+        (getSelectedView(ButtonGroup_PayType))?.let {
+            var value = MyUtil.getKey(dic, (it as BootstrapButton).text.toString())
+            paramObject.put("pay_type", value)
+        }
+
+        //get 결제기간
+        dic = util.getHashmapFromResoureces(R.array.pay_date)
+        MyUtil.getKey(dic, Button_SelectPayDate.text.toString())?.let {
+            paramObject.put("pay_date", it)
+        }
+
+        //get 현장연락처
+        val contact = EditText_WorkContact.text.toString()
+        if(pay != ""){
+            paramObject.put("work_contact", contact)
+        }
+
+        //추가옵션
+        if(Button_work_det_1.isSelected) strXY = "Y" else strXY = "N"
+        paramObject.put("work_det_1", strXY)
+        if(Button_work_det_2.isSelected) strXY = "Y" else strXY = "N"
+        paramObject.put("work_det_2", strXY)
+        if(Button_work_det_3.isSelected) strXY = "Y" else strXY = "N"
+        paramObject.put("work_det_3", strXY)
+        if(Button_work_det_4.isSelected) strXY = "Y" else strXY = "N"
+        paramObject.put("work_det_4", strXY)
+        if(Button_work_det_5.isSelected) strXY = "Y" else strXY = "N"
+        paramObject.put("work_det_5", strXY)
+        if(Button_work_det_6.isSelected) strXY = "Y" else strXY = "N"
+        paramObject.put("work_det_6", strXY)
+        if(Button_work_det_7.isSelected) strXY = "Y" else strXY = "N"
+        paramObject.put("work_det_7", strXY)
+
+        val content = EditText_WorkContent.text.toString()
+        if(content!="") paramObject.put("work_content", content)
+
+        //연결가능여부 UI없이 데이터만 바인딩 향후 적용여부 필요
+        paramObject.put("work_transfer", "Y")
+    }
+
+    fun getSelectedView(group:ViewGroup):View? {
+        for(i in 0..group.childCount - 1){
+            if (group.getChildAt(i).isSelected){
+                return group.getChildAt(i)
+            }
+        }
+        return null
+    }
 
     fun makeCarMinMaxDialog(isMaxBoolean: Boolean):AlertDialog.Builder{
         var typeItems = resources.getStringArray(R.array.car_type_text)
@@ -233,9 +356,10 @@ class OutorderFragment : Fragment(), View.OnClickListener{
         super.onActivityResult(requestCode, resultCode, data)
         if(REQUEST_MAP == requestCode)
             if(resultCode == RESULT_OK){
-                EditText_Map.setText(data?.getStringExtra("addr"))
-                println(data?.getDoubleExtra("latitude", 0.0))
-                println(data?.getDoubleExtra("longitude", 0.0))
+                EditText_Addr.setText(data?.getStringExtra("addr"))
+                //String.format("%.4f", data?.getDoubleExtra("latitude", 0.0))
+                paramObject.put("work_latitude", data?.getDoubleExtra("latitude", 0.0).toString())
+                paramObject.put("work_longitude", data?.getDoubleExtra("longitude", 0.0).toString())
             }
     }
 

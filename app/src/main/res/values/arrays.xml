@@ -17,6 +17,21 @@
         <item>WP04|작업완료</item>
     </string-array>
 
+    <string-array name="work_duration">
+        <item>A001|1일</item>
+        <item>A002|오전</item>
+        <item>A003|오후</item>
+        <item>A004|1시간</item>
+        <item>A005|2시간</item>
+        <item>A006|야간</item>
+    </string-array>
+
+    <string-array name="ext_charge">
+        <item>C001|없음</item>
+        <item>C002|5만원</item>
+        <item>C003|10만원</item>
+    </string-array>
+
     <string-array name="car_type">
         <item>T001|1T 차량</item>
         <item>T002|2.5T 차량</item>
@@ -117,6 +132,11 @@
         <item>P002|굴절</item>
         <item>P003|윈찌</item>
         <item>P004|단축</item>
+    </string-array>
+
+    <string-array name="pay_type">
+        <item>M001|직접수금</item>
+        <item>M002|발주자사인</item>
     </string-array>
 
     <string-array name="pay_date">

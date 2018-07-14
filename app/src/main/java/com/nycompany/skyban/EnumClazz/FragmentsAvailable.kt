@@ -6,9 +6,8 @@ package com.nycompany.skybanminitp
 enum class FragmentsAvailable {
     INORDER,
     OUTORDER,
-    EMPTY,
     INFO,
     CHARGE,
-    SETTING;
+    SETTING,
+    EMPTY;
 }
-

@@ -58,7 +58,7 @@
                 android:orientation="horizontal"
                 android:text="BootstrapButtonGroup"
                 app:bootstrapBrand="primary"
-                app:bootstrapSize="lg"
+                app:bootstrapSize="md"
                 app:buttonMode="radio"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -107,7 +107,7 @@
                 android:drawableRight="@drawable/avobedown"
                 android:hint="작업날짜"
                 app:bootstrapBrand="info"
-                app:bootstrapSize="lg"
+                app:bootstrapSize="md"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
@@ -136,7 +136,7 @@
                 android:drawableRight="@drawable/avobedown"
                 android:hint="작업시각"
                 app:bootstrapBrand="info"
-                app:bootstrapSize="lg"
+                app:bootstrapSize="md"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -163,7 +163,7 @@
                 android:orientation="horizontal"
                 android:text="BootstrapButtonGroup"
                 app:bootstrapBrand="primary"
-                app:bootstrapSize="lg"
+                app:bootstrapSize="md"
                 app:buttonMode="regular"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -181,6 +181,7 @@
 
                 <com.beardedhen.androidbootstrap.BootstrapButton
                     android:id="@+id/Button_RadioMorning"
+                    android:tag="오전"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -188,6 +189,7 @@
 
                 <com.beardedhen.androidbootstrap.BootstrapButton
                     android:id="@+id/Button_RadioSunset"
+                    android:tag="오후"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -205,7 +207,7 @@
                 android:orientation="horizontal"
                 android:text="BootstrapButtonGroup"
                 app:bootstrapBrand="primary"
-                app:bootstrapSize="lg"
+                app:bootstrapSize="md"
                 app:buttonMode="regular"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -238,6 +240,34 @@
             </com.beardedhen.androidbootstrap.BootstrapButtonGroup>
 
             <com.beardedhen.androidbootstrap.BootstrapLabel
+                android:id="@+id/BootstrapLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:bootstrapBrand="info"
+                app:bootstrapHeading="h6"
+                app:bootstrapText="{fa_circle_o} 작업수당"
+                app:layout_constraintStart_toStartOf="@+id/ButtonGroup_JobTimeBottom"
+                app:layout_constraintTop_toBottomOf="@+id/ButtonGroup_JobTimeBottom" />
+
+            <com.beardedhen.androidbootstrap.BootstrapEditText
+                android:id="@+id/EditWorkPay"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:hint="작업수당"
+                android:inputType="number"
+                android:imeOptions="actionDone"
+                app:bootstrapBrand="info"
+                app:bootstrapSize="md"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/BootstrapLabel" />
+
+            <com.beardedhen.androidbootstrap.BootstrapLabel
                 android:id="@+id/bootstrapLabel4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -245,18 +275,18 @@
                 app:bootstrapBrand="info"
                 app:bootstrapHeading="h6"
                 app:bootstrapText="{fa_circle_o} 추가요금"
-                app:layout_constraintStart_toStartOf="@+id/ButtonGroup_JobTimeBottom"
-                app:layout_constraintTop_toBottomOf="@+id/ButtonGroup_JobTimeBottom" />
+                app:layout_constraintStart_toStartOf="@+id/EditWorkPay"
+                app:layout_constraintTop_toBottomOf="@+id/EditWorkPay" />
 
             <com.beardedhen.androidbootstrap.BootstrapButtonGroup
-                android:id="@+id/bootstrapButtonGroup4"
+                android:id="@+id/ButtonGroup_Charge"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:layout_marginTop="8dp"
                 android:orientation="horizontal"
                 app:bootstrapBrand="primary"
-                app:bootstrapSize="lg"
+                app:bootstrapSize="md"
                 app:buttonMode="radio"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -297,11 +327,11 @@
                 app:bootstrapBrand="info"
                 app:bootstrapHeading="h6"
                 app:bootstrapText="{fa_circle_o} 작업장소"
-                app:layout_constraintStart_toStartOf="@+id/bootstrapButtonGroup4"
-                app:layout_constraintTop_toBottomOf="@+id/bootstrapButtonGroup4" />
+                app:layout_constraintStart_toStartOf="@+id/ButtonGroup_Charge"
+                app:layout_constraintTop_toBottomOf="@+id/ButtonGroup_Charge" />
 
             <com.beardedhen.androidbootstrap.BootstrapEditText
-                android:id="@+id/EditText_Map"
+                android:id="@+id/EditText_Addr"
                 android:focusable="false"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -311,7 +341,7 @@
                 android:drawableRight="@drawable/googleg_standard_color_18"
                 android:hint="주소"
                 app:bootstrapBrand="info"
-                app:bootstrapSize="lg"
+                app:bootstrapSize="md"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -319,7 +349,9 @@
 
             <com.beardedhen.androidbootstrap.BootstrapEditText
                 android:maxLines="1"
-                android:id="@+id/bootstrapEditText5"
+                android:inputType="text"
+                android:imeOptions="actionDone"
+                android:id="@+id/EditText_AddrD"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
@@ -327,11 +359,11 @@
                 android:layout_marginTop="8dp"
                 android:hint="상세주소"
                 app:bootstrapBrand="info"
-                app:bootstrapSize="lg"
+                app:bootstrapSize="md"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/EditText_Map" />
+                app:layout_constraintTop_toBottomOf="@+id/EditText_Addr" />
 
             <com.beardedhen.androidbootstrap.BootstrapLabel
                 android:id="@+id/bootstrapLabel6"
@@ -343,7 +375,7 @@
                 app:bootstrapHeading="h6"
                 app:bootstrapText="{fa_circle_o} 차량정보"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/bootstrapEditText5" />
+                app:layout_constraintTop_toBottomOf="@+id/EditText_AddrD" />
 
             <LinearLayout
                 android:id="@+id/linearLayout"
@@ -358,13 +390,13 @@
                 app:layout_constraintTop_toBottomOf="@+id/bootstrapLabel6">
 
                 <com.beardedhen.androidbootstrap.BootstrapButton
-                    android:drawableRight="@drawable/avobedown_w"
                     android:id="@+id/Button_SelectMinType"
+                    android:drawableRight="@drawable/avobedown_w"
                     android:layout_marginRight="4dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    app:bootstrapSize="lg"
+                    app:bootstrapSize="md"
                     app:bootstrapBrand="primary"
                     android:text="최소톤수"
                     app:roundedCorners="true" />
@@ -377,7 +409,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="최소길이"
-                    app:bootstrapSize="lg"
+                    app:bootstrapSize="md"
                     app:bootstrapBrand="primary"
                     app:roundedCorners="true" />
 
@@ -402,7 +434,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    app:bootstrapSize="lg"
+                    app:bootstrapSize="md"
                     app:bootstrapBrand="primary"
                     app:bootstrapText="최대톤수"
                     app:roundedCorners="true" />
@@ -414,7 +446,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    app:bootstrapSize="lg"
+                    app:bootstrapSize="md"
                     app:bootstrapBrand="primary"
                     app:bootstrapText="최대길이"
                     app:roundedCorners="true" />
@@ -443,7 +475,7 @@
                 android:layout_weight="1"
                 app:bootstrapBrand="primary"
                 app:bootstrapExpandDirection="down"
-                app:bootstrapSize="lg"
+                app:bootstrapSize="md"
                 app:bootstrapText="전고"
                 app:dropdownResource="@array/bootstrap_dropdown_example_data"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -471,7 +503,7 @@
                 android:layout_marginTop="8dp"
                 android:orientation="horizontal"
                 app:bootstrapBrand="primary"
-                app:bootstrapSize="lg"
+                app:bootstrapSize="md"
                 app:buttonMode="checkbox"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -522,7 +554,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/bootstrapButtonGroup5" />
 
             <com.beardedhen.androidbootstrap.BootstrapButtonGroup
-                android:id="@+id/bootstrapButtonGroup6"
+                android:id="@+id/ButtonGroup_PayType"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
@@ -530,7 +562,7 @@
                 android:orientation="horizontal"
                 android:text="BootstrapButtonGroup"
                 app:bootstrapBrand="primary"
-                app:bootstrapSize="lg"
+                app:bootstrapSize="md"
                 app:buttonMode="radio"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -564,8 +596,8 @@
                 app:bootstrapBrand="info"
                 app:bootstrapHeading="h6"
                 app:bootstrapText="{fa_circle_o} 결제기간"
-                app:layout_constraintStart_toStartOf="@+id/bootstrapButtonGroup6"
-                app:layout_constraintTop_toBottomOf="@+id/bootstrapButtonGroup6" />
+                app:layout_constraintStart_toStartOf="@+id/ButtonGroup_PayType"
+                app:layout_constraintTop_toBottomOf="@+id/ButtonGroup_PayType" />
 
             <com.beardedhen.androidbootstrap.BootstrapButton
                 android:id="@+id/Button_SelectPayDate"
@@ -577,7 +609,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_weight="1"
                 app:bootstrapBrand="primary"
-                app:bootstrapSize="lg"
+                app:bootstrapSize="md"
                 app:bootstrapText="결제기간"
                 app:dropdownResource="@array/bootstrap_dropdown_example_data"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -599,6 +631,8 @@
             <com.beardedhen.androidbootstrap.BootstrapEditText
                 android:id="@+id/EditText_WorkContact"
                 android:maxLines="1"
+                android:inputType="number"
+                android:imeOptions="actionDone"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
@@ -606,7 +640,7 @@
                 android:layout_marginTop="8dp"
                 android:hint="연락처"
                 app:bootstrapBrand="info"
-                app:bootstrapSize="lg"
+                app:bootstrapSize="md"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -621,7 +655,7 @@
                 android:layout_marginTop="12dp"
                 android:orientation="horizontal"
                 app:bootstrapBrand="primary"
-                app:bootstrapSize="lg"
+                app:bootstrapSize="md"
                 app:buttonMode="checkbox"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -662,7 +696,7 @@
                 android:layout_marginTop="8dp"
                 android:orientation="horizontal"
                 app:bootstrapBrand="primary"
-                app:bootstrapSize="lg"
+                app:bootstrapSize="md"
                 app:buttonMode="checkbox"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -712,7 +746,7 @@
                     android:layout_weight="1"
                     android:text="전지작업"
                     app:bootstrapBrand="primary"
-                    app:bootstrapSize="lg"
+                    app:bootstrapSize="md"
                     app:buttonMode="checkbox"
                     app:roundedCorners="false"
                     app:showOutline="true" />
@@ -746,6 +780,7 @@
 
             <com.beardedhen.androidbootstrap.BootstrapEditText
                 android:id="@+id/EditText_WorkContent"
+                android:imeOptions="actionDone|normal"
                 android:layout_width="0dp"
                 android:layout_height="200dp"
                 android:layout_marginEnd="8dp"

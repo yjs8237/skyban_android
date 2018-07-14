@@ -44,6 +44,7 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         when(newFragmentType){
             FragmentsAvailable.INORDER -> fragment = InorderFragment()
             FragmentsAvailable.OUTORDER -> fragment = OutorderFragment()
+            FragmentsAvailable.INFO -> fragment = InfoFragment()
         }
         var fm:FragmentManager =  fragmentManager
         var transaction :FragmentTransaction = fm.beginTransaction()
@@ -78,11 +79,16 @@ class MainActivity : AppCompatActivity(), OnClickListener {
                 changeCurrentFragment(FragmentsAvailable.OUTORDER, null)
                 outorder_select.visibility = View.VISIBLE
             }
+            R.id.info-> {
+                changeCurrentFragment(FragmentsAvailable.INFO, null)
+                info_select.visibility = View.VISIBLE
+            }
         }
     }
 
     private fun resetSelection() {
         inorder_select!!.visibility = View.INVISIBLE
         outorder_select!!.visibility = View.INVISIBLE
+        info_select!!.visibility = View.INVISIBLE
     }
 }
