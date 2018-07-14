@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string-array name="bootstrap_dropdown_example_data">
-        <item>Samsung</item>
-        <item>Hyundai</item>
-        <item>LG</item>
-        <item>SK</item>
-        <item>KIA</item>
+    <string-array name="user_level">
+        <item>UL01|일반회원</item>
+        <item>UL02|프리미엄(유료회원)</item>
+        <item>UL03|VIP회원(총판)</item>
     </string-array>
 
     <string-array name="work_proc">
