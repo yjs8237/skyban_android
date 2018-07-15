@@ -185,11 +185,11 @@ class OutorderFragment : Fragment(), View.OnClickListener{
         //작업기간
         var dic = util.getHashmapFromResoureces(R.array.work_duration)
         (getSelectedView(ButtonGroup_JobTimeTop))?.let {
-            var value = MyUtil.getKey(dic, (it as BootstrapButton).text.toString())
+            var value = MyUtil.getDicKeyFromValue(dic, (it as BootstrapButton).text.toString())
             paramObject.put("work_duration", value)
         }?:run{
             (getSelectedView(ButtonGroup_JobTimeBottom))?.let {
-                var value = MyUtil.getKey(dic, (it as BootstrapButton).text.toString())
+                var value = MyUtil.getDicKeyFromValue(dic, (it as BootstrapButton).text.toString())
                 paramObject.put("work_duration", value)
             }
         }
@@ -203,7 +203,7 @@ class OutorderFragment : Fragment(), View.OnClickListener{
         //추가요금
         dic = util.getHashmapFromResoureces(R.array.ext_charge)
         (getSelectedView(ButtonGroup_Charge))?.let {
-            var value = MyUtil.getKey(dic, (it as BootstrapButton).text.toString())
+            var value = MyUtil.getDicKeyFromValue(dic, (it as BootstrapButton).text.toString())
             paramObject.put("ext_charge", value)
         }
 
@@ -216,23 +216,23 @@ class OutorderFragment : Fragment(), View.OnClickListener{
 
         //차량정보
         dic = util.getHashmapFromResoureces(R.array.car_type)
-        MyUtil.getKey(dic, Button_SelectMinType.text.toString())?.let {
+        MyUtil.getDicKeyFromValue(dic, Button_SelectMinType.text.toString())?.let {
             paramObject.put("min_car_type", it)
         }
-        MyUtil.getKey(dic, Button_SelectMaxType.text.toString())?.let {
+        MyUtil.getDicKeyFromValue(dic, Button_SelectMaxType.text.toString())?.let {
             paramObject.put("max_car_type", it)
         }
         dic = util.getHashmapFromResoureces(R.array.car_length)
-        MyUtil.getKey(dic, Button_SelectMinLength.text.toString())?.let {
+        MyUtil.getDicKeyFromValue(dic, Button_SelectMinLength.text.toString())?.let {
             paramObject.put("min_car_length", it)
         }
-        MyUtil.getKey(dic, Button_SelectMaxLength.text.toString())?.let {
+        MyUtil.getDicKeyFromValue(dic, Button_SelectMaxLength.text.toString())?.let {
             paramObject.put("max_car_length", it)
         }
 
         //get 전고
         dic = util.getHashmapFromResoureces(R.array.car_height)
-        MyUtil.getKey(dic, Button_SelectHeight.text.toString())?.let {
+        MyUtil.getDicKeyFromValue(dic, Button_SelectHeight.text.toString())?.let {
             paramObject.put("car_height", it)
         }
 
@@ -250,13 +250,13 @@ class OutorderFragment : Fragment(), View.OnClickListener{
         //get 결제방법
         dic = util.getHashmapFromResoureces(R.array.pay_type)
         (getSelectedView(ButtonGroup_PayType))?.let {
-            var value = MyUtil.getKey(dic, (it as BootstrapButton).text.toString())
+            var value = MyUtil.getDicKeyFromValue(dic, (it as BootstrapButton).text.toString())
             paramObject.put("pay_type", value)
         }
 
         //get 결제기간
         dic = util.getHashmapFromResoureces(R.array.pay_date)
-        MyUtil.getKey(dic, Button_SelectPayDate.text.toString())?.let {
+        MyUtil.getDicKeyFromValue(dic, Button_SelectPayDate.text.toString())?.let {
             paramObject.put("pay_date", it)
         }
 
@@ -282,6 +282,7 @@ class OutorderFragment : Fragment(), View.OnClickListener{
         if(Button_work_det_7.isSelected) strXY = "Y" else strXY = "N"
         paramObject.put("work_det_7", strXY)
 
+        //메모
         val content = EditText_WorkContent.text.toString()
         if(content!="") paramObject.put("work_content", content)
 

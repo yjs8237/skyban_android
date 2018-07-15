@@ -14,6 +14,7 @@ open class RealmUserInfo : RealmModel {
     */
     @PrimaryKey
     var cell_no: String? = ""
+    var password: String? = ""
     var user_type: String? = ""
     var user_name: String? = ""
     var user_level: String? = null
