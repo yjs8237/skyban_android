@@ -63,11 +63,10 @@ class OutorderFragment : Fragment(), View.OnClickListener{
         inttUI()
 
         //발주버튼
-        val server = RetrofitCreater.getInstance(activity)?.create(ReqOrderRegister::class.java)
         Button_Order.setOnClickListener{
             setJsonParmFromUI()
             val reqString = paramObject.toString()
-
+            val server = RetrofitCreater.getInstance(activity)?.create(ReqOrderRegister::class.java)
             server?.postRequest(reqString)?.enqueue(object: Callback<OrderRegisterDTO> {
                 override fun onFailure(call: Call<OrderRegisterDTO>, t: Throwable) {
                     val msg = if(!util.isConnected()) getString(R.string.network_eror) else t.toString()
@@ -93,6 +92,7 @@ class OutorderFragment : Fragment(), View.OnClickListener{
                     }
                 }
             })
+            util.updateUserInfo()
         }
     }
 

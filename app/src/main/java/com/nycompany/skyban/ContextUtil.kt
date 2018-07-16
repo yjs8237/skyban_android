@@ -11,6 +11,7 @@ import com.beardedhen.androidbootstrap.BootstrapButton
 import com.nycompany.skyban.DTO.LoginDTO
 import com.nycompany.skyban.EnumClazz.ResCode
 import io.realm.Realm
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -65,6 +66,45 @@ class ContextUtil(context: Context) {
             outputArray.put(splitResult[0], splitResult[1])
         }
         return outputArray
+    }
+
+    fun updateUserInfo(){
+        val server = RetrofitCreater.getInstance(mContext!!)?.create(ReqLogin::class.java)
+        val paramObject = JSONObject()
+        lateinit var pass:String
+        Realm.getDefaultInstance().use {
+            val data = it.where(RealmUserInfo::class.java).findAll()
+            paramObject.put("cell_no", data[0]?.cell_no)
+            paramObject.put("user_pwd", data[0]?.password)
+            pass = data[0]?.password.toString()
+        }
+        val reqString = paramObject.toString()
+
+        server?.postRequest(reqString)?.enqueue(object:Callback<LoginDTO>{
+            override fun onFailure(call: Call<LoginDTO>, t: Throwable) {
+                val msg = if(!isConnected()) mContext?.getString(R.string.network_eror) else t.toString()
+                Log.e(this::class.java.name, msg)
+            }
+
+            override fun onResponse(call: Call<LoginDTO>, response: Response<LoginDTO>) {
+                response.body()?.let {
+                    if(it.result == ResCode.Success.Code) {
+                        Realm.getDefaultInstance().use {
+                            val data = it.where(RealmUserInfo::class.java).findAll()
+                            it.beginTransaction()
+                            if (data.size > 0) it.deleteAll()
+                            var userInfo = setUserinfo(response, pass)
+                            it.copyToRealm(userInfo)
+                            it.commitTransaction()
+                        }
+                    }else{
+                        Log.e(this::class.java.name, it.description)
+                    }
+                }?:run{
+                    Log.e(this::class.java.name, mContext?.getString(R.string.response_body_eror))
+                }
+            }
+        })
     }
 
     fun setUserinfo(response:Response<LoginDTO>?, pass:String): RealmUserInfo{

@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
+import android.widget.TextView
 import android.widget.Toast
 import com.nycompany.skyban.DTO.InoderDTO
 import com.nycompany.skyban.DTO.List
@@ -20,6 +21,7 @@ import retrofit2.Response
 import java.util.ArrayList
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout
+import kotlinx.android.synthetic.main.inorder_recyclerview_item.view.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -98,11 +100,6 @@ class InorderFragment : Fragment() {
                                 inOrders.addAll(it)
                                 myAdapter.notifyDataSetChanged()
                             }
-                            myAdapter.setClickListener(View.OnClickListener { view ->
-                                Toast.makeText(view.getContext(), "Position ${recycler_inorder.indexOfChild(view)}", Toast.LENGTH_SHORT).show()
-                                val intent = Intent(activity, InorderDetailActivity::class.java)
-                                startActivity(intent)
-                            })
                             recycler_inorder?.let {
                                 it.adapter = myAdapter
                             }
@@ -121,6 +118,12 @@ class InorderFragment : Fragment() {
                     }
                 }
             }
+        })
+        myAdapter.setClickListener(View.OnClickListener { view ->
+            Toast.makeText(view.getContext(), "주문번호 ${view.textView_Orderseq.text.toString()}", Toast.LENGTH_SHORT).show()
+            val intent = Intent(activity, InorderDetailActivity::class.java)
+            intent.putExtra("orderseq", view.textView_Orderseq.text.toString())
+            startActivity(intent)
         })
     }
 

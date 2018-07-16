@@ -1,5 +1,6 @@
 package com.nycompany.skyban
 
+import com.nycompany.skyban.DTO.InOrderdetailDTO
 import com.nycompany.skyban.DTO.InoderDTO
 import com.nycompany.skyban.DTO.LoginDTO
 import com.nycompany.skyban.DTO.OrderRegisterDTO
@@ -27,6 +28,12 @@ interface ReqOrderRegister {
     @POST("/user/ordermngt/register")
     @Headers("Content-Type: application/json", "Authorization: Basic YXBpdXNlcjpTa3lCYW5BcGk=")
     fun postRequest(@Body body:String):Call<OrderRegisterDTO>
+}
+
+interface ReqOrderdetail{
+    @POST("/user/ordermngt/orderdetail")
+    @Headers("Content-Type: application/json", "Authorization: Basic YXBpdXNlcjpTa3lCYW5BcGk=")
+    fun postRequest(@Body body:String):Call<InOrderdetailDTO>
 }
 
 

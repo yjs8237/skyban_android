@@ -29,6 +29,7 @@ class InorderRecyclerViewAdapter(private val inOrders: ArrayList<List>?) : Recyc
     override fun onBindViewHolder(vh: InorderRecyclerViewAdapter.ViewHolder, i: Int) {
         //xml 데아터 바인딩
         var util = ContextUtil(context!!)
+        vh.textView_Orderseq.text = inOrders!![i].order_seq
         vh.textViewCommission_yn.text = if (inOrders!![i].commission_yn =="Y") context?.getString(R.string.commission_y)  else context?.getString(R.string.commission_n)
         vh.textViewDate.text = inOrders!![i].work_date!!.split(" ")[0]
         vh.textViewTime.text = inOrders!![i].work_date!!.split(" ")[1]
@@ -79,6 +80,7 @@ class InorderRecyclerViewAdapter(private val inOrders: ArrayList<List>?) : Recyc
         val textViewDate: TextView
         val textViewTime: TextView
         val textViewWorkProc: TextView
+        val textView_Orderseq:TextView
 
         val textView_car_length: TextView
         val textView_work_location: TextView
@@ -91,6 +93,7 @@ class InorderRecyclerViewAdapter(private val inOrders: ArrayList<List>?) : Recyc
         init {
             v.setOnClickListener(this)
 
+            textView_Orderseq = v.findViewById<View>(R.id.textView_Orderseq) as TextView
             textViewCommission_yn = v.findViewById<View>(R.id.textViewCommission_yn) as TextView
             textViewDate = v.findViewById<View>(R.id.textViewDate) as TextView
             textViewTime = v.findViewById<View>(R.id.textViewTime) as TextView

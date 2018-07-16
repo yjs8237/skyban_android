@@ -10,13 +10,12 @@ class RetrofitCreater private constructor(){
         private var instance: Retrofit? = null
         private const val URL_BASE = "https://skyban.co.kr"
 
-        fun getInstance(ontext: Context):Retrofit? {
-            if (instance == null)  // NOT thread safe!
-                instance = Retrofit.Builder()
-                        .baseUrl(URL_BASE)
-                        .addConverterFactory(ScalarsConverterFactory.create())
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .build()
+        @Synchronized fun getInstance(context: Context):Retrofit? {
+            instance?:run { instance = Retrofit.Builder()
+                    .baseUrl(URL_BASE)
+                    .addConverterFactory(ScalarsConverterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build() }
 
             return instance
         }
