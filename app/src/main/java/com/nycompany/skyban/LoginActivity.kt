@@ -22,7 +22,7 @@ class LoginActivity : AppCompatActivity() {
 
         if(!util.isConnected()) util.buildDialog("eror",getString(R.string.network_eror)).show()
 
-        val server = RetrofitCreater.getInstance(this)?.create(ReqLogin::class.java)
+        val server = RetrofitCreater.getMyInstance()?.create(ReqLogin::class.java)
         loginBtn.setOnClickListener{
             val paramObject = JSONObject()
             editTextPhone.setText("01032228237")

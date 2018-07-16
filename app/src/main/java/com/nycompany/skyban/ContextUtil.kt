@@ -69,7 +69,7 @@ class ContextUtil(context: Context) {
     }
 
     fun updateUserInfo(){
-        val server = RetrofitCreater.getInstance(mContext!!)?.create(ReqLogin::class.java)
+        val server = RetrofitCreater.getMyInstance()?.create(ReqLogin::class.java)
         val paramObject = JSONObject()
         lateinit var pass:String
         Realm.getDefaultInstance().use {

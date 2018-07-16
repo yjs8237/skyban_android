@@ -66,7 +66,7 @@ class OutorderFragment : Fragment(), View.OnClickListener{
         Button_Order.setOnClickListener{
             setJsonParmFromUI()
             val reqString = paramObject.toString()
-            val server = RetrofitCreater.getInstance(activity)?.create(ReqOrderRegister::class.java)
+            val server = RetrofitCreater.getMyInstance()?.create(ReqOrderRegister::class.java)
             server?.postRequest(reqString)?.enqueue(object: Callback<OrderRegisterDTO> {
                 override fun onFailure(call: Call<OrderRegisterDTO>, t: Throwable) {
                     val msg = if(!util.isConnected()) getString(R.string.network_eror) else t.toString()

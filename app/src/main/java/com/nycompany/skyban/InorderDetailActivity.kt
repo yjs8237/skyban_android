@@ -69,7 +69,7 @@ class InorderDetailActivity : FragmentActivity(), OnMapReadyCallback {
         var intent = intent
         var orderseq = intent.getStringExtra("orderseq")
 
-        val server = RetrofitCreater.getInstance(this)?.create(ReqOrderdetail::class.java)
+        val server = RetrofitCreater.getMyInstance()?.create(ReqOrderdetail::class.java)
         val util = ContextUtil(this)
         val paramObject = JSONObject()
         paramObject.put("order_seq", orderseq)

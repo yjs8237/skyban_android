@@ -1,7 +1,9 @@
 package com.nycompany.skyban
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.app.Fragment
+import android.app.ProgressDialog
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
@@ -21,6 +23,7 @@ import retrofit2.Response
 import java.util.ArrayList
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout
+import dmax.dialog.SpotsDialog
 import kotlinx.android.synthetic.main.inorder_recyclerview_item.view.*
 
 // TODO: Rename parameter arguments, choose names that match
@@ -81,12 +84,16 @@ class InorderFragment : Fragment() {
     }
 
     fun setRecyclerView(isReset:Boolean, jsonObj:JSONObject){
-        val server = RetrofitCreater.getInstance(view!!.context)?.create(ReqOderList::class.java)
+        val server = RetrofitCreater.getMyInstance()?.create(ReqOderList::class.java)
         var reqString = jsonObj.toString()
         val util = ContextUtil(activity)
 
+        val loading: AlertDialog = SpotsDialog.Builder().setContext(activity).build()
+        loading.show()
+
         server?.postRequest(reqString)?.enqueue(object: Callback<InoderDTO> {
             override fun onFailure(call: Call<InoderDTO>, t: Throwable) {
+                loading.dismiss()
                 var msg = if(!util.isConnected()) getString(R.string.network_eror) else t.toString()
                 util.buildDialog("eror", msg).show()
             }
@@ -116,7 +123,9 @@ class InorderFragment : Fragment() {
                     } ?: run {
                         Log.e(this::class.java.name, "postRequest method eror")
                     }
+                    //(activity as MainActivity).startFinish()
                 }
+                loading.dismiss()
             }
         })
         myAdapter.setClickListener(View.OnClickListener { view ->

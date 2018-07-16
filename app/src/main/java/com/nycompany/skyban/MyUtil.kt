@@ -16,7 +16,7 @@ class MyUtil {
 }
 
 /*
-val server = RetrofitCreater.getInstance(this)?.create(ReqOrderdetail::class.java)
+val server = RetrofitCreater.getMyInstance()?.create(ReqOrderdetail::class.java)
         val util = ContextUtil(this)
         val paramObject = JSONObject()
         paramObject.put("cell_no", orderseq)

@@ -10,7 +10,7 @@ class RetrofitCreater private constructor(){
         private var instance: Retrofit? = null
         private const val URL_BASE = "https://skyban.co.kr"
 
-        @Synchronized fun getInstance(context: Context):Retrofit? {
+        @JvmStatic @Synchronized fun getMyInstance():Retrofit? {
             instance?:run { instance = Retrofit.Builder()
                     .baseUrl(URL_BASE)
                     .addConverterFactory(ScalarsConverterFactory.create())

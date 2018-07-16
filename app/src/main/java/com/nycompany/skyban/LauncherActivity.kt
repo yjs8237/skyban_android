@@ -24,6 +24,6 @@ class LauncherActivity : AppCompatActivity() {
             }
             realm.close()
             finish()
-        }, 700)
+        }, 600)
     }
 }
