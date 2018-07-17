@@ -34,7 +34,7 @@
         <activity android:name=".termsActivity" />
         <activity android:name=".RegisterActivity" />
         <activity
-            android:name=".InorderDetailActivity"
+            android:name=".OrderDetailActivity"
             android:label="@string/title_activity_inorder_detail" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.

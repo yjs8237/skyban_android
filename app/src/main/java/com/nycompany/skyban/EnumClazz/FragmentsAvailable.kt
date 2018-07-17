@@ -4,10 +4,11 @@ package com.nycompany.skybanminitp
  * @author Sylvain Berfini
  */
 enum class FragmentsAvailable {
-    INORDER,
+    ORDER,
     OUTORDER,
     INFO,
     CHARGE,
     SETTING,
+    ORDER_HISTORY,
     EMPTY;
 }

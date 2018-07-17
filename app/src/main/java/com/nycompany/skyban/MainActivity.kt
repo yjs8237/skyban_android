@@ -3,11 +3,9 @@ package com.nycompany.skyban
 import android.app.Fragment
 import android.app.FragmentManager
 import android.app.FragmentTransaction
-import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.PersistableBundle
-import android.support.constraint.ConstraintLayout
 import android.view.View
 import android.view.View.OnClickListener
 import com.nycompany.skybanminitp.FragmentsAvailable
@@ -22,9 +20,10 @@ class MainActivity : AppCompatActivity(), OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        instance = this
 
         if(savedInstanceState == null){
-            changeCurrentFragment(FragmentsAvailable.INORDER, getIntent().extras)
+            changeCurrentFragment(FragmentsAvailable.ORDER, null)
         } else{
             currentFragment = savedInstanceState.getSerializable("currentFragment") as FragmentsAvailable
             changeCurrentFragment(currentFragment, getIntent().extras)
@@ -43,16 +42,19 @@ class MainActivity : AppCompatActivity(), OnClickListener {
     }
 
     private fun changeCurrentFragment(newFragmentType: FragmentsAvailable?, extras: Bundle?) {
-        fragment = null
+        lateinit var fragment:Fragment
+        currentFragment = newFragmentType
+
         when(newFragmentType){
-            FragmentsAvailable.INORDER -> fragment = InorderFragment()
+            FragmentsAvailable.ORDER -> fragment = OrderFragment()
             FragmentsAvailable.OUTORDER -> fragment = OutorderFragment()
             FragmentsAvailable.INFO -> fragment = InfoFragment()
+            FragmentsAvailable.ORDER_HISTORY -> fragment = OrderHistoryFragment()
         }
         var fm:FragmentManager =  fragmentManager
         var transaction :FragmentTransaction = fm.beginTransaction()
 
-        if (newFragmentType != FragmentsAvailable.INORDER
+        if (newFragmentType != FragmentsAvailable.ORDER
                 && newFragmentType != FragmentsAvailable.OUTORDER
                 && newFragmentType != FragmentsAvailable.CHARGE
                 && newFragmentType != FragmentsAvailable.INFO
@@ -60,6 +62,7 @@ class MainActivity : AppCompatActivity(), OnClickListener {
             transaction.addToBackStack(newFragmentType.toString())
         } else {
             while (fm.backStackEntryCount > 0) {
+                //백스택 모두 삭제
                 fm.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
             }
         }
@@ -67,31 +70,56 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         transaction.replace(R.id.fragmentContainer, fragment, newFragmentType.toString())
         transaction.commitAllowingStateLoss()
         fm.executePendingTransactions()
-
-        currentFragment = newFragmentType
     }
 
     override fun onClick(v: View) {
-        resetSelection()
         when(v.id) {
             R.id.inorder -> {
-                changeCurrentFragment(FragmentsAvailable.INORDER, null)
-                inorder_select.visibility = View.VISIBLE
+                changeCurrentFragment(FragmentsAvailable.ORDER, null)
+                selectMenu(FragmentsAvailable.ORDER)
             }
             R.id.outorder -> {
                 changeCurrentFragment(FragmentsAvailable.OUTORDER, null)
-                outorder_select.visibility = View.VISIBLE
+                selectMenu(FragmentsAvailable.OUTORDER)
             }
             R.id.info-> {
                 changeCurrentFragment(FragmentsAvailable.INFO, null)
-                info_select.visibility = View.VISIBLE
+                selectMenu(FragmentsAvailable.INFO)
             }
         }
+    }
+
+    fun selectMenu(menuToSelect: FragmentsAvailable?) {
+        currentFragment = menuToSelect
+        resetSelection()
+        when (menuToSelect) {
+            FragmentsAvailable.ORDER -> inorder_select.visibility = View.VISIBLE
+            FragmentsAvailable.OUTORDER -> outorder_select.visibility = View.VISIBLE
+            FragmentsAvailable.INFO-> info_select.visibility = View.VISIBLE
+        }
+    }
+
+    fun displayorderHistory(){
+        changeCurrentFragment(FragmentsAvailable.INFO , null)
+        changeCurrentFragment(FragmentsAvailable.ORDER_HISTORY, null)
+        selectMenu(FragmentsAvailable.INFO)
+    }
+
+    fun getCurrentFarnment():FragmentsAvailable?{
+        return currentFragment
     }
 
     private fun resetSelection() {
         inorder_select!!.visibility = View.INVISIBLE
         outorder_select!!.visibility = View.INVISIBLE
         info_select!!.visibility = View.INVISIBLE
+    }
+
+    companion object {
+        private var instance: MainActivity? = null
+
+        fun instance():MainActivity?{
+            return instance
+        }
     }
 }

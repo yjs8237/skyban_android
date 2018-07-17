@@ -14,13 +14,14 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.nycompany.skyban.DTO.InOrderdetailDTO
 import com.nycompany.skyban.EnumClazz.ResCode
+import com.nycompany.skybanminitp.FragmentsAvailable
 import kotlinx.android.synthetic.main.activity_inorder_detail.*
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class InorderDetailActivity : FragmentActivity(), OnMapReadyCallback {
+class OrderDetailActivity : FragmentActivity(), OnMapReadyCallback {
 
     private var mMap: GoogleMap? = null
 
@@ -34,6 +35,11 @@ class InorderDetailActivity : FragmentActivity(), OnMapReadyCallback {
 
         val btnCancel = findViewById<View>(R.id.btnCancel) as ImageView
         btnCancel.setOnClickListener { finish() }
+
+        ButtonOrder.setOnClickListener {
+            MainActivity.instance()?.displayorderHistory()
+            finish()
+        }
     }
 
 
@@ -69,7 +75,13 @@ class InorderDetailActivity : FragmentActivity(), OnMapReadyCallback {
         var intent = intent
         var orderseq = intent.getStringExtra("orderseq")
 
-        val server = RetrofitCreater.getMyInstance()?.create(ReqOrderdetail::class.java)
+
+
+
+        var server?:class = null
+        if(MainActivity.instance()?.getCurrentFarnment() == FragmentsAvailable.ORDER_HISTORY)
+            server = RetrofitCreater.getMyInstance()?.create(ReqLogin::class.java)
+
         val util = ContextUtil(this)
         val paramObject = JSONObject()
         paramObject.put("order_seq", orderseq)
@@ -121,7 +133,7 @@ class InorderDetailActivity : FragmentActivity(), OnMapReadyCallback {
                                 "${work_det_7?.let{it +" "}?:run{""}}"
 
                         var paydateMap = util.getHashmapFromResoureces(R.array.pay_date)
-                        textView_PayDate.text ="작업시간 : ${paydateMap[it.pay_date]}"
+                        textView_PayDate.text ="결제기간 : ${paydateMap[it.pay_date]}"
 
                         textView_WorkContent.text =it.work_content
                     }else{
@@ -133,6 +145,5 @@ class InorderDetailActivity : FragmentActivity(), OnMapReadyCallback {
                 }
             }
         })
-
     }
 }

@@ -3,19 +3,17 @@ package com.nycompany.skyban
 import android.app.AlertDialog
 import android.os.Bundle
 import android.app.Fragment
-import android.app.ProgressDialog
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
-import android.widget.TextView
 import android.widget.Toast
-import com.nycompany.skyban.DTO.InoderDTO
+import com.nycompany.skyban.DTO.OderDTO
 import com.nycompany.skyban.DTO.List
 import com.nycompany.skyban.EnumClazz.ResCode
-import kotlinx.android.synthetic.main.fragment_inorder.*
+import kotlinx.android.synthetic.main.fragment_order.*
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
@@ -26,93 +24,75 @@ import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout
 import dmax.dialog.SpotsDialog
 import kotlinx.android.synthetic.main.inorder_recyclerview_item.view.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Activities that contain this fragment must implement the
- * [InorderFragment.OnFragmentInteractionListener] interface
- * to handle interaction events.
- * Use the [InorderFragment.newInstance] factory method to
- * create an instance of this fragment.
- *
- */
-class InorderFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
+class OrderFragment() : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
     }
 
-    private val inOrders: ArrayList<List> = ArrayList()
-    private val myAdapter by lazy{InorderRecyclerViewAdapter(inOrders)}
-    private val jsonObj = JSONObject()
+    private val Orders: ArrayList<List> = ArrayList()
+    private lateinit var myAdapter:OrderRecyclerViewAdapter
+    val reaFragType = MainActivity.instance()?.getCurrentFarnment()!!
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         //var context: Context = activity
         val layoutManager = LinearLayoutManager(activity.applicationContext)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
-        recycler_inorder.setLayoutManager(layoutManager)
-        recycler_inorder.setHasFixedSize(true)
+        recycler_order.setLayoutManager(layoutManager)
+        recycler_order.setHasFixedSize(true)
 
-        setRecyclerView(true, makeJson(true))
+        val jsonObj = JSONObject()
+
+        myAdapter = OrderRecyclerViewAdapter(Orders, reaFragType)
+        setRecyclerView(true, makeJson(true, jsonObj))
 
         swipyrefreshlayout.setOnRefreshListener(SwipyRefreshLayout.OnRefreshListener { direction ->
-            if (direction == SwipyRefreshLayoutDirection.TOP) setRecyclerView(true, makeJson(true))
-            else setRecyclerView(false, makeJson(false))
+            if (direction == SwipyRefreshLayoutDirection.TOP) setRecyclerView(true, makeJson(true, jsonObj))
+            else setRecyclerView(false, makeJson(false, jsonObj))
 
             if (swipyrefreshlayout.isRefreshing) swipyrefreshlayout.isRefreshing = false
         })
     }
 
-    fun makeJson(isReset:Boolean):JSONObject{
-        jsonObj.put("search_type", "1")
-        jsonObj.put("search_count", 20)
-        if(isReset) jsonObj.put("start_index", 0)
-        else jsonObj.put("start_index", jsonObj.get("start_index") as Int + 20)
+    fun makeJson(isReset:Boolean, paramObject:JSONObject):JSONObject{
+        paramObject.put("search_type", "1")
+        if(isReset) paramObject.put("start_index", 0)
+        else paramObject.put("start_index", paramObject.get("start_index") as Int + 20)
+        paramObject.put("search_count", 20)
 
-        return  jsonObj
+        return  paramObject
     }
 
     fun setRecyclerView(isReset:Boolean, jsonObj:JSONObject){
-        val server = RetrofitCreater.getMyInstance()?.create(ReqOderList::class.java)
+        var server = RetrofitCreater.getMyInstance()?.create(ReqOderList::class.java)
+
         var reqString = jsonObj.toString()
         val util = ContextUtil(activity)
 
         val loading: AlertDialog = SpotsDialog.Builder().setContext(activity).build()
         loading.show()
 
-        server?.postRequest(reqString)?.enqueue(object: Callback<InoderDTO> {
-            override fun onFailure(call: Call<InoderDTO>, t: Throwable) {
+        server?.postRequest(reqString)?.enqueue(object: Callback<OderDTO> {
+            override fun onFailure(call: Call<OderDTO>, t: Throwable) {
                 loading.dismiss()
                 var msg = if(!util.isConnected()) getString(R.string.network_eror) else t.toString()
                 util.buildDialog("eror", msg).show()
             }
 
-            override fun onResponse(call: Call<InoderDTO>, response: Response<InoderDTO>) {
+            override fun onResponse(call: Call<OderDTO>, response: Response<OderDTO>) {
                 response.body()?.let {
                     if (response.body()?.result == ResCode.Success.Code) {
                         if (isReset) {
                             response.body()?.list?.let {
-                                inOrders.clear()
-                                inOrders.addAll(it)
+                                Orders.clear()
+                                Orders.addAll(it)
                                 myAdapter.notifyDataSetChanged()
                             }
-                            recycler_inorder?.let {
+                            recycler_order?.let {
                                 it.adapter = myAdapter
                             }
                         } else {
                             response.body()?.list?.let {
-                                inOrders.addAll<List>(it)
+                                Orders.addAll<List>(it)
                                 myAdapter.notifyDataSetChanged()
                             }
                         }
@@ -130,7 +110,7 @@ class InorderFragment : Fragment() {
         })
         myAdapter.setClickListener(View.OnClickListener { view ->
             Toast.makeText(view.getContext(), "주문번호 ${view.textView_Orderseq.text.toString()}", Toast.LENGTH_SHORT).show()
-            val intent = Intent(activity, InorderDetailActivity::class.java)
+            val intent = Intent(activity, OrderDetailActivity::class.java)
             intent.putExtra("orderseq", view.textView_Orderseq.text.toString())
             startActivity(intent)
         })
@@ -139,26 +119,6 @@ class InorderFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_inorder, container, false)
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment InorderFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-                InorderFragment().apply {
-                    arguments = Bundle().apply {
-                        putString(ARG_PARAM1, param1)
-                        putString(ARG_PARAM2, param2)
-                    }
-                }
+        return inflater.inflate(R.layout.fragment_order, container, false)
     }
 }

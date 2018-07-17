@@ -1,7 +1,7 @@
 package com.nycompany.skyban
 
 import com.nycompany.skyban.DTO.InOrderdetailDTO
-import com.nycompany.skyban.DTO.InoderDTO
+import com.nycompany.skyban.DTO.OderDTO
 import com.nycompany.skyban.DTO.LoginDTO
 import com.nycompany.skyban.DTO.OrderRegisterDTO
 import retrofit2.Call
@@ -21,7 +21,7 @@ interface ReqLogin {
 interface ReqOderList {
     @POST("/user/ordermngt/orderlist")
     @Headers("Content-Type: application/json", "Authorization: Basic YXBpdXNlcjpTa3lCYW5BcGk=")
-    fun postRequest(@Body body: String): Call<InoderDTO>
+    fun postRequest(@Body body: String): Call<OderDTO>
 }
 
 interface ReqOrderRegister {
@@ -34,6 +34,12 @@ interface ReqOrderdetail{
     @POST("/user/ordermngt/orderdetail")
     @Headers("Content-Type: application/json", "Authorization: Basic YXBpdXNlcjpTa3lCYW5BcGk=")
     fun postRequest(@Body body:String):Call<InOrderdetailDTO>
+}
+
+interface ReqMyOrderList{
+    @POST("/user/ordermngt/myorderlist")
+    @Headers("Content-Type: application/json", "Authorization: Basic YXBpdXNlcjpTa3lCYW5BcGk=")
+    fun postRequest(@Body body:String):Call<OderDTO>
 }
 
 

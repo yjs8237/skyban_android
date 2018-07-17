@@ -2,7 +2,7 @@ package com.nycompany.skyban.DTO
 
 import java.util.ArrayList
 
-data class InoderDTO(
+data class OderDTO(
         var result: String? = null,
         var description: String? = null,
         var list:ArrayList<List>? = null

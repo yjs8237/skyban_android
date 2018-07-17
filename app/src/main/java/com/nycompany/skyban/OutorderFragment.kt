@@ -29,15 +29,6 @@ import java.util.*
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Activities that contain this fragment must implement the
- * [OutorderFragment.OnFragmentInteractionListener] interface
- * to handle interaction events.
- * Use the [OutorderFragment.newInstance] factory method to
- * create an instance of this fragment.
- *
- */
 class OutorderFragment : Fragment(), View.OnClickListener{
     private val REQUEST_MAP = 101
     private  val paramObject by lazy{JSONObject()}
@@ -375,7 +366,7 @@ class OutorderFragment : Fragment(), View.OnClickListener{
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment InorderFragment.
+         * @return A new instance of fragment OrderFragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic

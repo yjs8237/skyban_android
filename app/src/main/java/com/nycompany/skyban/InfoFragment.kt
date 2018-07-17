@@ -1,7 +1,5 @@
 package com.nycompany.skyban
 
-import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import android.app.Fragment
 import android.view.LayoutInflater
@@ -53,6 +51,9 @@ class InfoFragment : Fragment() {
             val level = util.getHashmapFromResoureces(R.array.user_level)[data[0]?.user_level]
             textView_User.text = String.format("%s 님 %s",data[0]?.user_name, level)
         }
+        Button_InOrder.setOnClickListener {
+            MainActivity.instance()?.displayorderHistory()
+        }
     }
 
     companion object {
@@ -62,12 +63,12 @@ class InfoFragment : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment InorderFragment.
+         * @return A new instance of fragment OrderFragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-                InorderFragment().apply {
+                OrderFragment().apply {
                     arguments = Bundle().apply {
                         putString(ARG_PARAM1, param1)
                         putString(ARG_PARAM2, param2)
