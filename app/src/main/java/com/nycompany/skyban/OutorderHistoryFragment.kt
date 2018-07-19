@@ -4,7 +4,9 @@ package com.nycompany.skyban
 import android.app.AlertDialog
 import android.os.Bundle
 import android.app.Fragment
+import android.app.FragmentManager
 import android.content.Intent
+import android.os.Build
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.LayoutInflater
@@ -18,7 +20,7 @@ import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection
 import dmax.dialog.SpotsDialog
 import io.realm.Realm
-import kotlinx.android.synthetic.main.fragment_order_history.*
+import kotlinx.android.synthetic.main.fragment_outorder_history.*
 import kotlinx.android.synthetic.main.inorder_recyclerview_item.view.*
 import org.json.JSONObject
 import retrofit2.Call
@@ -26,9 +28,15 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.util.ArrayList
 
-class OrderHistoryFragment : Fragment() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+/**
+ * A simple [Fragment] subclass.
+ *
+ */
+class OutorderHistoryFragment : Fragment() {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_outorder_history, container, false)
     }
 
     private val orderHistory: ArrayList<List> = ArrayList()
@@ -62,8 +70,10 @@ class OrderHistoryFragment : Fragment() {
         }
     }
 
-    fun makeJson(isReset:Boolean, paramObject:JSONObject):JSONObject{
-        paramObject.put("search_type", "1")
+
+
+    fun makeJson(isReset:Boolean, paramObject: JSONObject): JSONObject {
+        paramObject.put("search_type", "2")
         if(isReset) paramObject.put("start_index", 0)
         else paramObject.put("start_index", paramObject.get("start_index") as Int + 20)
         paramObject.put("search_count", 20)
@@ -71,7 +81,7 @@ class OrderHistoryFragment : Fragment() {
         return  paramObject
     }
 
-    fun setRecyclerView(isReset:Boolean, paramObject:JSONObject){
+    fun setRecyclerView(isReset:Boolean, paramObject: JSONObject){
         var server = RetrofitCreater.getMyInstance()?.create(ReqMyOrderList::class.java)
 
         var reqString = paramObject.toString()
@@ -123,11 +133,5 @@ class OrderHistoryFragment : Fragment() {
             intent.putExtra("orderseq", view.textView_Orderseq.text.toString())
             startActivity(intent)
         })
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_order_history, container, false)
     }
 }

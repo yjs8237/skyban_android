@@ -1,5 +1,7 @@
 package com.nycompany.skyban
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.support.v4.app.FragmentActivity
 import android.os.Bundle
 import android.util.Log
@@ -12,8 +14,12 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.nycompany.skyban.DTO.CommonDTO
 import com.nycompany.skyban.DTO.InOrderdetailDTO
 import com.nycompany.skyban.EnumClazz.ResCode
+import com.nycompany.skybanminitp.FragmentsAvailable
+import dmax.dialog.SpotsDialog
+import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_inorder_detail.*
 import org.json.JSONObject
 import retrofit2.Call
@@ -23,7 +29,8 @@ import retrofit2.Response
 class OrderDetailActivity : FragmentActivity(), OnMapReadyCallback {
 
     private var mMap: GoogleMap? = null
-
+    private val util = ContextUtil(this)
+    private val paramObject = JSONObject()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_inorder_detail)
@@ -35,16 +42,79 @@ class OrderDetailActivity : FragmentActivity(), OnMapReadyCallback {
         val btnCancel = findViewById<View>(R.id.btnCancel) as ImageView
         btnCancel.setOnClickListener { finish() }
 
+        lateinit var cell_no:String
+        Realm.getDefaultInstance().use {
+            val data = it.where(RealmUserInfo::class.java).findAll()
+            cell_no = data[0]?.cell_no!!
+        }
+        var intent = intent
+        var orderseq = intent.getStringExtra("orderseq")
+
+        paramObject.put("order_seq", orderseq)
+
+        when (MainActivity.instance()?.getCurrentFarnment()) {
+        //일반 수주화면
+            FragmentsAvailable.ORDER -> {
+                LinearLayout_order.visibility = View.VISIBLE
+                textView_DetailTitle.text = "작업 상세정보"
+            }
+        //내 수주화면
+            FragmentsAvailable.ORDER_HISTORY -> {
+                LinearLayout_order_history.visibility = View.VISIBLE
+                textView_DetailTitle.text = "수주작업 상세정보"
+                ConstraintLayout_Contract.visibility = View.VISIBLE
+                paramObject.put("cell_no", cell_no)
+                paramObject.put("search_type", "1")
+            }
+            FragmentsAvailable.OUTORDER_HISTORY -> {
+                LinearLayout_outorder_history.visibility = View.VISIBLE
+                textView_DetailTitle.text = "발주작업 상세정보"
+                ConstraintLayout_Contract.visibility = View.VISIBLE
+                paramObject.put("cell_no", cell_no)
+                paramObject.put("search_type", "2")
+            }
+        }
+
         ButtonOrder.setOnClickListener {
-            MainActivity.instance()?.displayorderHistory()
-            finish()
+            val OderParam = JSONObject()
+            OderParam.put("order_seq", orderseq)
+            OderParam.put("cell_no", cell_no)
+
+            val reqString = OderParam.toString()
+            val server = RetrofitCreater.getMyInstance()?.create(ReqObtaInorder::class.java)
+            server?.postRequest(reqString)?.enqueue(object: Callback<CommonDTO> {
+                override fun onFailure(call: Call<CommonDTO>, t: Throwable) {
+                    val msg = if(!util.isConnected()) getString(R.string.network_eror) else t.toString()
+                    util.buildDialog("eror", msg).show()
+                }
+
+                override fun onResponse(call: Call<CommonDTO>, response: Response<CommonDTO>) {
+                    response.body()?.let {
+                        if (it.result == ResCode.Success.Code) {
+                            val db = util.buildDialog("성공", "성공적으로 수주 되었습니다 ")
+                            db.setPositiveButton("OK", object : DialogInterface.OnClickListener {
+                                override fun onClick(p0: DialogInterface?, p1: Int) {
+                                    MainActivity.instance()?.moveOrderHistory()
+                                    finish()
+                                }
+                            })
+                        } else {
+                            it.description?.let {
+                                util.buildDialog(it).show()
+                            }
+                        }?:run{
+                            Log.e(this::class.java.name, getString(R.string.response_body_eror))
+                        }
+                    }
+                }
+            })
         }
     }
 
-    val util = ContextUtil(this)
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-
+        val loading: AlertDialog = SpotsDialog.Builder().setContext(this).build()
+        loading.show()
         /*
         // 맵 터치 이벤트 구현 //
         mMap!!.setOnMapClickListener { point ->
@@ -61,38 +131,68 @@ class OrderDetailActivity : FragmentActivity(), OnMapReadyCallback {
             // 마커(핀) 추가
             googleMap.addMarker(mOptions)
         }*/
-        var intent = intent
-        var orderseq = intent.getStringExtra("orderseq")
-
-        val paramObject = JSONObject()
-        paramObject.put("order_seq", orderseq)
         val reqString = paramObject.toString()
 
-        val server = RetrofitCreater.getMyInstance()?.create(ReqOrderdetail::class.java)
-        server?.postRequest(reqString)?.enqueue(object: Callback<InOrderdetailDTO> {
-            override fun onFailure(call: Call<InOrderdetailDTO>, t: Throwable) {
-                val msg = if(!util.isConnected()) getString(R.string.network_eror) else t.toString()
-                util.buildDialog("eror", msg).show()
-            }
+        when (MainActivity.instance()?.getCurrentFarnment()) {
+            FragmentsAvailable.ORDER -> {
+                val reqString = paramObject.toString()
+                val server = RetrofitCreater.getMyInstance()?.create(ReqOrderdetail::class.java)
+                server?.postRequest(reqString)?.enqueue(object: Callback<InOrderdetailDTO> {
+                    override fun onFailure(call: Call<InOrderdetailDTO>, t: Throwable) {
+                        loading.dismiss()
+                        val msg = if(!util.isConnected()) getString(R.string.network_eror) else t.toString()
+                        util.buildDialog("eror", msg).show()
+                    }
 
-            override fun onResponse(call: Call<InOrderdetailDTO>, response: Response<InOrderdetailDTO>) {
-                response.body()?.let {
-                    if(it.result == ResCode.Success.Code) {
-                        setResponseData(it)
-                    }else{
-                        it.description?.let { util.buildDialog(it).show()
+                    override fun onResponse(call: Call<InOrderdetailDTO>, response: Response<InOrderdetailDTO>) {
+                        response.body()?.let {
+                            loading.dismiss()
+                            if(it.result == ResCode.Success.Code) {
+                                setResponseData(it)
+                            }else{
+                                it.description?.let { util.buildDialog(it).show()
+                                }
+                            }
+                        }?:run{
+                            Log.e(this::class.java.name, getString(R.string.response_body_eror))
                         }
                     }
-                }?:run{
-                    Log.e(this::class.java.name, getString(R.string.response_body_eror))
-                }
+                })
             }
-        })
+
+            FragmentsAvailable.ORDER_HISTORY, FragmentsAvailable.OUTORDER_HISTORY -> {
+                val server = RetrofitCreater.getMyInstance()?.create(ReqMyOrderDetail::class.java)
+                server?.postRequest(reqString)?.enqueue(object: Callback<InOrderdetailDTO> {
+                    override fun onFailure(call: Call<InOrderdetailDTO>, t: Throwable) {
+                        loading.dismiss()
+                        val msg = if(!util.isConnected()) getString(R.string.network_eror) else t.toString()
+                        util.buildDialog("eror", msg).show()
+                    }
+
+                    override fun onResponse(call: Call<InOrderdetailDTO>, response: Response<InOrderdetailDTO>) {
+                        response.body()?.let {
+                            loading.dismiss()
+                            if(it.result == ResCode.Success.Code) {
+                                setResponseData(it)
+                            }else{
+                                it.description?.let { util.buildDialog(it).show()
+                                }
+                            }
+                        }?:run{
+                            Log.e(this::class.java.name, getString(R.string.response_body_eror))
+                        }
+                    }
+                })
+            }
+        }
     }
 
     fun <T> setResponseData(dto:T){
         (dto as InOrderdetailDTO)?.let {
             val location = LatLng( it.work_latitude!!.toDouble(), it.work_longitude!!.toDouble())
+            textView_OrderUserNum.text = "발주자연락처 : ${it?.let { it.order_user_num }?:run { "" }}"
+            textView_WorkContact.text = "발주자연락처 : ${it?.let { it.work_contact }?:run { "" }}"
+
             mMap?.addMarker(MarkerOptions().position(location).title("work area"))
             mMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 14f))
             //mMap!!.moveCamera(CameraUpdateFactory.newLatLng(sydney))

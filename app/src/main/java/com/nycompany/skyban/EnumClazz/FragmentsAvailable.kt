@@ -10,5 +10,6 @@ enum class FragmentsAvailable {
     CHARGE,
     SETTING,
     ORDER_HISTORY,
+    OUTORDER_HISTORY,
     EMPTY;
 }

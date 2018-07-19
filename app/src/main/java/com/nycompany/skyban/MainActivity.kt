@@ -50,6 +50,7 @@ class MainActivity : AppCompatActivity(), OnClickListener {
             FragmentsAvailable.OUTORDER -> fragment = OutorderFragment()
             FragmentsAvailable.INFO -> fragment = InfoFragment()
             FragmentsAvailable.ORDER_HISTORY -> fragment = OrderHistoryFragment()
+            FragmentsAvailable.OUTORDER_HISTORY -> fragment = OutorderHistoryFragment()
         }
         var fm:FragmentManager =  fragmentManager
         var transaction :FragmentTransaction = fm.beginTransaction()
@@ -75,22 +76,28 @@ class MainActivity : AppCompatActivity(), OnClickListener {
     override fun onClick(v: View) {
         when(v.id) {
             R.id.inorder -> {
-                changeCurrentFragment(FragmentsAvailable.ORDER, null)
-                selectMenu(FragmentsAvailable.ORDER)
+                if(currentFragment != FragmentsAvailable.ORDER) {
+                    changeCurrentFragment(FragmentsAvailable.ORDER, null)
+                    selectMenu(FragmentsAvailable.ORDER)
+                }
             }
             R.id.outorder -> {
-                changeCurrentFragment(FragmentsAvailable.OUTORDER, null)
-                selectMenu(FragmentsAvailable.OUTORDER)
+                if(currentFragment != FragmentsAvailable.OUTORDER) {
+                    changeCurrentFragment(FragmentsAvailable.OUTORDER, null)
+                    selectMenu(FragmentsAvailable.OUTORDER)
+                }
             }
             R.id.info-> {
-                changeCurrentFragment(FragmentsAvailable.INFO, null)
-                selectMenu(FragmentsAvailable.INFO)
+                if(currentFragment != FragmentsAvailable.INFO) {
+                    changeCurrentFragment(FragmentsAvailable.INFO, null)
+                    selectMenu(FragmentsAvailable.INFO)
+                }
             }
         }
     }
 
-    fun selectMenu(menuToSelect: FragmentsAvailable?) {
-        currentFragment = menuToSelect
+
+    private fun selectMenu(menuToSelect: FragmentsAvailable?) {
         resetSelection()
         when (menuToSelect) {
             FragmentsAvailable.ORDER -> inorder_select.visibility = View.VISIBLE
@@ -99,9 +106,15 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         }
     }
 
-    fun displayorderHistory(){
+    fun moveOrderHistory(){
         changeCurrentFragment(FragmentsAvailable.INFO , null)
         changeCurrentFragment(FragmentsAvailable.ORDER_HISTORY, null)
+        selectMenu(FragmentsAvailable.INFO)
+    }
+
+    fun displayOutorderHistory(){
+        changeCurrentFragment(FragmentsAvailable.INFO , null)
+        changeCurrentFragment(FragmentsAvailable.OUTORDER_HISTORY, null)
         selectMenu(FragmentsAvailable.INFO)
     }
 

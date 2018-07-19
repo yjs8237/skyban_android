@@ -52,7 +52,11 @@ class InfoFragment : Fragment() {
             textView_User.text = String.format("%s 님 %s",data[0]?.user_name, level)
         }
         Button_InOrder.setOnClickListener {
-            MainActivity.instance()?.displayorderHistory()
+            MainActivity.instance()?.moveOrderHistory()
+        }
+
+        Button_OutOrder.setOnClickListener{
+            MainActivity.instance()?.displayOutorderHistory()
         }
     }
 
