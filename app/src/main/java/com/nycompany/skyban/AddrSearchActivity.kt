@@ -1,6 +1,5 @@
 package com.nycompany.skyban
 
-import android.app.Activity
 import android.content.Context
 import android.location.Address
 import android.location.Geocoder
@@ -14,14 +13,14 @@ import com.google.android.gms.maps.SupportMapFragment
 import kotlinx.android.synthetic.main.activity_addr_search.*
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import android.content.Context.INPUT_METHOD_SERVICE
 import android.content.Intent
 import android.view.inputmethod.InputMethodManager
+import com.nycompany.skyban.util.ContextUtil
 
 
 class AddrSearchActivity : AppCompatActivity(), OnMapReadyCallback {
     private val geocoder by lazy{Geocoder(this)}
-    private val util by lazy{ContextUtil(this)}
+    private val util by lazy{ ContextUtil(this) }
     private var mMap:GoogleMap? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,13 +32,13 @@ class AddrSearchActivity : AppCompatActivity(), OnMapReadyCallback {
 
         Button_Search.setOnClickListener {
             val str = if(EditText_Search.text.length > 0) EditText_Search.text.toString() else " "
-            var addressList: List<Address>? = geocoder?.getFromLocationName(str, 10)
+            var addressList: List<Address>? = geocoder.getFromLocationName(str, 10)
             addressList?.let {
                 if(it.size > 0) {
-                var addr = it?.get(0)?.getAddressLine(0)
-                val latitude = it?.get(0)?.latitude
-                val longitude = it?.get(0)?.longitude
-                val point = LatLng(latitude!!, longitude!!)
+                var addr = it.get(0).getAddressLine(0)
+                val latitude = it.get(0).latitude
+                val longitude = it.get(0).longitude
+                val point = LatLng(latitude, longitude)
 
                 val mOptions = MarkerOptions().run {
                     title("search result")
@@ -64,7 +63,7 @@ class AddrSearchActivity : AppCompatActivity(), OnMapReadyCallback {
             val view = this.currentFocus
             view?.run{
                 val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                imm!!.hideSoftInputFromWindow(windowToken, 0)
+                imm.hideSoftInputFromWindow(windowToken, 0)
             }
         }
 

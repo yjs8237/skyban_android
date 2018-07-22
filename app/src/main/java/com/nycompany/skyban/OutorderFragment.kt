@@ -13,8 +13,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.beardedhen.androidbootstrap.BootstrapButton
-import com.nycompany.skyban.DTO.OrderRegisterDTO
-import com.nycompany.skyban.EnumClazz.ResCode
+import com.nycompany.skyban.dto.OrderRegisterDTO
+import com.nycompany.skyban.dto.RealmUserInfo
+import com.nycompany.skyban.enums.ResCode
+import com.nycompany.skyban.network.ReqOrderRegister
+import com.nycompany.skyban.network.RetrofitCreater
+import com.nycompany.skyban.util.ContextUtil
+import com.nycompany.skyban.util.MyUtil
 import io.realm.Realm
 import kotlinx.android.synthetic.main.fragment_outorder.*
 import org.json.JSONObject
@@ -32,7 +37,7 @@ private const val ARG_PARAM2 = "param2"
 class OutorderFragment : Fragment(), View.OnClickListener{
     private val REQUEST_MAP = 101
     private  val paramObject by lazy{JSONObject()}
-    private  val util by lazy{ContextUtil(activity)}
+    private  val util by lazy{ ContextUtil(activity) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

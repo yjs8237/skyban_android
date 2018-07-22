@@ -5,6 +5,8 @@ import android.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.nycompany.skyban.dto.RealmUserInfo
+import com.nycompany.skyban.util.ContextUtil
 import io.realm.Realm
 import kotlinx.android.synthetic.main.fragment_info.*
 
@@ -22,7 +24,7 @@ private const val ARG_PARAM2 = "param2"
 class InfoFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
-    private  val util by lazy{ContextUtil(activity)}
+    private  val util by lazy{ ContextUtil(activity) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

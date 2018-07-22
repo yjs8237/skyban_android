@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                             xmlns:app="http://schemas.android.com/apk/res-auto"
-                                             xmlns:tools="http://schemas.android.com/tools"
-                                             android:layout_width="match_parent"
-                                             android:layout_height="match_parent"
-                                             tools:context=".MainActivity"
-                                             tools:layout_editor_absoluteY="25dp">
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    tools:layout_editor_absoluteY="25dp">
 
     <LinearLayout
         android:id="@+id/bottombar"
@@ -19,6 +20,7 @@
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/inorder"
+            android:foreground="?android:attr/selectableItemBackground"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1">
@@ -61,6 +63,7 @@
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/outorder"
+            android:foreground="?android:attr/selectableItemBackground"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1">
@@ -102,6 +105,7 @@
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/info"
+            android:foreground="?android:attr/selectableItemBackground"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1">
@@ -145,6 +149,7 @@
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/charge"
+            android:foreground="?android:attr/selectableItemBackground"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1">
@@ -176,7 +181,7 @@
                 android:id="@+id/charge_select"
                 android:layout_width="match_parent"
                 android:layout_height="4dp"
-                android:background="@color/colorAccent"
+                android:background="@color/white"
                 android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -188,6 +193,7 @@
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/setting"
+            android:foreground="?android:attr/selectableItemBackground"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1">
@@ -219,7 +225,7 @@
                 android:id="@+id/setting_select"
                 android:layout_width="match_parent"
                 android:layout_height="4dp"
-                android:background="@color/colorAccent"
+                android:background="@color/white"
                 android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -228,7 +234,6 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="1.0" />
         </android.support.constraint.ConstraintLayout>
-
 
     </LinearLayout>
 

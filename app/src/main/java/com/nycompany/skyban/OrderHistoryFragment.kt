@@ -11,9 +11,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import com.nycompany.skyban.DTO.List
-import com.nycompany.skyban.DTO.OderDTO
-import com.nycompany.skyban.EnumClazz.ResCode
+import com.nycompany.skyban.dto.List
+import com.nycompany.skyban.dto.OderDTO
+import com.nycompany.skyban.enums.ResCode
+import com.nycompany.skyban.adapter.OrderRecyclerViewAdapter
+import com.nycompany.skyban.dto.RealmUserInfo
+import com.nycompany.skyban.network.ReqMyOrderList
+import com.nycompany.skyban.network.RetrofitCreater
+import com.nycompany.skyban.util.ContextUtil
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection
 import dmax.dialog.SpotsDialog
@@ -32,7 +37,7 @@ class OrderHistoryFragment : Fragment() {
     }
 
     private val orderHistory: ArrayList<List> = ArrayList()
-    private lateinit var myAdapter:OrderRecyclerViewAdapter
+    private lateinit var myAdapter: OrderRecyclerViewAdapter
     val reqFragType = MainActivity.instance()?.getCurrentFarnment()!!
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         val layoutManager = LinearLayoutManager(activity.applicationContext)

@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              tools:context=".ChargeFragment">
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/backBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary">
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:text="Cash충전"
+            android:textColor="@android:color/background_light"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <com.beardedhen.androidbootstrap.BootstrapButtonGroup
+        android:id="@+id/bootstrapButtonGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal"
+        android:text="BootstrapButtonGroup"
+        app:bootstrapBrand="primary"
+        app:bootstrapSize="md"
+        app:buttonMode="radio"
+        app:roundedCorners="true"
+        app:showOutline="true">
+
+        <com.beardedhen.androidbootstrap.BootstrapButton
+            android:id="@+id/Button_commission_y"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="캐쉬충전"
+            app:checked="true" />
+
+        <com.beardedhen.androidbootstrap.BootstrapButton
+            android:id="@+id/Button_commission_n"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="캐쉬환전" />
+    </com.beardedhen.androidbootstrap.BootstrapButtonGroup>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.beardedhen.androidbootstrap.BootstrapLabel
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                app:bootstrapBrand="info"
+                app:bootstrapHeading="h6"
+                app:bootstrapText="{fa_circle_o} 계좌이체 안내"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/bootstrapButtonGroup" />
+
+            <android.support.v7.widget.CardView
+                app:cardCornerRadius="3dp"
+                app:cardElevation="4dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_margin="4dp"
+                        android:text="우리은행"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_margin="4dp"
+                        android:text="123-123456-78941"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_margin="4dp"
+                        android:text="예금주 : 예금주"
+                        android:textStyle="bold"/>
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <com.beardedhen.androidbootstrap.BootstrapLabel
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                app:bootstrapBrand="info"
+                app:bootstrapHeading="h6"
+                app:bootstrapText="{fa_circle_o} 입금금액"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/bootstrapButtonGroup" />
+
+            <com.beardedhen.androidbootstrap.BootstrapEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:hint="금액입력"
+                android:inputType="number"
+                android:imeOptions="actionDone"
+                app:bootstrapBrand="info"
+                app:bootstrapSize="md" />
+
+            <com.beardedhen.androidbootstrap.BootstrapLabel
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                app:bootstrapBrand="info"
+                app:bootstrapHeading="h6"
+                app:bootstrapText="{fa_circle_o} 입금자명"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/bootstrapButtonGroup" />
+
+            <com.beardedhen.androidbootstrap.BootstrapEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:hint="입금자명"
+                android:inputType="number"
+                android:imeOptions="actionDone"
+                app:bootstrapBrand="info"
+                app:bootstrapSize="md" />
+
+            <TextView
+                android:textColor="@color/colorAccent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/charge_description1"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:textColor="@color/colorAccent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/charge_description2"
+                android:textStyle="bold"/>
+
+            <com.beardedhen.androidbootstrap.BootstrapButton
+                android:id="@+id/Button_Order"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_weight="1"
+                app:bootstrapSize="lg"
+                android:text="입금 신청하기"
+                app:roundedCorners="true"
+                app:bootstrapBrand="danger" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:visibility="gone"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.beardedhen.androidbootstrap.BootstrapLabel
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                app:bootstrapBrand="info"
+                app:bootstrapHeading="h6"
+                app:bootstrapText="{fa_circle_o} 환전계좌"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/bootstrapButtonGroup" />
+
+            <com.beardedhen.androidbootstrap.BootstrapEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:hint="은행명"
+            android:inputType="number"
+            android:imeOptions="actionDone"
+            app:bootstrapBrand="info"
+            app:bootstrapSize="md" />
+
+            <com.beardedhen.androidbootstrap.BootstrapEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:hint="계좌번호"
+                android:inputType="number"
+                android:imeOptions="actionDone"
+                app:bootstrapBrand="info"
+                app:bootstrapSize="md" />
+
+            <com.beardedhen.androidbootstrap.BootstrapEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:hint="환전요청 금액"
+                android:inputType="number"
+                android:imeOptions="actionDone"
+                app:bootstrapBrand="info"
+                app:bootstrapSize="md" />
+
+            <com.beardedhen.androidbootstrap.BootstrapButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_weight="1"
+                app:bootstrapSize="lg"
+                android:text="환전 신청하기"
+                app:roundedCorners="true"
+                app:bootstrapBrand="danger" />
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+</LinearLayout>

@@ -14,9 +14,15 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import com.nycompany.skyban.DTO.CommonDTO
-import com.nycompany.skyban.DTO.InOrderdetailDTO
-import com.nycompany.skyban.EnumClazz.ResCode
+import com.nycompany.skyban.dto.CommonDTO
+import com.nycompany.skyban.dto.InOrderdetailDTO
+import com.nycompany.skyban.dto.RealmUserInfo
+import com.nycompany.skyban.enums.ResCode
+import com.nycompany.skyban.network.ReqMyOrderDetail
+import com.nycompany.skyban.network.ReqObtaInorder
+import com.nycompany.skyban.network.ReqOrderdetail
+import com.nycompany.skyban.network.RetrofitCreater
+import com.nycompany.skyban.util.ContextUtil
 import com.nycompany.skybanminitp.FragmentsAvailable
 import dmax.dialog.SpotsDialog
 import io.realm.Realm
@@ -91,6 +97,7 @@ class OrderDetailActivity : FragmentActivity(), OnMapReadyCallback {
                 override fun onResponse(call: Call<CommonDTO>, response: Response<CommonDTO>) {
                     response.body()?.let {
                         if (it.result == ResCode.Success.Code) {
+                            util.updateUserInfo()
                             val db = util.buildDialog("성공", "성공적으로 수주 되었습니다 ")
                             db.setPositiveButton("OK", object : DialogInterface.OnClickListener {
                                 override fun onClick(p0: DialogInterface?, p1: Int) {
@@ -98,6 +105,8 @@ class OrderDetailActivity : FragmentActivity(), OnMapReadyCallback {
                                     finish()
                                 }
                             })
+                            db.setCancelable(false)
+                            db.show()
                         } else {
                             it.description?.let {
                                 util.buildDialog(it).show()
@@ -187,8 +196,9 @@ class OrderDetailActivity : FragmentActivity(), OnMapReadyCallback {
         }
     }
 
-    fun <T> setResponseData(dto:T){
-        (dto as InOrderdetailDTO)?.let {
+    //fun <T> setResponseData(dto:T){
+    fun setResponseData(dto:InOrderdetailDTO){
+        dto?.let {
             val location = LatLng( it.work_latitude!!.toDouble(), it.work_longitude!!.toDouble())
             textView_OrderUserNum.text = "발주자연락처 : ${it?.let { it.order_user_num }?:run { "" }}"
             textView_WorkContact.text = "발주자연락처 : ${it?.let { it.work_contact }?:run { "" }}"

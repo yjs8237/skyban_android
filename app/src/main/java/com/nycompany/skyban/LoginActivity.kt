@@ -4,8 +4,12 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import com.nycompany.skyban.EnumClazz.*
-import com.nycompany.skyban.DTO.LoginDTO
+import com.nycompany.skyban.enums.*
+import com.nycompany.skyban.dto.LoginDTO
+import com.nycompany.skyban.dto.RealmUserInfo
+import com.nycompany.skyban.network.ReqLogin
+import com.nycompany.skyban.network.RetrofitCreater
+import com.nycompany.skyban.util.ContextUtil
 
 import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_login.*
@@ -15,7 +19,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class LoginActivity : AppCompatActivity() {
-    private var util:ContextUtil = ContextUtil(this)
+    private var util: ContextUtil = ContextUtil(this)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)

@@ -10,9 +10,13 @@ import android.view.ViewGroup
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.widget.Toast
-import com.nycompany.skyban.DTO.OderDTO
-import com.nycompany.skyban.DTO.List
-import com.nycompany.skyban.EnumClazz.ResCode
+import com.nycompany.skyban.dto.OderDTO
+import com.nycompany.skyban.dto.List
+import com.nycompany.skyban.enums.ResCode
+import com.nycompany.skyban.adapter.OrderRecyclerViewAdapter
+import com.nycompany.skyban.network.ReqOderList
+import com.nycompany.skyban.network.RetrofitCreater
+import com.nycompany.skyban.util.ContextUtil
 import kotlinx.android.synthetic.main.fragment_order.*
 import org.json.JSONObject
 import retrofit2.Call
@@ -30,7 +34,7 @@ class OrderFragment() : Fragment() {
     }
 
     private val Orders: ArrayList<List> = ArrayList()
-    private lateinit var myAdapter:OrderRecyclerViewAdapter
+    private lateinit var myAdapter: OrderRecyclerViewAdapter
     val reaFragType = MainActivity.instance()?.getCurrentFarnment()!!
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

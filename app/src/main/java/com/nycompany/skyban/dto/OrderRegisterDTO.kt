@@ -1,4 +1,4 @@
-package com.nycompany.skyban.DTO
+package com.nycompany.skyban.dto
 
 data class OrderRegisterDTO(
         var order_seq: String? = null,

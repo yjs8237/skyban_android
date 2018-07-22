@@ -4,6 +4,8 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import com.nycompany.skyban.dto.RealmUserInfo
+import com.nycompany.skyban.util.ContextUtil
 import io.realm.Realm
 
 class LauncherActivity : AppCompatActivity() {

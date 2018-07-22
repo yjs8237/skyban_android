@@ -1,4 +1,4 @@
-package com.nycompany.skyban.DTO
+package com.nycompany.skyban.dto
 
 data class LoginDTO(
         var result: String? = null,

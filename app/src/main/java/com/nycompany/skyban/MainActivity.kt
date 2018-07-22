@@ -49,6 +49,8 @@ class MainActivity : AppCompatActivity(), OnClickListener {
             FragmentsAvailable.ORDER -> fragment = OrderFragment()
             FragmentsAvailable.OUTORDER -> fragment = OutorderFragment()
             FragmentsAvailable.INFO -> fragment = InfoFragment()
+            FragmentsAvailable.CHARGE -> fragment = ChargeFragment()
+            FragmentsAvailable.SETTING -> fragment = SettingFragment()
             FragmentsAvailable.ORDER_HISTORY -> fragment = OrderHistoryFragment()
             FragmentsAvailable.OUTORDER_HISTORY -> fragment = OutorderHistoryFragment()
         }
@@ -93,6 +95,18 @@ class MainActivity : AppCompatActivity(), OnClickListener {
                     selectMenu(FragmentsAvailable.INFO)
                 }
             }
+            R.id.charge-> {
+                if(currentFragment != FragmentsAvailable.CHARGE) {
+                    changeCurrentFragment(FragmentsAvailable.CHARGE, null)
+                    selectMenu(FragmentsAvailable.CHARGE)
+                }
+            }
+            R.id.setting-> {
+                if(currentFragment != FragmentsAvailable.SETTING) {
+                    changeCurrentFragment(FragmentsAvailable.SETTING, null)
+                    selectMenu(FragmentsAvailable.SETTING)
+                }
+            }
         }
     }
 
@@ -103,6 +117,8 @@ class MainActivity : AppCompatActivity(), OnClickListener {
             FragmentsAvailable.ORDER -> inorder_select.visibility = View.VISIBLE
             FragmentsAvailable.OUTORDER -> outorder_select.visibility = View.VISIBLE
             FragmentsAvailable.INFO-> info_select.visibility = View.VISIBLE
+            FragmentsAvailable.CHARGE-> charge_select.visibility = View.VISIBLE
+            FragmentsAvailable.SETTING-> setting_select.visibility = View.VISIBLE
         }
     }
 
@@ -126,6 +142,8 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         inorder_select!!.visibility = View.INVISIBLE
         outorder_select!!.visibility = View.INVISIBLE
         info_select!!.visibility = View.INVISIBLE
+        charge_select!!.visibility = View.INVISIBLE
+        setting_select!!.visibility = View.INVISIBLE
     }
 
     companion object {
