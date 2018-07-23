@@ -15,14 +15,12 @@ import com.nycompany.skyban.dto.List
 import com.nycompany.skyban.dto.OderDTO
 import com.nycompany.skyban.enums.ResCode
 import com.nycompany.skyban.adapter.OrderRecyclerViewAdapter
-import com.nycompany.skyban.dto.RealmUserInfo
 import com.nycompany.skyban.network.ReqMyOrderList
 import com.nycompany.skyban.network.RetrofitCreater
 import com.nycompany.skyban.util.ContextUtil
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection
 import dmax.dialog.SpotsDialog
-import io.realm.Realm
 import kotlinx.android.synthetic.main.fragment_outorder_history.*
 import kotlinx.android.synthetic.main.inorder_recyclerview_item.view.*
 import org.json.JSONObject
@@ -52,10 +50,8 @@ class OutorderHistoryFragment : Fragment() {
         recycler_order.setHasFixedSize(true)
         val paramObject = JSONObject()
 
-        Realm.getDefaultInstance().use {
-            val data = it.where(RealmUserInfo::class.java).findAll()
-            paramObject.put("cell_no", data[0]?.cell_no)
-        }
+        val userInfo = getUserinfo()
+        paramObject.put("cell_no", userInfo?.cell_no)
 
         myAdapter = OrderRecyclerViewAdapter(orderHistory, reqFragType)
         setRecyclerView(true, makeJson(true, paramObject))

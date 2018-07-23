@@ -14,13 +14,11 @@ import android.view.View
 import android.view.ViewGroup
 import com.beardedhen.androidbootstrap.BootstrapButton
 import com.nycompany.skyban.dto.OrderRegisterDTO
-import com.nycompany.skyban.dto.RealmUserInfo
 import com.nycompany.skyban.enums.ResCode
 import com.nycompany.skyban.network.ReqOrderRegister
 import com.nycompany.skyban.network.RetrofitCreater
 import com.nycompany.skyban.util.ContextUtil
 import com.nycompany.skyban.util.MyUtil
-import io.realm.Realm
 import kotlinx.android.synthetic.main.fragment_outorder.*
 import org.json.JSONObject
 import retrofit2.Call
@@ -52,10 +50,9 @@ class OutorderFragment : Fragment(), View.OnClickListener{
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Realm.getDefaultInstance().use {
-            val data = it.where(RealmUserInfo::class.java).findAll()
-            paramObject.put("cell_no", data[0]?.cell_no)
-        }
+        val userinfo = getUserinfo()
+        paramObject.put("cell_no", userinfo?.cell_no)
+
         inttUI()
 
         //발주버튼
@@ -88,7 +85,7 @@ class OutorderFragment : Fragment(), View.OnClickListener{
                     }
                 }
             })
-            util.updateUserInfo()
+            updateUserInfo()
         }
     }
 

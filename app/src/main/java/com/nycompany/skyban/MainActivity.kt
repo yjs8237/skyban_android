@@ -127,7 +127,7 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         selectMenu(FragmentsAvailable.INFO)
     }
 
-    fun displayOutorderHistory(){
+    fun moveOutorderHistory(){
         changeCurrentFragment(FragmentsAvailable.INFO , null)
         changeCurrentFragment(FragmentsAvailable.OUTORDER_HISTORY, null)
         selectMenu(FragmentsAvailable.INFO)

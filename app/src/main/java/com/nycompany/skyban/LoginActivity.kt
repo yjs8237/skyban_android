@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.util.Log
 import com.nycompany.skyban.enums.*
 import com.nycompany.skyban.dto.LoginDTO
-import com.nycompany.skyban.dto.RealmUserInfo
 import com.nycompany.skyban.network.ReqLogin
 import com.nycompany.skyban.network.RetrofitCreater
 import com.nycompany.skyban.util.ContextUtil
@@ -44,14 +43,7 @@ class LoginActivity : AppCompatActivity() {
                 override fun onResponse(call: Call<LoginDTO>, response: Response<LoginDTO>) {
                     response.body()?.let {
                         if(it.result == ResCode.Success.Code) {
-                            Realm.getDefaultInstance().use {
-                                val data = it.where(RealmUserInfo::class.java).findAll()
-                                it.beginTransaction()
-                                if (data.size > 0) it.deleteAll()
-                                var userInfo = UserInfoLocal.makeRealmUserinfo(response, pass)
-                                it.copyToRealm(userInfo)
-                                it.commitTransaction()
-                            }
+                            resetUserinfoRealm(it, pass)
                             startActivity(Intent().setClass(this@LoginActivity, MainActivity::class.java))
                             finish()
                         }else{

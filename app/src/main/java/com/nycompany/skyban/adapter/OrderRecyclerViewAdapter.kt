@@ -34,41 +34,41 @@ class OrderRecyclerViewAdapter(private val inOrders: ArrayList<List>?, FragmentT
         //xml 데아터 바인딩
         var util = ContextUtil(context!!)
         vh.textView_Orderseq.text = inOrders!![i].order_seq
-        vh.textViewCommission_yn.text = if (inOrders!![i].commission_yn =="Y") context?.getString(R.string.commission_y)  else context?.getString(R.string.commission_n)
+        vh.textViewCommission_yn.text = if (inOrders[i].commission_yn =="Y") context?.getString(R.string.commission_y)  else context?.getString(R.string.commission_n)
         //if(fType == FragmentsAvailable.ORDER_HISTORY) {vh.textViewCommission_yn.visibility = View.GONE}
-        vh.textViewDate.text = inOrders!![i].work_date!!.split(" ")[0]
-        vh.textViewTime.text = inOrders!![i].work_date!!.split(" ")[1]
+        vh.textViewDate.text = inOrders[i].work_date!!.split(" ")[0]
+        vh.textViewTime.text = inOrders[i].work_date!!.split(" ")[1]
         var workProcMap = util.getHashmapFromResoureces(R.array.work_proc)
-        vh.textViewWorkProc.text = workProcMap[inOrders!![i].work_proc]
+        vh.textViewWorkProc.text = workProcMap[inOrders[i].work_proc]
         var carTypeMap = util.getHashmapFromResoureces(R.array.car_type)
         var carLengthMap = util.getHashmapFromResoureces(R.array.car_length)
-        vh.textView_car_length.text = "차량 : ${carTypeMap[inOrders!![i].min_car_type]}" +
-                "${carLengthMap[inOrders!![i].min_car_length]?.let{ " - " + it}?:run{ "" }} ~ " +
-                "${carTypeMap[inOrders!![i].max_car_type]}" +
-                "${carLengthMap[inOrders!![i].min_car_length]?.let{ " - " + it}?:run{ "" }}"
-        vh.textView_work_location.text = "장소 : ${inOrders!![i].work_location}"
-        var op_invertor =  if (inOrders!![i].op_danchuk == "Y") "인버터" else null
-        var op_guljul =  if (inOrders!![i].op_guljul == "Y") "굴절" else null
-        var op_winchi =  if (inOrders!![i].op_winchi == "Y") "윈찌" else null
-        var op_danchuk =  if (inOrders!![i].op_danchuk == "Y") "단축" else null
+        vh.textView_car_length.text = "차량 : ${carTypeMap[inOrders[i].min_car_type]}" +
+                "${carLengthMap[inOrders[i].min_car_length]?.let{ " - " + it}?:run{ "" }} ~ " +
+                "${carTypeMap[inOrders[i].max_car_type]}" +
+                "${carLengthMap[inOrders[i].min_car_length]?.let{ " - " + it}?:run{ "" }}"
+        vh.textView_work_location.text = "장소 : ${inOrders[i].work_location}"
+        var op_invertor =  if (inOrders[i].op_danchuk == "Y") "인버터" else null
+        var op_guljul =  if (inOrders[i].op_guljul == "Y") "굴절" else null
+        var op_winchi =  if (inOrders[i].op_winchi == "Y") "윈찌" else null
+        var op_danchuk =  if (inOrders[i].op_danchuk == "Y") "단축" else null
         vh.textView_work_option.text = "옵션 : ${op_invertor?.let{it +" "}?:run{""}} ${op_guljul?.let{it +" "}?:run{""}} " +
                 "${op_winchi?.let{it +" "}?:run{""}} ${op_danchuk?.let{it +" "}?:run{""}}"
-        vh.textView_work_pay.text = "수당 : ${inOrders!![i].work_pay}"
+        vh.textView_work_pay.text = "수당 : ${inOrders[i].work_pay}"
         var payDateMap = util.getHashmapFromResoureces(R.array.pay_date)
-        vh.textView_word_duration.text = "결재기간 : ${payDateMap[inOrders!![i].pay_date]?.let{it}?:run{""}}"
+        vh.textView_word_duration.text = "결재기간 : ${payDateMap[inOrders[i].pay_date]?.let{it}?:run{""}}"
 
-        inOrders!![i].work_proc?.let {
+        inOrders[i].work_proc?.let {
             if ("WP04" == it) {
                 vh.linearLayout_left.setBackgroundResource(R.color.grey)
                 vh.linearLayout_right.setBackgroundResource(R.color.grey)
-                for (i in 0..(vh.linearLayout_left.childCount - 1)) {
-                    (vh.linearLayout_left.getChildAt(i) as TextView)?.let { it.setTextColor(context?.resources?.getColor(R.color.black)!!) }
+                for (j in 0..(vh.linearLayout_left.childCount - 1)) {
+                    (vh.linearLayout_left.getChildAt(j) as TextView)?.let { it.setTextColor(context?.resources?.getColor(R.color.black)!!) }
                 }
             } else {
                 vh.linearLayout_left.setBackgroundResource(R.color.sky)
                 vh.linearLayout_right.setBackgroundResource(R.color.white)
-                for (i in 0..(vh.linearLayout_left.childCount - 1)) {
-                    (vh.linearLayout_left.getChildAt(i) as TextView)?.let { it.setTextColor(context?.resources?.getColor(R.color.white)!!) }
+                for (j in 0..(vh.linearLayout_left.childCount - 1)) {
+                    (vh.linearLayout_left.getChildAt(j) as TextView)?.let { it.setTextColor(context?.resources?.getColor(R.color.white)!!) }
                 }
             }
         }

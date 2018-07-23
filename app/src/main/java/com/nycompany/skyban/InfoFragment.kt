@@ -6,9 +6,7 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.nycompany.skyban.dto.RealmUserInfo
 import com.nycompany.skyban.util.ContextUtil
-import io.realm.Realm
 import kotlinx.android.synthetic.main.fragment_info.*
 
 private const val ARG_PARAM1 = "param1"
@@ -42,24 +40,27 @@ class InfoFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_info, container, false)
     }
 
+    override fun onStart() {
+        super.onStart()
+        val userinfo = getUserinfo()
+        if(userinfo?.cash.toString() != "") textView_cash.text = String.format("%s cash",userinfo?.cash)
+        textView_InorderPoint.text = String.format("%s 수주 point",userinfo?.obtain_point)
+        textView_OutorderPoint.text = String.format("%s 발주 point",userinfo?.order_point)
+        Button_InOrder.text = String.format("수주완료 %s건",userinfo?.obtain_cnt)
+        Button_OutOrder.text = String.format("발주완료 %s건",userinfo?.order_cnt)
+        val level = util.getHashmapFromResoureces(R.array.user_level)[userinfo?.user_level]
+        textView_User.text = String.format("%s 님 %s",userinfo?.user_name, level)
+    }
+
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Realm.getDefaultInstance().use {
-            val data = it.where(RealmUserInfo::class.java).findAll()
-            if(data[0]?.cash.toString() != "") textView_cash.text = String.format("%s cash",data[0]?.cash)
-            textView_InorderPoint.text = String.format("%s 수주 point",data[0]?.obtain_point)
-            textView_OutorderPoint.text = String.format("%s 발주 point",data[0]?.order_point)
-            Button_InOrder.text = String.format("수주완료 %s건",data[0]?.obtain_cnt)
-            Button_OutOrder.text = String.format("발주완료 %s건",data[0]?.order_cnt)
-            val level = util.getHashmapFromResoureces(R.array.user_level)[data[0]?.user_level]
-            textView_User.text = String.format("%s 님 %s",data[0]?.user_name, level)
-        }
+
         Button_InOrder.setOnClickListener {
             MainActivity.instance()?.moveOrderHistory()
         }
 
         Button_OutOrder.setOnClickListener{
-            MainActivity.instance()?.displayOutorderHistory()
+            MainActivity.instance()?.moveOutorderHistory()
         }
 
         ButtonPremium.setOnClickListener {

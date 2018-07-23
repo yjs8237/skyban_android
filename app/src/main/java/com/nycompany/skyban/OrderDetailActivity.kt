@@ -6,7 +6,6 @@ import android.support.v4.app.FragmentActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.ImageView
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -16,7 +15,6 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.nycompany.skyban.dto.CommonDTO
 import com.nycompany.skyban.dto.InOrderdetailDTO
-import com.nycompany.skyban.dto.RealmUserInfo
 import com.nycompany.skyban.enums.ResCode
 import com.nycompany.skyban.network.ReqMyOrderDetail
 import com.nycompany.skyban.network.ReqObtaInorder
@@ -25,7 +23,6 @@ import com.nycompany.skyban.network.RetrofitCreater
 import com.nycompany.skyban.util.ContextUtil
 import com.nycompany.skybanminitp.FragmentsAvailable
 import dmax.dialog.SpotsDialog
-import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_inorder_detail.*
 import org.json.JSONObject
 import retrofit2.Call
@@ -45,14 +42,10 @@ class OrderDetailActivity : FragmentActivity(), OnMapReadyCallback {
                 .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-        val btnCancel = findViewById<View>(R.id.btnCancel) as ImageView
         btnCancel.setOnClickListener { finish() }
 
-        lateinit var cell_no:String
-        Realm.getDefaultInstance().use {
-            val data = it.where(RealmUserInfo::class.java).findAll()
-            cell_no = data[0]?.cell_no!!
-        }
+        val cell_no = getUserinfo()?.cell_no!!
+
         var intent = intent
         var orderseq = intent.getStringExtra("orderseq")
 
@@ -97,7 +90,7 @@ class OrderDetailActivity : FragmentActivity(), OnMapReadyCallback {
                 override fun onResponse(call: Call<CommonDTO>, response: Response<CommonDTO>) {
                     response.body()?.let {
                         if (it.result == ResCode.Success.Code) {
-                            util.updateUserInfo()
+                            updateUserInfo()
                             val db = util.buildDialog("성공", "성공적으로 수주 되었습니다 ")
                             db.setPositiveButton("OK", object : DialogInterface.OnClickListener {
                                 override fun onClick(p0: DialogInterface?, p1: Int) {

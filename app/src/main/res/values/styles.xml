@@ -34,7 +34,7 @@
 
     <style name="MyButton.white" parent="ThemeOverlay.AppCompat.Light">
         <item name="colorAccent">@color/white</item>
-        <item name="android:colorControlHighlight">@color/colorAccent</item>
+        <item name="android:colorControlHighlight">@color/sky</item>
         <item name="android:textSize">15sp</item>
         <item name="android:textColor">@color/colorPrimaryDark</item>
         <item name="android:textStyle">bold</item>
