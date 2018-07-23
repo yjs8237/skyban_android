@@ -12,85 +12,88 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class UserInfoLocal {
-    companion object {
-        fun updateUserInfo(){
-            val server = RetrofitCreater.getMyInstance()?.create(ReqLogin::class.java)
-            val paramObject = JSONObject()
-            lateinit var pass:String
-            Realm.getDefaultInstance().use {
-                val data = it.where(RealmUserInfo::class.java).findAll()
-                paramObject.put("cell_no", data[0]?.cell_no)
-                paramObject.put("user_pwd", data[0]?.password)
-                pass = data[0]?.password.toString()
-            }
-            val reqString = paramObject.toString()
+fun updateUserInfo(){
+    var userinfo = getUserinfo()
+    val server = RetrofitCreater.getMyInstance()?.create(ReqLogin::class.java)
+    val paramObject = JSONObject()
 
-            server?.postRequest(reqString)?.enqueue(object: Callback<LoginDTO> {
-                override fun onFailure(call: Call<LoginDTO>, t: Throwable) {
-                    //val msg = if(!isConnected()) mContext?.getString(R.string.network_eror) else t.toString()
-                    Log.e(this::class.java.name, t.toString())
-                }
+    paramObject.put("cell_no", userinfo?.let { it.cell_no })
+    paramObject.put("user_pwd", userinfo?.let { it.password })
 
-                override fun onResponse(call: Call<LoginDTO>, response: Response<LoginDTO>) {
-                    response.body()?.let {
-                        if(it.result == ResCode.Success.Code) {
-                            Realm.getDefaultInstance().use {
-                                val data = it.where(RealmUserInfo::class.java).findAll()
-                                it.beginTransaction()
-                                if (data.size > 0) it.deleteAll()
-                                var userInfo = makeRealmUserinfo(response, pass)
-                                it.copyToRealm(userInfo)
-                                it.commitTransaction()
-                            }
-                        }else{
-                            Log.e(this::class.java.name, it.description)
-                        }
-                    }?:run{
-                        Log.e(this::class.java.name, "response body eror")
-                    }
-                }
-            })
+    val reqString = paramObject.toString()
+
+    server?.postRequest(reqString)?.enqueue(object: Callback<LoginDTO> {
+        override fun onFailure(call: Call<LoginDTO>, t: Throwable) {
+            //val msg = if(!isConnected()) mContext?.getString(R.string.network_eror) else t.toString()
+            Log.e(this::class.java.name, t.toString())
         }
 
-        fun makeRealmUserinfo(response:Response<LoginDTO>?, pass:String): RealmUserInfo {
-            val userInfo: RealmUserInfo = RealmUserInfo().apply {
-                cell_no = response?.body()?.user?.cell_no
-                password = pass
-                user_type = response?.body()?.user?.user_type
-                user_name = response?.body()?.user?.user_name
-                user_level = response?.body()?.user?.user_level
-                order_point = response?.body()?.user?.order_point
-                obtain_point = response?.body()?.user?.obtain_point
-                cash = response?.body()?.user?.cash
-                location = response?.body()?.user?.location
-                cop_number = response?.body()?.user?.cop_number
-                email = response?.body()?.user?.email
-                latitude = response?.body()?.user?.latitude
-                longitude = response?.body()?.user?.longitude
-                car_type = response?.body()?.user?.car_type
-                car_length = response?.body()?.user?.car_length
-                car_height = response?.body()?.user?.car_height
-                op_invertor = response?.body()?.user?.op_invertor
-                longitude = response?.body()?.user?.longitude
-                op_guljul = response?.body()?.user?.op_guljul
-                op_winchi = response?.body()?.user?.op_winchi
-                op_danchuk = response?.body()?.user?.op_danchuk
-                recomm_cell_no = response?.body()?.user?.recomm_cell_no
-                order_cnt = response?.body()?.user?.order_cnt
-                obtain_cnt = response?.body()?.user?.obtain_cnt
-                reg_date = response?.body()?.user?.reg_date
-            }
-            return userInfo
-        }
-
-        fun isHaveUserinfo():Boolean{
-            Realm.getDefaultInstance().use {
-                if(it.where(RealmUserInfo::class.java).findAll().size > 0){
-                    return true
+        override fun onResponse(call: Call<LoginDTO>, response: Response<LoginDTO>) {
+            response.body()?.let {
+                if(it.result == ResCode.Success.Code) {
+                    resetUserinfoRealm(it, userinfo?.password!!)
+                }else{
+                    Log.e(this::class.java.name, it.description)
                 }
-                return false
+            }?:run{
+                Log.e(this::class.java.name, "response body eror")
             }
+        }
+    })
+}
+
+fun getUserinfo(): RealmUserInfo? {
+    Realm.getDefaultInstance().use {
+        val userData = it.where(RealmUserInfo::class.java).findAll()
+        if(userData.size > 0){
+            return it.copyFromRealm(userData)[0]
         }
     }
+    return null
+}
+
+fun resetUserinfoRealm(dto:LoginDTO?, pass:String){
+    val userInfo: RealmUserInfo = RealmUserInfo().apply {
+        cell_no = dto?.user?.cell_no
+        password = pass
+        user_type = dto?.user?.user_type
+        user_name = dto?.user?.user_name
+        user_level = dto?.user?.user_level
+        order_point = dto?.user?.order_point
+        obtain_point = dto?.user?.obtain_point
+        cash = dto?.user?.cash
+        location = dto?.user?.location
+        cop_number = dto?.user?.cop_number
+        email = dto?.user?.email
+        latitude = dto?.user?.latitude
+        longitude = dto?.user?.longitude
+        car_type = dto?.user?.car_type
+        car_length = dto?.user?.car_length
+        car_height = dto?.user?.car_height
+        op_invertor = dto?.user?.op_invertor
+        longitude = dto?.user?.longitude
+        op_guljul = dto?.user?.op_guljul
+        op_winchi = dto?.user?.op_winchi
+        op_danchuk = dto?.user?.op_danchuk
+        recomm_cell_no = dto?.user?.recomm_cell_no
+        order_cnt = dto?.user?.order_cnt
+        obtain_cnt = dto?.user?.obtain_cnt
+        reg_date = dto?.user?.reg_date
+    }
+
+    Realm.getDefaultInstance().use {
+        it.beginTransaction()
+        it.deleteAll()
+        it.copyToRealm(userInfo)
+        it.commitTransaction()
+    }
+}
+
+fun isHaveUserinfo():Boolean{
+    Realm.getDefaultInstance().use {
+        if(it.where(RealmUserInfo::class.java).findAll().size > 0){
+            return true
+        }
+    }
+    return false
 }
