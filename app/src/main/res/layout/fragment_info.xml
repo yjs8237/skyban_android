@@ -177,7 +177,7 @@
                 tools:text="나고객 님 일반회원"/>
 
             <com.beardedhen.androidbootstrap.BootstrapButton
-                android:id="@+id/bootstrapButton"
+                android:id="@+id/ButtonPremium"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
@@ -202,7 +202,7 @@
                 app:bootstrapHeading="h6"
                 app:bootstrapText="{fa_circle_o} 정보수정"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/bootstrapButton"/>
+                app:layout_constraintTop_toBottomOf="@+id/ButtonPremium"/>
 
             <com.beardedhen.androidbootstrap.BootstrapButton
                 android:id="@+id/bootstrapButton2"

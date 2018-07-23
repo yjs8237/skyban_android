@@ -12,16 +12,16 @@ class LauncherActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.launcher)
-        val realm = Realm.getDefaultInstance()
-        val data = realm.where(RealmUserInfo::class.java).findAll()
-        if(data.size != 0) ContextUtil(this).updateUserInfo()
+
+        if(UserInfoLocal.isHaveUserinfo()) {
+            UserInfoLocal.updateUserInfo()
+        }
 
         var mHandler = Handler()
         mHandler.postDelayed({
             //Realm.deleteRealm(Realm.getDefaultConfiguration())
-            if(data.size == 0) startActivity(Intent().setClass(this@LauncherActivity, LoginActivity::class.java))
+            if(UserInfoLocal.isHaveUserinfo()) startActivity(Intent().setClass(this@LauncherActivity, LoginActivity::class.java))
             else  startActivity(Intent().setClass(this@LauncherActivity, MainActivity::class.java))
-            realm.close()
             finish()
         }, 600)
     }

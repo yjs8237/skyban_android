@@ -16,7 +16,6 @@ class MainActivity : AppCompatActivity(), OnClickListener {
     private var currentFragment:FragmentsAvailable? = null
     private var fragment: Fragment? = null
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)

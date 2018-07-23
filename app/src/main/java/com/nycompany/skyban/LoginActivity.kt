@@ -48,7 +48,7 @@ class LoginActivity : AppCompatActivity() {
                                 val data = it.where(RealmUserInfo::class.java).findAll()
                                 it.beginTransaction()
                                 if (data.size > 0) it.deleteAll()
-                                var userInfo = util.setUserinfo(response, pass)
+                                var userInfo = UserInfoLocal.makeRealmUserinfo(response, pass)
                                 it.copyToRealm(userInfo)
                                 it.commitTransaction()
                             }

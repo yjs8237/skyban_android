@@ -2,6 +2,7 @@ package com.nycompany.skyban
 
 import android.os.Bundle
 import android.app.Fragment
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -59,6 +60,10 @@ class InfoFragment : Fragment() {
 
         Button_OutOrder.setOnClickListener{
             MainActivity.instance()?.displayOutorderHistory()
+        }
+
+        ButtonPremium.setOnClickListener {
+            startActivity(Intent(activity, PremiumActivity::class.java))
         }
     }
 
