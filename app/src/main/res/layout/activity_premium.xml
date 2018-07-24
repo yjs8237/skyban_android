@@ -3,6 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LinearLayout"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -55,20 +58,20 @@
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/guideline4"
+            app:layout_constraintEnd_toStartOf="@+id/guideline"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
         <android.support.constraint.Guideline
-            android:id="@+id/guideline4"
+            android:id="@+id/guideline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintGuide_percent="0.5"/>
 
         <TextView
-            android:id="@+id/textView11"
+            android:id="@+id/textView_Cash"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
@@ -79,7 +82,7 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/guideline4"/>
+            app:layout_constraintStart_toStartOf="@+id/guideline"/>
 
     </android.support.constraint.ConstraintLayout>
 
@@ -99,7 +102,7 @@
         app:showOutline="true">
 
         <com.beardedhen.androidbootstrap.BootstrapButton
-            android:id="@+id/Button_commission_y"
+            android:id="@+id/Button_RadioCash"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -107,7 +110,7 @@
             app:checked="true" />
 
         <com.beardedhen.androidbootstrap.BootstrapButton
-            android:id="@+id/Button_commission_n"
+            android:id="@+id/Button_RadioDeposit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -163,11 +166,43 @@
         android:layout_marginTop="8dp"
         app:bootstrapBrand="info"
         app:bootstrapHeading="h6"
+        app:bootstrapText="{fa_circle_o} 신청기간"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bootstrapButtonGroup" />
+
+    <com.beardedhen.androidbootstrap.BootstrapEditText
+        android:id="@+id/EditText_Term"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:hint="기간입력(개월)"
+        android:inputType="number"
+        android:imeOptions="actionDone"
+        app:bootstrapBrand="info"
+        app:bootstrapSize="md" />
+
+    <LinearLayout
+        android:id="@+id/View_Deposit"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <com.beardedhen.androidbootstrap.BootstrapLabel
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:bootstrapBrand="info"
+        app:bootstrapHeading="h6"
         app:bootstrapText="{fa_circle_o} 입금금액"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bootstrapButtonGroup" />
 
     <com.beardedhen.androidbootstrap.BootstrapEditText
+        android:id="@+id/EditText_Cash"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -191,16 +226,19 @@
         app:layout_constraintTop_toBottomOf="@+id/bootstrapButtonGroup" />
 
     <com.beardedhen.androidbootstrap.BootstrapEditText
+        android:id="@+id/EditText_Name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:hint="입금자명"
-        android:inputType="number"
+        android:inputType="text"
         android:imeOptions="actionDone"
         app:bootstrapBrand="info"
         app:bootstrapSize="md" />
+
+    </LinearLayout>1
 
     <com.beardedhen.androidbootstrap.BootstrapButton
         android:id="@+id/Button_Order"
@@ -210,7 +248,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        app:bootstrapSize="lg"
+        app:bootstrapSize="md"
         android:text="신청하기"
         app:roundedCorners="true"
         app:bootstrapBrand="danger" />

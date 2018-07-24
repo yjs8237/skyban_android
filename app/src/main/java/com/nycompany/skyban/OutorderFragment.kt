@@ -69,7 +69,7 @@ class OutorderFragment : Fragment(), View.OnClickListener{
                 override fun onResponse(call: Call<OrderRegisterDTO>, response: Response<OrderRegisterDTO>) {
                     response.body()?.let {
                         if(it.result == ResCode.Success.Code) {
-                            util.buildDialog("성공","성공적으로 발주 되었습니다").show()
+                            util.buildDialog("완료","성공적으로 발주 되었습니다").show()
 
                             val fm = fragmentManager.beginTransaction()
                             fm.remove(this@OutorderFragment).replace(R.id.fragmentContainer , OutorderFragment.newInstance()).commit()
@@ -306,7 +306,7 @@ class OutorderFragment : Fragment(), View.OnClickListener{
             lenghButton = Button_SelectMaxLength
         }
 
-        var DilogType = AlertDialog.Builder(activity).apply {
+        var dilog = AlertDialog.Builder(activity).apply {
             setTitle(typeTitle)
             lateinit var lengthItems: Array<String>
             setItems(typeItems, DialogInterface.OnClickListener { dialogInterface, i ->
@@ -333,7 +333,7 @@ class OutorderFragment : Fragment(), View.OnClickListener{
                 }
             })
         }
-        return DilogType
+        return dilog
     }
 
     override fun onClick(btn: View?) {

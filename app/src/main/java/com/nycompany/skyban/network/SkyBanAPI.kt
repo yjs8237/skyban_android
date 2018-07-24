@@ -50,3 +50,9 @@ interface ReqObtaInorder{
     @Headers("Content-Type: application/json", "Authorization: Basic YXBpdXNlcjpTa3lCYW5BcGk=")
     fun postRequest(@Body body:String):Call<CommonDTO>
 }
+
+interface ReqPremium{
+    @POST("/user/usermngt/premium")
+    @Headers("Content-Type: application/json", "Authorization: Basic YXBpdXNlcjpTa3lCYW5BcGk=")
+    fun postRequest(@Body body:String):Call<CommonDTO>
+}
