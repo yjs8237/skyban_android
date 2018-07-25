@@ -357,10 +357,6 @@ class OutorderFragment : Fragment(), View.OnClickListener{
             }
     }
 
-    override fun onDetach() {
-        super.onDetach()
-    }
-
     companion object {
         /**
          * Use this factory method to create a new instance of

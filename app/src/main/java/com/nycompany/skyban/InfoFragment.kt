@@ -66,6 +66,10 @@ class InfoFragment : Fragment() {
         ButtonPremium.setOnClickListener {
             startActivity(Intent(activity, PremiumActivity::class.java))
         }
+
+        Button_Personal.setOnClickListener {
+            startActivity(Intent(activity, UpdatePersonalActivity::class.java))
+        }
     }
 
     companion object {
