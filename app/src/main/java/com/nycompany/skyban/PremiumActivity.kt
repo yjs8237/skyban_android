@@ -66,7 +66,7 @@ class PremiumActivity : AppCompatActivity() {
                 override fun onResponse(call: Call<CommonDTO>, response: Response<CommonDTO>) {
                     response.body()?.let {
                         if(it.result == ResCode.Success.Code) {
-                            updateUserInfo()
+                            updateUserInfo(userInfo?.cell_no, userInfo?.password)
                             val db = util.buildDialog("완료", "등록 되었습니다")
                             db.setPositiveButton("OK", object : DialogInterface.OnClickListener {
                                 override fun onClick(p0: DialogInterface?, p1: Int) {

@@ -241,7 +241,7 @@
                 app:showOutline="true"/>
 
             <com.beardedhen.androidbootstrap.BootstrapButton
-                android:id="@+id/Button_carNo"
+                android:id="@+id/Button_carInfo"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
@@ -249,7 +249,7 @@
                 android:layout_marginTop="2dp"
                 android:drawableRight="@drawable/arrow_right"
                 android:gravity="left|center"
-                android:text="차량번호 수정"
+                android:text="차량정보 변경"
                 android:textStyle="bold"
                 app:bootstrapBrand="regular"
                 app:bootstrapSize="md"
@@ -268,7 +268,7 @@
                 app:bootstrapHeading="h6"
                 app:bootstrapText="{fa_circle_o} 적립금 내역"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/Button_carNo"/>
+                app:layout_constraintTop_toBottomOf="@+id/Button_carInfo"/>
 
             <com.beardedhen.androidbootstrap.BootstrapButton
                 android:id="@+id/bootstrapButton5"

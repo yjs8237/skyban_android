@@ -11,7 +11,7 @@ class LauncherActivity : AppCompatActivity() {
         setContentView(R.layout.launcher)
 
         if(isHaveUserinfo()) {
-           updateUserInfo()
+           updateUserInfo(getUserinfo()?.cell_no, getUserinfo()?.password)
         }
 
         var mHandler = Handler()

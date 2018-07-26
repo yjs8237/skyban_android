@@ -12,13 +12,13 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-fun updateUserInfo(){
-    var userinfo = getUserinfo()
+
+fun updateUserInfo(cell:String?, pass:String?){
     val server = RetrofitCreater.getMyInstance()?.create(ReqLogin::class.java)
     val paramObject = JSONObject()
 
-    paramObject.put("cell_no", userinfo?.let { it.cell_no })
-    paramObject.put("user_pwd", userinfo?.let { it.password })
+    paramObject.put("cell_no", cell)
+    paramObject.put("user_pwd", pass)
 
     val reqString = paramObject.toString()
 
@@ -31,7 +31,7 @@ fun updateUserInfo(){
         override fun onResponse(call: Call<LoginDTO>, response: Response<LoginDTO>) {
             response.body()?.let {
                 if(it.result == ResCode.Success.Code) {
-                    resetUserinfoRealm(it, userinfo?.password!!)
+                    resetUserinfoRealm(it, pass!!)
                 }else{
                     Log.e(this::class.java.name, it.description)
                 }

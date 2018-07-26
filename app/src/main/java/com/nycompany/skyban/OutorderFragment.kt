@@ -85,7 +85,7 @@ class OutorderFragment : Fragment(), View.OnClickListener{
                     }
                 }
             })
-            updateUserInfo()
+            updateUserInfo(userinfo?.cell_no, userinfo?.password)
         }
     }
 

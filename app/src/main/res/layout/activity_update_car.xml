@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UpdatePersonalActivity">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:text="차량정보 변경"
+            android:textColor="@android:color/background_light"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <ImageView
+            android:id="@+id/imageView_Back"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="8dp"
+            android:src="@drawable/ic_arrow_back_white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <com.beardedhen.androidbootstrap.BootstrapLabel
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:bootstrapBrand="info"
+        app:bootstrapHeading="h6"
+        app:bootstrapText="{fa_circle_o} 차량정보" />
+
+    <com.beardedhen.androidbootstrap.BootstrapButton
+        android:id="@+id/Button_SelectType"
+        android:drawableRight="@drawable/avobedown_w"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:bootstrapSize="md"
+        app:bootstrapBrand="primary"
+        android:text="차량톤수"
+        app:roundedCorners="true" />
+
+    <com.beardedhen.androidbootstrap.BootstrapButton
+        android:id="@+id/Button_SelectLength"
+        android:drawableRight="@drawable/avobedown_w"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="차량길이"
+        app:bootstrapSize="md"
+        app:bootstrapBrand="primary"
+        app:roundedCorners="true" />
+
+    <com.beardedhen.androidbootstrap.BootstrapButton
+        android:id="@+id/Button_SelectHeight"
+        android:drawableRight="@drawable/avobedown_w"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:bootstrapBrand="primary"
+        app:bootstrapExpandDirection="down"
+        app:bootstrapSize="md"
+        app:bootstrapText="차량높이(전고)"
+        app:roundedCorners="true" />
+
+    <com.beardedhen.androidbootstrap.BootstrapLabel
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:bootstrapBrand="info"
+        app:bootstrapHeading="h6"
+        app:bootstrapText="{fa_circle_o} 차량옵션(멀티선택가능)"/>
+
+    <com.beardedhen.androidbootstrap.BootstrapButtonGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal"
+        app:bootstrapBrand="primary"
+        app:bootstrapSize="md"
+        app:buttonMode="checkbox"
+        app:roundedCorners="false"
+        app:showOutline="true">
+
+        <com.beardedhen.androidbootstrap.BootstrapButton
+            android:id="@+id/Button_CheckInvertor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="인버터" />
+
+        <com.beardedhen.androidbootstrap.BootstrapButton
+            android:id="@+id/Button_CheckGuljul"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="굴절" />
+
+        <com.beardedhen.androidbootstrap.BootstrapButton
+            android:id="@+id/Button_CheckWinchi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="원찌" />
+
+        <com.beardedhen.androidbootstrap.BootstrapButton
+            android:id="@+id/Button_CheckDanchuk"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="단축" />
+
+    </com.beardedhen.androidbootstrap.BootstrapButtonGroup>
+
+    <com.beardedhen.androidbootstrap.BootstrapButton
+        android:id="@+id/Button_Change"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        app:bootstrapSize="md"
+        android:text="변경하기"
+        app:roundedCorners="true"
+        app:bootstrapBrand="danger" />
+
+</LinearLayout>

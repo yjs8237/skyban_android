@@ -90,7 +90,7 @@ class OrderDetailActivity : FragmentActivity(), OnMapReadyCallback {
                 override fun onResponse(call: Call<CommonDTO>, response: Response<CommonDTO>) {
                     response.body()?.let {
                         if (it.result == ResCode.Success.Code) {
-                            updateUserInfo()
+                            updateUserInfo(getUserinfo()?.cell_no, getUserinfo()?.password)
                             val db = util.buildDialog("성공", "성공적으로 수주 되었습니다 ")
                             db.setPositiveButton("OK", object : DialogInterface.OnClickListener {
                                 override fun onClick(p0: DialogInterface?, p1: Int) {

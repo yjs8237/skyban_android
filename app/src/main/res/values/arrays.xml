@@ -33,7 +33,7 @@
     <string-array name="car_type">
         <item>T001|1T 차량</item>
         <item>T002|2.5T 차량</item>
-        <item>T003|2.5T 차량</item>
+        <item>T003|3.5T 차량</item>
         <item>T004|5T 단축</item>
         <item>T005|5T 40장축</item>
         <item>T006|5T 이상</item>

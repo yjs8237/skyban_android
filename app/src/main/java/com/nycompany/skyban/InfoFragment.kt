@@ -70,6 +70,14 @@ class InfoFragment : Fragment() {
         Button_Personal.setOnClickListener {
             startActivity(Intent(activity, UpdatePersonalActivity::class.java))
         }
+
+        Button_pass.setOnClickListener {
+            startActivity(Intent(activity, UpdatePasswordActivity::class.java))
+        }
+
+        Button_carInfo.setOnClickListener {
+            startActivity(Intent(activity, UpdateCarActivity::class.java))
+        }
     }
 
     companion object {
