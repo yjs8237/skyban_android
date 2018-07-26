@@ -29,8 +29,10 @@ import dmax.dialog.SpotsDialog
 import kotlinx.android.synthetic.main.inorder_recyclerview_item.view.*
 
 class OrderFragment() : Fragment() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_order, container, false)
     }
 
     private val Orders: ArrayList<List> = ArrayList()
@@ -118,11 +120,5 @@ class OrderFragment() : Fragment() {
             intent.putExtra("orderseq", view.textView_Orderseq.text.toString())
             startActivity(intent)
         })
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_order, container, false)
     }
 }

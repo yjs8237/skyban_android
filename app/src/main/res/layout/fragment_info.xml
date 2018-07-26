@@ -271,7 +271,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/Button_carInfo"/>
 
             <com.beardedhen.androidbootstrap.BootstrapButton
-                android:id="@+id/bootstrapButton5"
+                android:id="@+id/Button_Point"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
@@ -303,7 +303,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/bootstrapButton5"
+                app:layout_constraintTop_toBottomOf="@+id/Button_Point"
                 app:showOutline="true"/>
 
         </android.support.constraint.ConstraintLayout>
