@@ -11,7 +11,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.widget.Toast
 import com.nycompany.skyban.dto.OderDTO
-import com.nycompany.skyban.dto.List
+import com.nycompany.skyban.dto.OrderList
 import com.nycompany.skyban.enums.ResCode
 import com.nycompany.skyban.adapter.OrderRecyclerViewAdapter
 import com.nycompany.skyban.network.ReqOderList
@@ -26,7 +26,7 @@ import java.util.ArrayList
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout
 import dmax.dialog.SpotsDialog
-import kotlinx.android.synthetic.main.inorder_recyclerview_item.view.*
+import kotlinx.android.synthetic.main.recyclerview_inorder_item.view.*
 
 class OrderFragment() : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -35,9 +35,9 @@ class OrderFragment() : Fragment() {
         return inflater.inflate(R.layout.fragment_order, container, false)
     }
 
-    private val Orders: ArrayList<List> = ArrayList()
-    private lateinit var myAdapter: OrderRecyclerViewAdapter
-    val reaFragType = MainActivity.instance()?.getCurrentFarnment()!!
+    private val Orders: ArrayList<OrderList> = ArrayList()
+    private lateinit var mAdapter: OrderRecyclerViewAdapter
+    val reqFragType = MainActivity.instance()?.getCurrentFarnment()!!
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         //var context: Context = activity
@@ -48,7 +48,7 @@ class OrderFragment() : Fragment() {
 
         val jsonObj = JSONObject()
 
-        myAdapter = OrderRecyclerViewAdapter(Orders, reaFragType)
+        mAdapter = OrderRecyclerViewAdapter(Orders, reqFragType)
         setRecyclerView(true, makeJson(true, jsonObj))
 
         swipyrefreshlayout.setOnRefreshListener(SwipyRefreshLayout.OnRefreshListener { direction ->
@@ -91,15 +91,15 @@ class OrderFragment() : Fragment() {
                             response.body()?.list?.let {
                                 Orders.clear()
                                 Orders.addAll(it)
-                                myAdapter.notifyDataSetChanged()
+                                mAdapter.notifyDataSetChanged()
                             }
                             recycler_order?.let {
-                                it.adapter = myAdapter
+                                it.adapter = mAdapter
                             }
                         } else {
                             response.body()?.list?.let {
-                                Orders.addAll<List>(it)
-                                myAdapter.notifyDataSetChanged()
+                                Orders.addAll<OrderList>(it)
+                                mAdapter.notifyDataSetChanged()
                             }
                         }
                     } else {
@@ -114,7 +114,7 @@ class OrderFragment() : Fragment() {
                 loading.dismiss()
             }
         })
-        myAdapter.setClickListener(View.OnClickListener { view ->
+        mAdapter.setClickListener(View.OnClickListener { view ->
             Toast.makeText(view.getContext(), "주문번호 ${view.textView_Orderseq.text.toString()}", Toast.LENGTH_SHORT).show()
             val intent = Intent(activity, OrderDetailActivity::class.java)
             intent.putExtra("orderseq", view.textView_Orderseq.text.toString())

@@ -5,6 +5,7 @@
     <color name="colorAccent">#FF5722</color>
     <color name="white">#ffffff</color>
     <color name="sky">#88abe6</color>
+    <color name="pink">#ef759b</color>
     <color name="grey">#999999</color>
     <color name="black">#1c2426</color>
 </resources>

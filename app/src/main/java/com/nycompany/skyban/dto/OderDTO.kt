@@ -5,10 +5,10 @@ import java.util.ArrayList
 data class OderDTO(
         var result: String? = null,
         var description: String? = null,
-        var list:ArrayList<List>? = null
+        var list:ArrayList<OrderList>? = null
 )
 
-data class List(
+data class OrderList(
         var order_seq: String? = null,
         var order_user_num: String? = null,
         var work_date: String? = null,

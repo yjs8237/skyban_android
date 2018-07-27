@@ -62,3 +62,9 @@ interface ReqPersonalInfoUpdateServer{
     @Headers("Content-Type: application/json", "Authorization: Basic YXBpdXNlcjpTa3lCYW5BcGk=")
     fun postRequest(@Body body:String):Call<CommonDTO>
 }
+
+interface ReqPointHistory{
+    @POST("/user/usermngt/pointhistory")
+    @Headers("Content-Type: application/json", "Authorization: Basic YXBpdXNlcjpTa3lCYW5BcGk=")
+    fun postRequest(@Body body:String):Call<PointDTO>
+}

@@ -11,7 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import com.nycompany.skyban.dto.List
+import com.nycompany.skyban.dto.OrderList
 import com.nycompany.skyban.dto.OderDTO
 import com.nycompany.skyban.enums.ResCode
 import com.nycompany.skyban.adapter.OrderRecyclerViewAdapter
@@ -22,7 +22,7 @@ import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection
 import dmax.dialog.SpotsDialog
 import kotlinx.android.synthetic.main.fragment_outorder_history.*
-import kotlinx.android.synthetic.main.inorder_recyclerview_item.view.*
+import kotlinx.android.synthetic.main.recyclerview_inorder_item.view.*
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
@@ -40,7 +40,7 @@ class OutorderHistoryFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_outorder_history, container, false)
     }
 
-    private val orderHistory: ArrayList<List> = ArrayList()
+    private val orderHistory: ArrayList<OrderList> = ArrayList()
     private lateinit var myAdapter: OrderRecyclerViewAdapter
     val reqFragType = MainActivity.instance()?.getCurrentFarnment()!!
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
@@ -110,7 +110,7 @@ class OutorderHistoryFragment : Fragment() {
                             }
                         } else {
                             response.body()?.list?.let {
-                                orderHistory.addAll<List>(it)
+                                orderHistory.addAll<OrderList>(it)
                                 myAdapter.notifyDataSetChanged()
                             }
                         }

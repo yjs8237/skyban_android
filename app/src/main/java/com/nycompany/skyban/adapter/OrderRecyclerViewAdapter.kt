@@ -8,13 +8,13 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.nycompany.skyban.util.ContextUtil
-import com.nycompany.skyban.dto.List
+import com.nycompany.skyban.dto.OrderList
 import com.nycompany.skyban.R
 import com.nycompany.skybanminitp.FragmentsAvailable
 
 import java.util.ArrayList
 
-class OrderRecyclerViewAdapter(private val inOrders: ArrayList<List>?, FragmentType:FragmentsAvailable) : RecyclerView.Adapter<OrderRecyclerViewAdapter.ViewHolder>() {
+class OrderRecyclerViewAdapter(private val inOrders: ArrayList<OrderList>?, FragmentType:FragmentsAvailable) : RecyclerView.Adapter<OrderRecyclerViewAdapter.ViewHolder>() {
     private var mListener: View.OnClickListener? = null
     private var context: Context? = null
     private val fType = FragmentType
@@ -26,7 +26,7 @@ class OrderRecyclerViewAdapter(private val inOrders: ArrayList<List>?, FragmentT
     override fun onCreateViewHolder(v: ViewGroup, i: Int): ViewHolder {
         //xml 가져옴
         context = v.context
-        val view = LayoutInflater.from(v.context).inflate(R.layout.inorder_recyclerview_item, v, false)
+        val view = LayoutInflater.from(v.context).inflate(R.layout.recyclerview_inorder_item, v, false)
         return ViewHolder(view, mListener!!)
     }
 

@@ -60,7 +60,7 @@
             android:id="@+id/recycler_order"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:listitem="@layout/inorder_recyclerview_item"/>
+            tools:listitem="@layout/recyclerview_inorder_item"/>
     </com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout>
 
 

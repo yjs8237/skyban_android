@@ -78,6 +78,10 @@ class InfoFragment : Fragment() {
         Button_carInfo.setOnClickListener {
             startActivity(Intent(activity, UpdateCarActivity::class.java))
         }
+
+        Button_Point.setOnClickListener {
+            startActivity(Intent(activity, PointListActivity::class.java))
+        }
     }
 
     companion object {
