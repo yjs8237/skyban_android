@@ -23,7 +23,6 @@ import java.util.ArrayList
 class PointListActivity : AppCompatActivity() {
 
     private val points: ArrayList<PointList> = ArrayList()
-    private lateinit var mAdapter: PointRecyclerViewAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_point_list)
@@ -37,8 +36,6 @@ class PointListActivity : AppCompatActivity() {
         recycler_point.setLayoutManager(layoutManager)
         recycler_point.setHasFixedSize(true)
 
-        mAdapter = PointRecyclerViewAdapter(points)
-
         val paramObject = JSONObject()
         paramObject.put("cell_no", getUserinfo()?.cell_no)
         paramObject.put("user_pwd", getUserinfo()?.password)
@@ -46,6 +43,7 @@ class PointListActivity : AppCompatActivity() {
         val util = ContextUtil(this)
 
         var server = RetrofitCreater.getMyInstance()?.create(ReqPointHistory::class.java)
+        var mAdapter = PointRecyclerViewAdapter(points)
         val loading: AlertDialog = SpotsDialog.Builder().setContext(this).build()
         loading.show()
         server?.postRequest(reqString)?.enqueue(object: Callback<PointDTO> {

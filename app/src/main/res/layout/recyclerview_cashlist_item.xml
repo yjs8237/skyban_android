@@ -24,7 +24,7 @@
             android:padding="8dp">
 
             <TextView
-                android:id="@+id/textViewPointType"
+                android:id="@+id/textView_ReqType"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="한글"
@@ -37,7 +37,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/textViewPoint"
+                android:id="@+id/textView_Cash"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="2dp"
@@ -48,7 +48,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewPointType" />
+                app:layout_constraintTop_toBottomOf="@+id/textView_ReqType" />
 
         </android.support.constraint.ConstraintLayout>
 
@@ -60,7 +60,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textView_order_num"
+                android:id="@+id/textView_RegDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="2dp"
@@ -68,7 +68,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textView_work_contact"
+                android:id="@+id/textView_ResultDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="2dp"

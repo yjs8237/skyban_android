@@ -25,13 +25,6 @@ class PointRecyclerViewAdapter(private val points: ArrayList<PointList>?) : Recy
     override fun onBindViewHolder(vh: ViewHolder, i: Int) {
         //xml 데아터 바인딩
         vh.textViewPointType.text = points!![i].point_type
-
-        vh.textView_order_num.text = "발주자 연락처 : ${points[i].order_user_num}"
-        vh.textView_work_contact.text = "현장 연락처 : ${points[i].work_contact}"
-        vh.textView_work_location.text = "작업장소 : ${points[i].work_location}"
-        vh.textView_work_date.text = "작업일시 : ${points[i].work_date}"
-        vh.textView_work_pay.text = "작업수당 : ${points[i].work_pay}"
-
         points[i].point_type?.let {
             if ("발주" == it) {
                 vh.constraintLayout_left.setBackgroundResource(R.color.pink)
@@ -41,6 +34,12 @@ class PointRecyclerViewAdapter(private val points: ArrayList<PointList>?) : Recy
                 vh.textViewPoint.text = "+ ${points[i].point}P"
             }
         }
+
+        vh.textView_order_num.text = "발주자 연락처 : ${points[i].order_user_num}"
+        vh.textView_work_contact.text = "현장 연락처 : ${points[i].work_contact}"
+        vh.textView_work_location.text = "작업장소 : ${points[i].work_location}"
+        vh.textView_work_date.text = "작업일시 : ${points[i].work_date}"
+        vh.textView_work_pay.text = "작업수당 : ${points[i].work_pay}"
     }
 
     override fun getItemCount(): Int {

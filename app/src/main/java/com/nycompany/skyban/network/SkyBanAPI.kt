@@ -68,3 +68,9 @@ interface ReqPointHistory{
     @Headers("Content-Type: application/json", "Authorization: Basic YXBpdXNlcjpTa3lCYW5BcGk=")
     fun postRequest(@Body body:String):Call<PointDTO>
 }
+
+interface ReqCashHistory{
+    @POST("/user/cash/cashhistory")
+    @Headers("Content-Type: application/json", "Authorization: Basic YXBpdXNlcjpTa3lCYW5BcGk=")
+    fun postRequest(@Body body:String):Call<CashDTO>
+}
