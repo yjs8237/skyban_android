@@ -82,6 +82,10 @@ class InfoFragment : Fragment() {
         Button_Point.setOnClickListener {
             startActivity(Intent(activity, PointListActivity::class.java))
         }
+
+        Button_Cash.setOnClickListener {
+            startActivity(Intent(activity, CashListActivity::class.java))
+        }
     }
 
     companion object {
