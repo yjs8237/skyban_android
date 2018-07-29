@@ -54,20 +54,20 @@ class PremiumActivity : AppCompatActivity() {
             }
 
             val server = RetrofitCreater.getMyInstance()?.create(ReqPremium::class.java)
-            val util = ContextUtil(this)
+            val cUtil = ContextUtil(this)
             val reqString = paramObject.toString()
 
             server?.postRequest(reqString)?.enqueue(object: Callback<CommonDTO> {
                 override fun onFailure(call: Call<CommonDTO>, t: Throwable) {
-                    val msg = if(!util.isConnected()) getString(R.string.network_eror) else t.toString()
-                    util.buildDialog("eror", msg).show()
+                    val msg = if(!cUtil.isConnected()) getString(R.string.network_eror) else t.toString()
+                    cUtil.buildDialog("eror", msg).show()
                 }
 
                 override fun onResponse(call: Call<CommonDTO>, response: Response<CommonDTO>) {
                     response.body()?.let {
                         if(it.result == ResCode.Success.Code) {
                             updateUserInfo(userInfo?.cell_no, userInfo?.password)
-                            val db = util.buildDialog("완료", "등록 되었습니다")
+                            val db = cUtil.buildDialog("완료", "등록 되었습니다")
                             db.setPositiveButton("OK", object : DialogInterface.OnClickListener {
                                 override fun onClick(p0: DialogInterface?, p1: Int) {
                                     finish()
@@ -77,7 +77,7 @@ class PremiumActivity : AppCompatActivity() {
                             db.show()
                         }else{
                             it.description?.let {
-                                util.buildDialog(it).show()
+                                cUtil.buildDialog(it).show()
                             }
                         }
                     }?:run{

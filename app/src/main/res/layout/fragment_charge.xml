@@ -46,7 +46,7 @@
         app:showOutline="true">
 
         <com.beardedhen.androidbootstrap.BootstrapButton
-            android:id="@+id/Button_charge"
+            android:id="@+id/Button_Radio_charge"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -54,7 +54,7 @@
             app:checked="true" />
 
         <com.beardedhen.androidbootstrap.BootstrapButton
-            android:id="@+id/Button_refund"
+            android:id="@+id/Button_Radio_refund"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -135,6 +135,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/bootstrapButtonGroup" />
 
             <com.beardedhen.androidbootstrap.BootstrapEditText
+                android:id="@+id/EditText_Price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
@@ -158,13 +159,14 @@
                 app:layout_constraintTop_toBottomOf="@+id/bootstrapButtonGroup" />
 
             <com.beardedhen.androidbootstrap.BootstrapEditText
+                android:id="@+id/EditText_ChargeName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:hint="입금자명"
-                android:inputType="number"
+                android:inputType="textPersonName"
                 android:imeOptions="actionDone"
                 app:bootstrapBrand="info"
                 app:bootstrapSize="md" />
@@ -190,7 +192,7 @@
                 android:textStyle="bold"/>
 
             <com.beardedhen.androidbootstrap.BootstrapButton
-                android:id="@+id/Button_Order"
+                android:id="@+id/Button_charge"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
@@ -224,18 +226,20 @@
                 app:layout_constraintTop_toBottomOf="@+id/bootstrapButtonGroup" />
 
             <com.beardedhen.androidbootstrap.BootstrapEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:hint="은행명"
-            android:inputType="number"
-            android:imeOptions="actionDone"
-            app:bootstrapBrand="info"
-            app:bootstrapSize="md" />
+                android:id="@+id/EditText_Bank"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:hint="은행명"
+                android:inputType="number"
+                android:imeOptions="actionDone"
+                app:bootstrapBrand="info"
+                app:bootstrapSize="md" />
 
             <com.beardedhen.androidbootstrap.BootstrapEditText
+                android:id="@+id/EditText_AccountNo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
@@ -248,6 +252,20 @@
                 app:bootstrapSize="md" />
 
             <com.beardedhen.androidbootstrap.BootstrapEditText
+                android:id="@+id/EditText_AccountName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:hint="예금주"
+                android:inputType="number"
+                android:imeOptions="actionDone"
+                app:bootstrapBrand="info"
+                app:bootstrapSize="md" />
+
+            <com.beardedhen.androidbootstrap.BootstrapEditText
+                android:id="@+id/EditText_ReturnPrice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
@@ -260,6 +278,7 @@
                 app:bootstrapSize="md" />
 
             <com.beardedhen.androidbootstrap.BootstrapButton
+                android:id="@+id/Button_refund"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"

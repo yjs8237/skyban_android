@@ -1,5 +1,8 @@
 package com.nycompany.skyban.util
 
+import org.json.JSONObject
+
+
 class MyUtil {
     companion object {
         @JvmStatic fun getDicKeyFromValue(m:HashMap<String, String>, value: Any): Any? {
@@ -9,6 +12,11 @@ class MyUtil {
                 }
             }
             return null
+        }
+
+        fun clearJson(JSONobj:JSONObject){
+            while(JSONobj.length()>0)
+                JSONobj.remove(JSONobj.keys().next());
         }
     }
 }

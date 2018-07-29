@@ -74,3 +74,15 @@ interface ReqCashHistory{
     @Headers("Content-Type: application/json", "Authorization: Basic YXBpdXNlcjpTa3lCYW5BcGk=")
     fun postRequest(@Body body:String):Call<CashDTO>
 }
+
+interface ReqCashCharge{
+    @POST("/user/cash/requestcharge")
+    @Headers("Content-Type: application/json", "Authorization: Basic YXBpdXNlcjpTa3lCYW5BcGk=")
+    fun postRequest(@Body body:String):Call<CommonDTO>
+}
+
+interface ReqCashRefund{
+    @POST("/user/cash/refund")
+    @Headers("Content-Type: application/json", "Authorization: Basic YXBpdXNlcjpTa3lCYW5BcGk=")
+    fun postRequest(@Body body:String):Call<CommonDTO>
+}
