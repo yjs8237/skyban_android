@@ -86,3 +86,9 @@ interface ReqCashRefund{
     @Headers("Content-Type: application/json", "Authorization: Basic YXBpdXNlcjpTa3lCYW5BcGk=")
     fun postRequest(@Body body:String):Call<CommonDTO>
 }
+
+interface ReqNotificationList{
+    @POST("/user/notification/requestlist")
+    @Headers("Content-Type: application/json", "Authorization: Basic YXBpdXNlcjpTa3lCYW5BcGk=")
+    fun postRequest(@Body body:String):Call<NotificationDTO>
+}

@@ -103,6 +103,7 @@
     </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.ConstraintLayout
+        android:id="@+id/ConstraintLayout_Logout"
         android:clickable="true"
         android:theme="@style/MyTheme"
         android:foreground="?android:attr/selectableItemBackground"
@@ -153,6 +154,7 @@
         app:bootstrapText="{fa_circle_o} 고객센터"/>
 
     <android.support.constraint.ConstraintLayout
+        android:id="@+id/ConstraintLayout_Notification"
         android:clickable="true"
         android:theme="@style/MyTheme"
         android:foreground="?android:attr/selectableItemBackground"

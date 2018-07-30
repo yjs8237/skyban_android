@@ -55,8 +55,10 @@
             android:theme="@style/AppTheme" />
         <activity android:name=".UpdatePasswordActivity" />
         <activity android:name=".UpdateCarActivity" />
-        <activity android:name=".PointListActivity"></activity>
-        <activity android:name=".CashListActivity"></activity>
+        <activity android:name=".PointListActivity" />
+        <activity android:name=".CashListActivity" />
+        <activity android:name=".NotificationActivity" />
+        <activity android:name=".NotificationDetailActivity"></activity>
     </application>
 
 </manifest>

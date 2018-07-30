@@ -3,12 +3,14 @@ package com.nycompany.skyban
 import android.app.Fragment
 import android.app.FragmentManager
 import android.app.FragmentTransaction
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.view.View
 import android.view.View.OnClickListener
 import com.nycompany.skybanminitp.FragmentsAvailable
+import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -131,6 +133,16 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         changeCurrentFragment(FragmentsAvailable.INFO , null)
         changeCurrentFragment(FragmentsAvailable.OUTORDER_HISTORY, null)
         selectMenu(FragmentsAvailable.INFO)
+    }
+
+    fun logout(){
+        Realm.getDefaultInstance().use {
+            it.beginTransaction()
+            it.deleteAll()
+            it.commitTransaction()
+        }
+        startActivity(Intent().setClass(this, LoginActivity::class.java))
+        finish()
     }
 
     fun getCurrentFarnment():FragmentsAvailable?{
