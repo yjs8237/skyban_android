@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.nycompany.skyban.adapter.NotificationRecyclerViewAdapter
+import com.nycompany.skyban.dto.NotiDetailDTO
 import com.nycompany.skyban.dto.NotificationDTO
 import com.nycompany.skyban.dto.NotificationList
 import com.nycompany.skyban.enums.ResCode
@@ -112,11 +113,9 @@ class NotificationActivity : AppCompatActivity() {
         })
 
         myAdapter.setClickListener(View.OnClickListener { view ->
-            Toast.makeText(view.getContext(), "주문번호 ${view.textView_Notiseq.text.toString()}", Toast.LENGTH_SHORT).show()
-            /*
-            val intent = Intent(this, OrderDetailActivity::class.java)
-            intent.putExtra("orderseq", view.textView_Orderseq.text.toString())
-            startActivity(intent)*/
+            val intent = Intent(this, NotificationDetailActivity::class.java)
+            intent.putExtra("seq", view.textView_Notiseq.text.toString())
+            startActivity(intent)
         })
     }
 }

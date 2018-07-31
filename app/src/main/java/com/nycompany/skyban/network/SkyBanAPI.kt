@@ -92,3 +92,21 @@ interface ReqNotificationList{
     @Headers("Content-Type: application/json", "Authorization: Basic YXBpdXNlcjpTa3lCYW5BcGk=")
     fun postRequest(@Body body:String):Call<NotificationDTO>
 }
+
+interface ReqNotiDetail{
+    @POST("/user/notification/detail")
+    @Headers("Content-Type: application/json", "Authorization: Basic YXBpdXNlcjpTa3lCYW5BcGk=")
+    fun postRequest(@Body body:String):Call<NotiDetailDTO>
+}
+
+interface ReqQna{
+    @POST("/user/qna/list")
+    @Headers("Content-Type: application/json", "Authorization: Basic YXBpdXNlcjpTa3lCYW5BcGk=")
+    fun postRequest(@Body body:String):Call<QnalDTO>
+}
+
+interface ReqQnaDetail{
+    @POST("/user/qna/detail")
+    @Headers("Content-Type: application/json", "Authorization: Basic YXBpdXNlcjpTa3lCYW5BcGk=")
+    fun postRequest(@Body body:String):Call<QnaDetailDTO>
+}

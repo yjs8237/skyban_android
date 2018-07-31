@@ -58,7 +58,9 @@
         <activity android:name=".PointListActivity" />
         <activity android:name=".CashListActivity" />
         <activity android:name=".NotificationActivity" />
-        <activity android:name=".NotificationDetailActivity"></activity>
+        <activity android:name=".NotificationDetailActivity" />
+        <activity android:name=".QnaActivity" />
+        <activity android:name=".QnaDetailActivity"></activity>
     </application>
 
 </manifest>
