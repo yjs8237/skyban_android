@@ -110,3 +110,9 @@ interface ReqQnaDetail{
     @Headers("Content-Type: application/json", "Authorization: Basic YXBpdXNlcjpTa3lCYW5BcGk=")
     fun postRequest(@Body body:String):Call<QnaDetailDTO>
 }
+
+interface ReqQnaRegister{
+    @POST("/user/qna/register")
+    @Headers("Content-Type: application/json", "Authorization: Basic YXBpdXNlcjpTa3lCYW5BcGk=")
+    fun postRequest(@Body body:String):Call<CommonDTO>
+}

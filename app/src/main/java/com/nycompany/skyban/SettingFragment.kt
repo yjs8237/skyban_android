@@ -40,5 +40,9 @@ class SettingFragment : Fragment() {
         ConstraintLayout_qna.setOnClickListener {
             startActivity(Intent().setClass(activity, QnaActivity::class.java))
         }
+
+        ConstraintLayout_register_qna.setOnClickListener {
+            startActivity(Intent().setClass(activity, QnaRegisterActivity::class.java))
+        }
     }
 }

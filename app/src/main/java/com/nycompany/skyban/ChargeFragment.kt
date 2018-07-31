@@ -11,7 +11,6 @@ import com.nycompany.skyban.dto.CommonDTO
 import com.nycompany.skyban.enums.ResCode
 import com.nycompany.skyban.network.*
 import com.nycompany.skyban.util.ContextUtil
-import com.nycompany.skyban.util.MyUtil
 import kotlinx.android.synthetic.main.fragment_charge.*
 import org.json.JSONObject
 import retrofit2.Call
