@@ -4,14 +4,11 @@ import android.content.DialogInterface
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.EditText
 import com.nycompany.skyban.dto.CommonDTO
 import com.nycompany.skyban.enums.ResCode
-import com.nycompany.skyban.network.ReqPremium
 import com.nycompany.skyban.network.ReqQnaRegister
 import com.nycompany.skyban.network.RetrofitCreater
 import com.nycompany.skyban.util.ContextUtil
-import kotlinx.android.synthetic.main.activity_premium.*
 import kotlinx.android.synthetic.main.activity_qna_register.*
 import org.json.JSONObject
 import retrofit2.Call
@@ -24,6 +21,10 @@ class QnaRegisterActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_qna_register)
+
+        imageView_Back.setOnClickListener {
+            finish()
+        }
 
         Button_Qna.setOnClickListener {
             val userInfo = getUserinfo()
