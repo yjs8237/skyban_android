@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "863372864155",
+    "firebase_url": "https://skyban-544b7.firebaseio.com",
+    "project_id": "skyban-544b7",
+    "storage_bucket": "skyban-544b7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:863372864155:android:ba2d831de72f919a",
+        "android_client_info": {
+          "package_name": "com.nycompany.skyban"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "863372864155-9re6ap1f32a10nq9hrh2j6h5d8t5udpm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCs8NUodyp1InPQ8_9yCvMKheOMWk7d9ZU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

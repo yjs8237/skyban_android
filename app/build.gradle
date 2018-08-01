@@ -8,6 +8,8 @@ apply plugin: 'realm-android'
 
 apply plugin: 'kotlin-kapt'
 
+apply plugin:  'com.google.gms.google-services'
+
 android {
     compileSdkVersion 26
     defaultConfig {
@@ -49,4 +51,5 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-scalars:2.4.0'
     implementation 'com.github.d-max:spots-dialog:1.1@aar'
     api 'com.github.orangegangsters:swipy:1.2.3@aar'
+    implementation 'com.google.firebase:firebase-messaging:17.1.0'
 }

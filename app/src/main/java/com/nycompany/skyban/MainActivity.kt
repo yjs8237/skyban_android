@@ -9,6 +9,10 @@ import android.os.Bundle
 import android.os.PersistableBundle
 import android.view.View
 import android.view.View.OnClickListener
+import android.widget.Toast
+import com.google.android.gms.tasks.OnSuccessListener
+import com.google.firebase.iid.FirebaseInstanceId
+import com.google.firebase.iid.InstanceIdResult
 import com.nycompany.skybanminitp.FragmentsAvailable
 import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_main.*
@@ -20,6 +24,13 @@ class MainActivity : AppCompatActivity(), OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener(this, OnSuccessListener<InstanceIdResult> { instanceIdResult ->
+            val newToken = instanceIdResult.token
+            Toast.makeText(this, "newToken ${ newToken }", Toast.LENGTH_SHORT).show()
+        })
+
+
         setContentView(R.layout.activity_main)
         instance = this
 

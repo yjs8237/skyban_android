@@ -15,5 +15,7 @@ class RegisterActivity : AppCompatActivity() {
             startActivity(Intent().setClass(this, MainActivity::class.java))
             finish()
         }
+
+
     }
 }
