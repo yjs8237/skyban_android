@@ -12,7 +12,7 @@ class RegisterActivity : AppCompatActivity() {
         setContentView(R.layout.activity_register)
 
         buttonAgree.setOnClickListener{
-            startActivity(Intent().setClass(this, MainActivity::class.java))
+            //startActivity(Intent().setClass(this, MainActivity::class.java))
             finish()
         }
 
