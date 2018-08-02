@@ -146,6 +146,19 @@
         <item>S006|두달이내</item>
     </string-array>
 
+    <string-array name="alarm_distance">
+        <item>5|5km</item>
+        <item>10|10km</item>
+        <item>15|15km</item>
+        <item>20|20km</item>
+        <item>25|25km</item>
+        <item>30|30km</item>
+        <item>50|50km</item>
+        <item>80|80km</item>
+        <item>100|100km</item>
+        <item>1000000000000000|전체받기</item>
+    </string-array>
+
     <string-array name="res_code">
         <item>-102|휴대폰번호가 잘못되었습니다</item>
         <item>-103|전송 데이터오류</item>

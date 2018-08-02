@@ -131,11 +131,11 @@ class OutorderFragment : Fragment(), View.OnClickListener{
 
         //차량정보
         Button_SelectMaxType.setOnClickListener {
-            makeCarMinMaxDialog(true).show()
+            makeCarTypelengthDialog(true).show()
         }
 
         Button_SelectMinType.setOnClickListener {
-            makeCarMinMaxDialog(false).show()
+            makeCarTypelengthDialog(false).show()
         }
 
         //전고
@@ -292,7 +292,7 @@ class OutorderFragment : Fragment(), View.OnClickListener{
         return null
     }
 
-    fun makeCarMinMaxDialog(isMaxBoolean: Boolean):AlertDialog.Builder{
+    fun makeCarTypelengthDialog(isMaxBoolean: Boolean):AlertDialog.Builder{
         var typeItems = resources.getStringArray(R.array.car_type_text)
         var typeTitle = "최소톤수"
         var lenghTitle = "최소길이"

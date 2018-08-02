@@ -3,6 +3,7 @@ package com.nycompany.skyban
 import android.app.Fragment
 import android.app.FragmentManager
 import android.app.FragmentTransaction
+import android.content.DialogInterface
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -13,6 +14,7 @@ import android.widget.Toast
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.iid.InstanceIdResult
+import com.nycompany.skyban.util.ContextUtil
 import com.nycompany.skybanminitp.FragmentsAvailable
 import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_main.*
@@ -122,6 +124,22 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         }
     }
 
+    override fun onBackPressed() {
+        ContextUtil(this).buildDialog("종료 하시겠습니까?")?.apply {
+            setPositiveButton("OK", object : DialogInterface.OnClickListener {
+                override fun onClick(p0: DialogInterface?, p1: Int) {
+                    finish()
+                }
+            })
+            setNegativeButton("cancel", object : DialogInterface.OnClickListener{
+                override fun onClick(p0: DialogInterface?, p1: Int) {
+                    return
+                }
+            })
+            setCancelable(false)
+            show()
+        }
+    }
 
     private fun selectMenu(menuToSelect: FragmentsAvailable?) {
         resetSelection()

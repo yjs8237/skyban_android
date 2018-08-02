@@ -56,7 +56,7 @@ class CustomFirebaseMessagingService : FirebaseMessagingService() {
         //.setContentText(dataMap["msg"])
 
         val nManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        nManager!!.notify(0 /* ID of notification */, nBuilder.build())
+        nManager?.notify(0 /* ID of notification */, nBuilder.build())
     }
 
     override fun onNewToken(newToken: String?) {
