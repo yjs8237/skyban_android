@@ -33,13 +33,13 @@ class LoginActivity : AppCompatActivity() {
         val server = RetrofitCreater.getMyInstance()?.create(ReqLogin::class.java)
         loginBtn.setOnClickListener{
             val paramObject = JSONObject()
-            editTextPhone.setText("01032228237")
+            //editTextPhone.setText("01032228237")
             val pass = editTextPassword.text.toString()
             FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener(this, OnSuccessListener<InstanceIdResult> { instanceIdResult ->
                 val token = instanceIdResult.token
                 paramObject.put("cell_no", editTextPhone.text)
                 paramObject.put("user_pwd", pass)
-                Toast.makeText(this, "newToken ${ token }", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this, "newToken ${ token }", Toast.LENGTH_SHORT).show()
                 paramObject.put("token", token)
                 paramObject.put("distance", RealmUserInfo().AlarmDistance)
                 val reqString = paramObject.toString()

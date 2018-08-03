@@ -29,7 +29,7 @@ class CustomFirebaseMessagingService : FirebaseMessagingService() {
     override fun onMessageReceived(remoteMessage:RemoteMessage) {
         try {
             val pushDataMap = remoteMessage.data
-            sendNotification(pushDataMap["title"], pushDataMap["msg"])
+            sendNotification(pushDataMap["title"], pushDataMap["message"])
             //sendNotification(remoteMessage.notification?.title!!, remoteMessage.notification?.body!!)
         }catch (e:NullPointerException){
             Log.e(this::class.java.name, e.toString())
@@ -62,7 +62,6 @@ class CustomFirebaseMessagingService : FirebaseMessagingService() {
 
         if(isHaveUserinfo()){
             val server = RetrofitCreater.getMyInstance()?.create(ReqUpdatetoken::class.java)
-            var util = ContextUtil(this)
 
             val paramObject = JSONObject()
             paramObject.put("cell_no", getUserinfo()?.cell_no)
@@ -71,8 +70,7 @@ class CustomFirebaseMessagingService : FirebaseMessagingService() {
 
             server?.postRequest(reqString)?.enqueue(object: Callback<CommonDTO> {
                 override fun onFailure(call: Call<CommonDTO>, t: Throwable) {
-                    val msg = if(!util.isConnected()) getString(R.string.network_eror) else t.toString()
-                    util.buildDialog("eror", msg).show()
+                    Log.e(this::class.java.name, t.toString())
                 }
 
                 override fun onResponse(call: Call<CommonDTO>, response: Response<CommonDTO>) {

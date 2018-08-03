@@ -134,3 +134,9 @@ interface ReqLogout{
     @Headers("Content-Type: application/json", "Authorization: Basic YXBpdXNlcjpTa3lCYW5BcGk=")
     fun postRequest(@Body body:String):Call<CommonDTO>
 }
+
+interface ReqRegister{
+    @POST("/user/usermngt/register")
+    @Headers("Content-Type: application/json", "Authorization: Basic YXBpdXNlcjpTa3lCYW5BcGk=")
+    fun postRequest(@Body body:String):Call<CommonDTO>
+}

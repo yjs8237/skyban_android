@@ -107,13 +107,12 @@
                     app:layout_constraintTop_toBottomOf="@+id/bootstrapButtonGroup" />
 
                 <com.beardedhen.androidbootstrap.BootstrapEditText
-                    android:id="@+id/EditTextDay"
+                    android:id="@+id/EditText_Name"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
-                    android:focusable="false"
                     android:hint="이름(상호명)"
                     app:bootstrapBrand="info"
                     app:bootstrapSize="md"
@@ -123,39 +122,37 @@
                     app:layout_constraintTop_toBottomOf="@+id/bootstrapLabel" />
 
                 <com.beardedhen.androidbootstrap.BootstrapEditText
-                    android:id="@+id/EditTextTime"
+                    android:id="@+id/EditText_CellNo"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
-                    android:focusable="false"
                     android:hint="휴대폰번호"
                     app:bootstrapBrand="info"
                     app:bootstrapSize="md"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/EditTextDay" />
+                    app:layout_constraintTop_toBottomOf="@+id/EditText_Name" />
 
                 <com.beardedhen.androidbootstrap.BootstrapEditText
-                    android:id="@+id/EditTextTime11"
+                    android:id="@+id/EditText_Pass"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
-                    android:focusable="false"
                     android:hint="비밀번호"
                     app:bootstrapBrand="info"
                     app:bootstrapSize="md"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/EditTextTime" />
+                    app:layout_constraintTop_toBottomOf="@+id/EditText_CellNo" />
 
                 <com.beardedhen.androidbootstrap.BootstrapEditText
-                    android:id="@+id/EditTextTime12"
+                    android:id="@+id/EditText_Addr"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
@@ -168,10 +165,10 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/EditTextTime11" />
+                    app:layout_constraintTop_toBottomOf="@+id/EditText_Pass" />
 
                 <com.beardedhen.androidbootstrap.BootstrapEditText
-                    android:id="@+id/EditTextTime13"
+                    android:id="@+id/EditText_CopNumber"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
@@ -184,27 +181,27 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/EditTextTime12" />
+                    app:layout_constraintTop_toBottomOf="@+id/EditText_Addr" />
 
                 <com.beardedhen.androidbootstrap.BootstrapEditText
-                    android:id="@+id/EditTextTime14"
+                    android:id="@+id/EditText_Email"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
-                    android:focusable="false"
                     android:hint="이메일(전자세금계산서용)"
                     app:bootstrapBrand="info"
                     app:bootstrapSize="md"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/EditTextTime13" />
+                    app:layout_constraintTop_toBottomOf="@+id/EditText_CopNumber" />
 
             </android.support.constraint.ConstraintLayout>
 
             <android.support.constraint.ConstraintLayout
+                android:id="@+id/ConstraintLayout_CarType"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -258,6 +255,25 @@
 
                 </LinearLayout>
 
+                <com.beardedhen.androidbootstrap.BootstrapButton
+                    android:id="@+id/Button_SelectHeight"
+                    android:drawableRight="@drawable/avobedown_w"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_weight="1"
+                    app:bootstrapBrand="primary"
+                    app:bootstrapExpandDirection="down"
+                    app:bootstrapSize="md"
+                    app:bootstrapText="전고"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+                    app:roundedCorners="true" />
+
                 <com.beardedhen.androidbootstrap.BootstrapLabel
                     android:id="@+id/bootstrapLabel8"
                     android:layout_width="wrap_content"
@@ -266,8 +282,8 @@
                     app:bootstrapBrand="info"
                     app:bootstrapHeading="h6"
                     app:bootstrapText="{fa_circle_o} 차량옵션(멀티선택가능)"
-                    app:layout_constraintStart_toStartOf="@+id/linearLayout"
-                    app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+                    app:layout_constraintStart_toStartOf="@+id/Button_SelectHeight"
+                    app:layout_constraintTop_toBottomOf="@+id/Button_SelectHeight" />
 
                 <com.beardedhen.androidbootstrap.BootstrapButtonGroup
                     android:id="@+id/bootstrapButtonGroup5"
@@ -316,14 +332,13 @@
                 </com.beardedhen.androidbootstrap.BootstrapButtonGroup>
 
                 <com.beardedhen.androidbootstrap.BootstrapEditText
-                    android:id="@+id/EditTextTime15"
+                    android:id="@+id/EditTextTime_recommNo"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
-                    android:focusable="false"
-                    android:hint="이메일(전자세금계산서용)"
+                    android:hint="추천인 휴대폰번호"
                     app:bootstrapBrand="info"
                     app:bootstrapSize="md"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -332,7 +347,7 @@
             </android.support.constraint.ConstraintLayout>
 
             <com.beardedhen.androidbootstrap.BootstrapButton
-                android:id="@+id/Button_Order"
+                android:id="@+id/Button_Register"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"

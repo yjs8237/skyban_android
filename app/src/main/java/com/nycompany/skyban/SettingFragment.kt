@@ -201,7 +201,7 @@ class SettingFragment : Fragment() {
                         return
                     }
                 })
-                setCancelable(false)
+                //setCancelable(false)
                 show()
             }
         }
