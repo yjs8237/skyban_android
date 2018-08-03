@@ -79,6 +79,18 @@ fun resetUserinfoRealm(dto:LoginDTO?, pass:String){
         order_cnt = dto?.user?.order_cnt
         obtain_cnt = dto?.user?.obtain_cnt
         reg_date = dto?.user?.reg_date
+
+        getUserinfo()?.let {
+            it.isAlarmYN?.let {
+                isAlarmYN = it
+            }
+            it.isAlarmSound?.let {
+                isAlarmSound = it
+            }
+            it.AlarmDistance?.let {
+                AlarmDistance = it
+            }
+        }
     }
 
     Realm.getDefaultInstance().use {

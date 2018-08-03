@@ -50,12 +50,9 @@ class OrderHistoryFragment : Fragment() {
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         recycler_order.setLayoutManager(layoutManager)
         recycler_order.setHasFixedSize(true)
-        val paramObject = JSONObject()
 
-        Realm.getDefaultInstance().use {
-            val data = it.where(RealmUserInfo::class.java).findAll()
-            paramObject.put("cell_no", data[0]?.cell_no)
-        }
+        val paramObject = JSONObject()
+        paramObject.put("cell_no", getUserinfo()?.cell_no)
 
         myAdapter = OrderRecyclerViewAdapter(orderHistory, reqFragType)
         setRecyclerView(true, makeJson(true, paramObject))

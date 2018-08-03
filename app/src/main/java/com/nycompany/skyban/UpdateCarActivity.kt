@@ -30,7 +30,7 @@ class UpdateCarActivity : AppCompatActivity() {
         }
 
         //전고
-        val car_heights = util.getArryFromResoureces(R.array.car_height)
+        val car_heights = util.getValueArryFromResoureces(R.array.car_height)
         val dialogHeight = android.support.v7.app.AlertDialog.Builder(this).apply {
             setTitle("전고")
             setItems(car_heights, DialogInterface.OnClickListener { dialogInterface, i ->

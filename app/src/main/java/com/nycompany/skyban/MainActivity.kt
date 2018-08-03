@@ -29,7 +29,6 @@ class MainActivity : AppCompatActivity(), OnClickListener {
 
         FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener(this, OnSuccessListener<InstanceIdResult> { instanceIdResult ->
             val newToken = instanceIdResult.token
-            Toast.makeText(this, "newToken ${ newToken }", Toast.LENGTH_SHORT).show()
         })
 
 

@@ -5,11 +5,25 @@ import android.os.Bundle
 import android.app.Fragment
 import android.content.DialogInterface
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.beardedhen.androidbootstrap.BootstrapButton
+import com.nycompany.skyban.dto.CommonDTO
+import com.nycompany.skyban.dto.RealmUserInfo
+import com.nycompany.skyban.enums.ResCode
+import com.nycompany.skyban.network.ReqLogout
+import com.nycompany.skyban.network.ReqUpdateDistance
+import com.nycompany.skyban.network.RetrofitCreater
 import com.nycompany.skyban.util.ContextUtil
+import com.nycompany.skyban.util.MyUtil
+import io.realm.Realm
 import kotlinx.android.synthetic.main.fragment_setting.*
+import org.json.JSONObject
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -28,17 +42,125 @@ class SettingFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_setting, container, false)
     }
 
+    private  val alarmDistanceDic by lazy{ContextUtil(activity).getHashmapFromResoureces(R.array.alarm_distance)}
+    private val util by lazy{ContextUtil(activity)}
+    private val server by lazy{RetrofitCreater.getMyInstance()?.create(ReqUpdateDistance::class.java)}
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val alarm_distance =  ContextUtil(activity).getArryFromResoureces(R.array.alarm_distance)
-        val dialogDistance = android.support.v7.app.AlertDialog.Builder(activity).apply {
-            setTitle("알람받기 반경")
-            setItems(alarm_distance, DialogInterface.OnClickListener { dialogInterface, i ->
-                Button_AlarmArea.text = alarm_distance[i]
+        getUserinfo()?.let {
+            it.isAlarmYN?.let {
+                switch_alarmYN.isChecked = it
+                setAlarmSubUI(it)
+            }
+            it.isAlarmSound?.let {
+                switch_alarmWay.isChecked = it
+            }
+            it.AlarmDistance?.let {
+                TextView_Distance.text = alarmDistanceDic[it]
+            }
+        }
+
+        switch_alarmYN.setOnClickListener {
+            val paramObject = JSONObject()
+            if(switch_alarmYN.isChecked){
+                paramObject.put("cell_no", getUserinfo()?.cell_no)
+                paramObject.put("distance", "10000000")
+            }else{
+                paramObject.put("cell_no", getUserinfo()?.cell_no)
+                paramObject.put("distance", "0")
+            }
+            val reqString = paramObject.toString()
+
+            server?.postRequest(reqString)?.enqueue(object : Callback<CommonDTO> {
+                override fun onFailure(call: Call<CommonDTO>, t: Throwable) {
+                    val msg = if (!util.isConnected()) getString(R.string.network_eror) else t.toString()
+                    util.buildDialog("eror", msg).show()
+                }
+
+                override fun onResponse(call: Call<CommonDTO>, response: Response<CommonDTO>) {
+                    response.body()?.let {
+                        if (it.result == ResCode.Success.Code) {
+                            Realm.getDefaultInstance().use {
+                                val edit = it.where(RealmUserInfo::class.java).findAll()[0]
+                                it.beginTransaction()
+                                edit?.isAlarmYN = switch_alarmYN.isChecked
+                                edit?.AlarmDistance = if(switch_alarmYN.isChecked) "10000000" else "0"
+                                it.commitTransaction()
+                            }
+                            setAlarmSubUI(switch_alarmYN.isChecked)
+                        } else {
+                            it.description?.let {
+                                Log.e(this::class.java.name, it)
+                                switch_alarmYN.toggle()
+                            }
+                        }
+                    } ?: run {
+                        Log.e(this::class.java.name, getString(R.string.response_body_eror))
+                        switch_alarmYN.toggle()
+                    }
+                }
             })
         }
-        Button_AlarmArea.setOnClickListener {
+
+        switch_alarmWay.setOnCheckedChangeListener { compoundButton, isChecked ->
+            Realm.getDefaultInstance().use {
+                val edit = it.where(RealmUserInfo::class.java).findAll()[0]
+                it.beginTransaction()
+                edit?.isAlarmSound = isChecked
+                it.commitTransaction()
+            }
+        }
+
+        val alarmDistanceValue =  ContextUtil(activity).getValueArryFromResoureces(R.array.alarm_distance)
+        val dialogDistance = android.support.v7.app.AlertDialog.Builder(activity).apply {
+            setTitle("알람받기 반경")
+            setItems(alarmDistanceValue, DialogInterface.OnClickListener { dialogInterface, i ->
+                alarmDistanceValue[i]?.let {alarmDistanceValue ->
+                    val dist = MyUtil.getDicKeyFromValue(alarmDistanceDic,alarmDistanceValue) as String
+                    TextView_Distance.text = alarmDistanceValue
+
+                    val paramObject = JSONObject()
+                    paramObject.put("cell_no", getUserinfo()?.cell_no)
+                    paramObject.put("distance", dist)
+                    val reqString = paramObject.toString()
+
+                    server?.postRequest(reqString)?.enqueue(object : Callback<CommonDTO> {
+                        override fun onFailure(call: Call<CommonDTO>, t: Throwable) {
+                            val msg = if (!util.isConnected()) getString(R.string.network_eror) else t.toString()
+                            util.buildDialog("eror", msg).show()
+                        }
+
+                        override fun onResponse(call: Call<CommonDTO>, response: Response<CommonDTO>) {
+                            response.body()?.let {
+                                if (it.result == ResCode.Success.Code) {
+                                    Realm.getDefaultInstance().use {
+                                        val edit = it.where(RealmUserInfo::class.java).findAll()[0]
+                                        it.beginTransaction()
+                                        edit?.AlarmDistance = dist
+                                        it.commitTransaction()
+                                    }
+                                } else {
+                                    it.description?.let {
+                                        Log.e(this::class.java.name, it)
+                                    }
+                                }
+                            } ?: run {
+                                Log.e(this::class.java.name, getString(R.string.response_body_eror))
+                            }
+                        }
+                    })
+
+                    Realm.getDefaultInstance().use {
+                        val edit = it.where(RealmUserInfo::class.java).findAll()[0]
+                        it.beginTransaction()
+                        edit?.AlarmDistance = dist
+                        it.commitTransaction()
+                    }
+                }
+            })
+        }
+        ConstraintLayout_Distance.setOnClickListener {
             dialogDistance.show()
         }
 
@@ -46,7 +168,32 @@ class SettingFragment : Fragment() {
             ContextUtil(activity).buildDialog("로그아웃 하시겠습니까?")?.apply {
                 setPositiveButton("OK", object : DialogInterface.OnClickListener {
                     override fun onClick(p0: DialogInterface?, p1: Int) {
-                        MainActivity.instance()?.logout()
+                        val paramObject = JSONObject()
+                        paramObject.put("cell_no", getUserinfo()?.cell_no)
+                        paramObject.put("user_pwd", getUserinfo()?.password)
+                        val reqString = paramObject.toString()
+
+                        val server = RetrofitCreater.getMyInstance()?.create(ReqLogout::class.java)
+                        server?.postRequest(reqString)?.enqueue(object : Callback<CommonDTO> {
+                            override fun onFailure(call: Call<CommonDTO>, t: Throwable) {
+                                val msg = if (!util.isConnected()) getString(R.string.network_eror) else t.toString()
+                                util.buildDialog("eror", msg).show()
+                            }
+
+                            override fun onResponse(call: Call<CommonDTO>, response: Response<CommonDTO>) {
+                                response.body()?.let {
+                                    if (it.result == ResCode.Success.Code) {
+                                        MainActivity.instance()?.logout()
+                                    } else {
+                                        it.description?.let {
+                                            Log.e(this::class.java.name, it)
+                                        }
+                                    }
+                                } ?: run {
+                                    Log.e(this::class.java.name, getString(R.string.response_body_eror))
+                                }
+                            }
+                        })
                     }
                 })
                 setNegativeButton("cancel", object :DialogInterface.OnClickListener{
@@ -69,6 +216,15 @@ class SettingFragment : Fragment() {
 
         ConstraintLayout_register_qna.setOnClickListener {
             startActivity(Intent().setClass(activity, QnaRegisterActivity::class.java))
+        }
+    }
+
+    private fun setAlarmSubUI(isChecked:Boolean){
+        if(isChecked){
+            LinearLayout_AlarmSub.visibility = View.VISIBLE
+            TextView_Distance.text = alarmDistanceDic[getUserinfo()?.AlarmDistance]
+        }else{
+            LinearLayout_AlarmSub.visibility = View.GONE
         }
     }
 }

@@ -64,7 +64,6 @@
             android:id="@+id/switch_alarmYN"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checked="true"
             android:switchMinWidth="60dp"
             android:textSize="16sp"
             android:textStyle="bold"
@@ -75,52 +74,84 @@
     </android.support.constraint.ConstraintLayout>
 
     <LinearLayout
+        android:id="@+id/LinearLayout_AlarmSub"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-    <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
-        android:paddingTop="4dp"
-        android:paddingBottom="4dp">
-
-        <TextView
-            android:layout_width="wrap_content"
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="알림방식(소리/진동)"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp">
 
-        <Switch
-            android:id="@+id/switch_alarmWay"
-            android:layout_width="wrap_content"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="알림방식(소리/진동)"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <Switch
+                android:id="@+id/switch_alarmWay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:switchMinWidth="60dp"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/ConstraintLayout_Distance"
+            android:clickable="true"
+            android:theme="@style/MyTheme"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:checked="true"
-            android:switchMinWidth="60dp"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:orientation="vertical">
 
-    </android.support.constraint.ConstraintLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="알림받기 반경(km)"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
 
-    <com.beardedhen.androidbootstrap.BootstrapButton
-        android:id="@+id/Button_AlarmArea"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:drawableRight="@drawable/avobedown"
-        android:layout_margin="8dp"
-        app:showOutline="true"
-        app:bootstrapBrand="primary"
-        app:bootstrapSize="md"
-        app:bootstrapText="전체받기"
-        app:roundedCorners="true" />
+            <TextView
+                android:id="@+id/TextView_Distance"
+                android:layout_width="wrap_content"
+                android:layout_height="18dp"
+                android:text="모두받기"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/imageView4"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:scaleType="fitXY"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/arrow_right" />
+
+        </android.support.constraint.ConstraintLayout>
 
     </LinearLayout>
 

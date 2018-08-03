@@ -27,16 +27,16 @@ import retrofit2.Response
 
 class CustomFirebaseMessagingService : FirebaseMessagingService() {
     override fun onMessageReceived(remoteMessage:RemoteMessage) {
-        //val pushDataMap = remoteMessage.data
-        //sendNotification(pushDataMap)
         try {
-            sendNotification(remoteMessage.notification?.title!!, remoteMessage.notification?.body!!)
+            val pushDataMap = remoteMessage.data
+            sendNotification(pushDataMap["title"], pushDataMap["msg"])
+            //sendNotification(remoteMessage.notification?.title!!, remoteMessage.notification?.body!!)
         }catch (e:NullPointerException){
             Log.e(this::class.java.name, e.toString())
         }
     }
 
-    private fun sendNotification(tile:String, msg:String) {
+    private fun sendNotification(tile:String?, msg:String?) {
         val intent = Intent(this, MainActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
 
@@ -52,8 +52,6 @@ class CustomFirebaseMessagingService : FirebaseMessagingService() {
                 .setVibrate(longArrayOf(1000, 1000))
                 .setLights(Color.WHITE, 1500, 1500)
                 .setContentIntent(contentIntent)
-        //.setContentTitle(dataMap["title"])
-        //.setContentText(dataMap["msg"])
 
         val nManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         nManager?.notify(0 /* ID of notification */, nBuilder.build())

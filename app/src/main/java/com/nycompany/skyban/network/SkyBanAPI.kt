@@ -122,3 +122,15 @@ interface ReqUpdatetoken{
     @Headers("Content-Type: application/json", "Authorization: Basic YXBpdXNlcjpTa3lCYW5BcGk=")
     fun postRequest(@Body body:String):Call<CommonDTO>
 }
+
+interface ReqUpdateDistance{
+    @POST("/user/usermngt/distance")
+    @Headers("Content-Type: application/json", "Authorization: Basic YXBpdXNlcjpTa3lCYW5BcGk=")
+    fun postRequest(@Body body:String):Call<CommonDTO>
+}
+
+interface ReqLogout{
+    @POST("/user/usermngt/logout")
+    @Headers("Content-Type: application/json", "Authorization: Basic YXBpdXNlcjpTa3lCYW5BcGk=")
+    fun postRequest(@Body body:String):Call<CommonDTO>
+}

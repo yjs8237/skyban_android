@@ -47,7 +47,7 @@ class ContextUtil(context: Context) {
     }
 
     //key|value string
-    fun getArryFromResoureces(stringArrayResourceId:Int): Array<String?> {
+    fun getValueArryFromResoureces(stringArrayResourceId:Int): Array<String?> {
         val stringArray = mContext!!.resources.getStringArray(stringArrayResourceId)
         val outputArray = arrayOfNulls<String>(stringArray.size)
         for (i in 0..stringArray.size - 1) {

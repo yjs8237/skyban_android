@@ -139,7 +139,7 @@ class OutorderFragment : Fragment(), View.OnClickListener{
         }
 
         //전고
-        val car_heights = util.getArryFromResoureces(R.array.car_height)
+        val car_heights = util.getValueArryFromResoureces(R.array.car_height)
         val dialogHeight = android.support.v7.app.AlertDialog.Builder(activity).apply {
             setTitle("전고")
             setItems(car_heights, DialogInterface.OnClickListener { dialogInterface, i ->
@@ -151,7 +151,7 @@ class OutorderFragment : Fragment(), View.OnClickListener{
         }
 
         //결제기간
-        val pay_dates = util.getArryFromResoureces(R.array.pay_date)
+        val pay_dates = util.getValueArryFromResoureces(R.array.pay_date)
         val dialogDate = android.support.v7.app.AlertDialog.Builder(activity).apply {
             setTitle("결제기간")
             setItems(pay_dates, DialogInterface.OnClickListener { dialogInterface, i ->

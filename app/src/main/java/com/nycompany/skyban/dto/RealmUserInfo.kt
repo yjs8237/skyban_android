@@ -37,4 +37,8 @@ open class RealmUserInfo : RealmModel {
     var order_cnt: String? = null
     var obtain_cnt: String? = null
     var reg_date: String? = null
+    //default setting
+    var isAlarmYN:Boolean? = true
+    var isAlarmSound:Boolean? = true
+    var AlarmDistance:String? = "10000000"
 }
