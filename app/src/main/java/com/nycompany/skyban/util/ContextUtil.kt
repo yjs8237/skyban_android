@@ -17,7 +17,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class ContextUtil(context: Context) {
-    var mContext:Context? = context
+    private var mContext:Context? = context
 
     fun isConnected(): Boolean {
         val cm = mContext?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager

@@ -9,6 +9,7 @@ import com.google.firebase.messaging.RemoteMessage
 import android.content.Context
 import android.graphics.Color
 import android.media.RingtoneManager
+import android.os.Build
 import android.util.Log
 import com.nycompany.skyban.MainActivity
 import com.nycompany.skyban.R
@@ -18,7 +19,6 @@ import com.nycompany.skyban.getUserinfo
 import com.nycompany.skyban.isHaveUserinfo
 import com.nycompany.skyban.network.ReqUpdatetoken
 import com.nycompany.skyban.network.RetrofitCreater
-import com.nycompany.skyban.util.ContextUtil
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
@@ -29,32 +29,41 @@ class CustomFirebaseMessagingService : FirebaseMessagingService() {
     override fun onMessageReceived(remoteMessage:RemoteMessage) {
         try {
             val pushDataMap = remoteMessage.data
-            sendNotification(pushDataMap["title"], pushDataMap["message"])
+            makeBuilder(pushDataMap["title"], pushDataMap["message"]).apply {
+                val nManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+                nManager?.notify(0 /* ID of notification */, build())
+            }
             //sendNotification(remoteMessage.notification?.title!!, remoteMessage.notification?.body!!)
         }catch (e:NullPointerException){
             Log.e(this::class.java.name, e.toString())
         }
     }
 
-    private fun sendNotification(tile:String?, msg:String?) {
+    private fun makeBuilder(tile:String?, msg:String?):Notification.Builder {
         val intent = Intent(this, MainActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
 
-        val contentIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT)
-        val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+        lateinit var nBuilder: Notification.Builder
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            nBuilder = Notification.Builder(this, "order_01")
+        } else {
+            nBuilder = Notification.Builder(this)
+        }
 
-        val nBuilder = Notification.Builder(this)
-                .setContentTitle(tile)
+        val contentIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT)
+        nBuilder.setContentTitle(tile)
                 .setContentText(msg)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setAutoCancel(true)
-                .setSound(defaultSoundUri)
-                .setVibrate(longArrayOf(1000, 1000))
-                .setLights(Color.WHITE, 1500, 1500)
                 .setContentIntent(contentIntent)
 
-        val nManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        nManager?.notify(0 /* ID of notification */, nBuilder.build())
+        if (!getUserinfo()?.isAlarmSound!! && (Build.VERSION.SDK_INT < Build.VERSION_CODES.O)) {
+            val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+            nBuilder.setSound(defaultSoundUri)
+                    .setVibrate(longArrayOf(1000, 1000))
+                    .setLights(Color.WHITE, 1500, 1500)
+        }
+        return nBuilder
     }
 
     override fun onNewToken(newToken: String?) {

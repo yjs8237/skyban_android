@@ -14,6 +14,8 @@ import android.widget.Toast
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.iid.InstanceIdResult
+import com.nycompany.skyban.enums.PermissionCode
+import com.nycompany.skyban.service.GpsInfo
 import com.nycompany.skyban.util.ContextUtil
 import com.nycompany.skybanminitp.FragmentsAvailable
 import io.realm.Realm
@@ -23,7 +25,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity(), OnClickListener {
     private var currentFragment:FragmentsAvailable? = null
     private var fragment: Fragment? = null
-
+    lateinit var gps:GpsInfo
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -31,9 +33,10 @@ class MainActivity : AppCompatActivity(), OnClickListener {
             val newToken = instanceIdResult.token
         })
 
-
         setContentView(R.layout.activity_main)
         instance = this
+        gps = GpsInfo(this)
+        if(!gps.isGetLocation) gps.setLocationTool()
 
         if(savedInstanceState == null){
             changeCurrentFragment(FragmentsAvailable.ORDER, null)
@@ -183,6 +186,14 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         info_select!!.visibility = View.INVISIBLE
         charge_select!!.visibility = View.INVISIBLE
         setting_select!!.visibility = View.INVISIBLE
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        //퍼미션 거절 승인에따른 처리
+        if(requestCode == PermissionCode.ACCESS_FINE_LOCATION_CODE.Code){
+            gps.setLocationTool()
+        }
     }
 
     companion object {
