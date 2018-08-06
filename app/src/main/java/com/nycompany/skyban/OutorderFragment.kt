@@ -6,6 +6,7 @@ import android.app.DatePickerDialog
 import android.os.Bundle
 import android.app.Fragment
 import android.app.TimePickerDialog
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.util.Log
@@ -19,6 +20,7 @@ import com.nycompany.skyban.network.ReqOrderRegister
 import com.nycompany.skyban.network.RetrofitCreater
 import com.nycompany.skyban.util.ContextUtil
 import com.nycompany.skyban.util.MyUtil
+import dmax.dialog.SpotsDialog
 import kotlinx.android.synthetic.main.fragment_outorder.*
 import org.json.JSONObject
 import retrofit2.Call
@@ -36,20 +38,23 @@ class OutorderFragment : Fragment(), View.OnClickListener{
     private val REQUEST_MAP = 101
     private  val paramObject by lazy{JSONObject()}
     private  val util by lazy{ ContextUtil(activity) }
+    private  val mLoading by lazy{ SpotsDialog.Builder().setContext(activity).build()}
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        if(!util.isConnected()) util.buildDialog("eror",getString(R.string.network_eror)).show()
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        mLoading.show()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_outorder, container, false)
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        mLoading.dismiss()
+        if(!util.isConnected()) util.buildDialog("eror",getString(R.string.network_eror)).show()
+
         val userinfo = getUserinfo()
         paramObject.put("cell_no", userinfo?.cell_no)
 

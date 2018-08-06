@@ -43,18 +43,12 @@ class OutorderHistoryFragment : Fragment() {
     private val orderHistory: ArrayList<OrderList> = ArrayList()
     private lateinit var myAdapter: OrderRecyclerViewAdapter
     val reqFragType = MainActivity.instance()?.getCurrentFarnment()!!
+    private  val paramObject by lazy { JSONObject() }
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         val layoutManager = LinearLayoutManager(activity.applicationContext)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         recycler_order.setLayoutManager(layoutManager)
         recycler_order.setHasFixedSize(true)
-        val paramObject = JSONObject()
-
-        val userInfo = getUserinfo()
-        paramObject.put("cell_no", userInfo?.cell_no)
-
-        myAdapter = OrderRecyclerViewAdapter(orderHistory, reqFragType)
-        setRecyclerView(true, makeJson(true, paramObject))
 
         swipyrefreshlayout.setOnRefreshListener(SwipyRefreshLayout.OnRefreshListener { direction ->
             if (direction == SwipyRefreshLayoutDirection.TOP) setRecyclerView(true, makeJson(true, paramObject))
@@ -69,7 +63,13 @@ class OutorderHistoryFragment : Fragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        paramObject.put("cell_no", getUserinfo()?.cell_no)
 
+        myAdapter = OrderRecyclerViewAdapter(orderHistory, reqFragType)
+        setRecyclerView(true, makeJson(true, paramObject))
+    }
 
     fun makeJson(isReset:Boolean, paramObject: JSONObject): JSONObject {
         paramObject.put("search_type", "2")

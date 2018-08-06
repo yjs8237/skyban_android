@@ -57,6 +57,8 @@ class OrderFragment() : Fragment() {
 
             if (swipyrefreshlayout.isRefreshing) swipyrefreshlayout.isRefreshing = false
         })
+
+        TextView_cash.text = String.format("Cash : %s 원", getUserinfo()?.cash)
     }
 
     fun makeJson(isReset:Boolean, paramObject:JSONObject):JSONObject{

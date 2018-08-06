@@ -140,3 +140,22 @@ interface ReqRegister{
     @Headers("Content-Type: application/json", "Authorization: Basic YXBpdXNlcjpTa3lCYW5BcGk=")
     fun postRequest(@Body body:String):Call<CommonDTO>
 }
+
+interface ReqLocation{
+    @POST("/user/usermngt/location")
+    @Headers("Content-Type: application/json", "Authorization: Basic YXBpdXNlcjpTa3lCYW5BcGk=")
+    fun postRequest(@Body body:String):Call<CommonDTO>
+}
+
+interface ReqUpdateorder{
+    @POST("/user/ordermngt/updateorder")
+    @Headers("Content-Type: application/json", "Authorization: Basic YXBpdXNlcjpTa3lCYW5BcGk=")
+    fun postRequest(@Body body:String):Call<CommonDTO>
+}
+
+interface ReqRegisteragain{
+    @POST("/user/ordermngt/registeragain")
+    @Headers("Content-Type: application/json", "Authorization: Basic YXBpdXNlcjpTa3lCYW5BcGk=")
+    fun postRequest(@Body body:String):Call<CommonDTO>
+}
+

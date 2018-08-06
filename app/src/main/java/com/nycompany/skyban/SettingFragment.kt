@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.app.Fragment
 import android.content.DialogInterface
 import android.content.Intent
+import android.os.Build
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -222,8 +223,11 @@ class SettingFragment : Fragment() {
     private fun setAlarmSubUI(isChecked:Boolean){
         if(isChecked){
             LinearLayout_AlarmSub.visibility = View.VISIBLE
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                ConstraintLayout_alarmWay.visibility = View.GONE
+            }
             TextView_Distance.text = alarmDistanceDic[getUserinfo()?.AlarmDistance]
-        }else{
+        } else{
             LinearLayout_AlarmSub.visibility = View.GONE
         }
     }

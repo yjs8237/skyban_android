@@ -16,10 +16,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.nycompany.skyban.dto.CommonDTO
 import com.nycompany.skyban.dto.InOrderdetailDTO
 import com.nycompany.skyban.enums.ResCode
-import com.nycompany.skyban.network.ReqMyOrderDetail
-import com.nycompany.skyban.network.ReqObtaInorder
-import com.nycompany.skyban.network.ReqOrderdetail
-import com.nycompany.skyban.network.RetrofitCreater
+import com.nycompany.skyban.network.*
 import com.nycompany.skyban.util.ContextUtil
 import com.nycompany.skybanminitp.FragmentsAvailable
 import dmax.dialog.SpotsDialog
@@ -42,7 +39,7 @@ class OrderDetailActivity : FragmentActivity(), OnMapReadyCallback {
                 .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-        btnCancel.setOnClickListener { finish() }
+        imageView_Back.setOnClickListener { finish() }
 
         val cell_no = getUserinfo()?.cell_no!!
 
@@ -100,6 +97,82 @@ class OrderDetailActivity : FragmentActivity(), OnMapReadyCallback {
                             })
                             db.setCancelable(false)
                             db.show()
+                        } else {
+                            it.description?.let {
+                                util.buildDialog(it).show()
+                            }
+                        }?:run{
+                            Log.e(this::class.java.name, getString(R.string.response_body_eror))
+                        }
+                    }
+                }
+            })
+        }
+
+        Button_Complete.setOnClickListener {
+            val OderParam = JSONObject()
+            OderParam.put("cell_no", cell_no)
+            OderParam.put("order_seq", orderseq)
+            OderParam.put("work_proc", "WP04 ")
+
+            val reqString = OderParam.toString()
+            val server = RetrofitCreater.getMyInstance()?.create(ReqUpdateorder::class.java)
+            server?.postRequest(reqString)?.enqueue(object: Callback<CommonDTO> {
+                override fun onFailure(call: Call<CommonDTO>, t: Throwable) {
+                    val msg = if(!util.isConnected()) getString(R.string.network_eror) else t.toString()
+                    util.buildDialog("eror", msg).show()
+                }
+
+                override fun onResponse(call: Call<CommonDTO>, response: Response<CommonDTO>) {
+                    response.body()?.let {
+                        if (it.result == ResCode.Success.Code) {
+                            updateUserInfo(getUserinfo()?.cell_no, getUserinfo()?.password)
+                            val bd = util.buildDialog("성공", "작업완료 처리되었습니다 ")
+                            bd.setPositiveButton("OK", object : DialogInterface.OnClickListener {
+                                override fun onClick(p0: DialogInterface?, p1: Int) {
+                                    MainActivity.instance()?.moveOrderHistory()
+                                    finish()
+                                }
+                            })
+                            bd.setCancelable(false)
+                            bd.show()
+                        } else {
+                            it.description?.let {
+                                util.buildDialog(it).show()
+                            }
+                        }?:run{
+                            Log.e(this::class.java.name, getString(R.string.response_body_eror))
+                        }
+                    }
+                }
+            })
+        }
+
+        Button_reorder.setOnClickListener {
+            val OderParam = JSONObject()
+            OderParam.put("cell_no", cell_no)
+            OderParam.put("order_seq", orderseq)
+
+            val reqString = OderParam.toString()
+            val server = RetrofitCreater.getMyInstance()?.create(ReqRegisteragain::class.java)
+            server?.postRequest(reqString)?.enqueue(object: Callback<CommonDTO> {
+                override fun onFailure(call: Call<CommonDTO>, t: Throwable) {
+                    val msg = if(!util.isConnected()) getString(R.string.network_eror) else t.toString()
+                    util.buildDialog("eror", msg).show()
+                }
+
+                override fun onResponse(call: Call<CommonDTO>, response: Response<CommonDTO>) {
+                    response.body()?.let {
+                        if (it.result == ResCode.Success.Code) {
+                            updateUserInfo(getUserinfo()?.cell_no, getUserinfo()?.password)
+                            val bd = util.buildDialog("성공", "재발주 되었습니다 ")
+                            bd.setPositiveButton("OK", object : DialogInterface.OnClickListener {
+                                override fun onClick(p0: DialogInterface?, p1: Int) {
+                                    finish()
+                                }
+                            })
+                            bd.setCancelable(false)
+                            bd.show()
                         } else {
                             it.description?.let {
                                 util.buildDialog(it).show()

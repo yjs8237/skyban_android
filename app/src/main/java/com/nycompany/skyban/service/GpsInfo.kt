@@ -21,14 +21,26 @@ import com.nycompany.skyban.enums.PermissionCode
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
+import com.nycompany.skyban.R
+import com.nycompany.skyban.dto.CommonDTO
+import com.nycompany.skyban.enums.ResCode
+import com.nycompany.skyban.getUserinfo
+import com.nycompany.skyban.network.ReqLocation
+import com.nycompany.skyban.network.RetrofitCreater
+import com.nycompany.skyban.util.ContextUtil
+import org.json.JSONObject
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class GpsInfo(private val mContext: Context): GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener {
-    // 최소 GPS 정보 업데이트 거리 500미터
+    // 최소 GPS 정보 업데이트 거리 100미터
     private val MIN_DISTANCE_CHANGE_FOR_UPDATES:Float = 100.0f
-    // 최소 GPS 정보 업데이트 시간 밀리세컨이므로 1분
-    private val MIN_TIME_INTRVAL = (1000 * 60 * 1).toLong()
+    // 최소 GPS 정보 업데이트 시간 밀리세컨이므로 2분
+    private val MIN_TIME_INTRVAL = (1000 * 60 * 2).toLong()
+    //10초
     private val MIN_TIME_FASTEST_INTRVAL = (1000 * 10).toLong()
     // 현재 GPS 사용유무
     private var isGPSEnabled = false
@@ -120,10 +132,40 @@ class GpsInfo(private val mContext: Context): GoogleApiClient.ConnectionCallback
         // TODO Auto-generated method stub
         Log.i(this::class.java.name, "on location update")
         isGetLocation = true
+        mLocation = location
         location.run {
             lat = latitude
             lon = longitude
         }
+
+        val OderParam = JSONObject()
+        OderParam.put("cell_no", getUserinfo()?.cell_no)
+        OderParam.put("latitude", location.latitude)
+        OderParam.put("longitude", location.longitude)
+
+        val util = ContextUtil(mContext)
+        val reqString = OderParam.toString()
+        val server = RetrofitCreater.getMyInstance()?.create(ReqLocation::class.java)
+        server?.postRequest(reqString)?.enqueue(object: Callback<CommonDTO> {
+            override fun onFailure(call: Call<CommonDTO>, t: Throwable) {
+                val msg = if(!util.isConnected()) mContext.getString(R.string.network_eror) else t.toString()
+                Log.e(this::class.java.name, msg)
+            }
+
+            override fun onResponse(call: Call<CommonDTO>, response: Response<CommonDTO>) {
+                response.body()?.let {
+                    if (it.result == ResCode.Success.Code) {
+                        Log.i(this::class.java.name, "Location update")
+                    } else {
+                        it.description?.let {
+                            Log.e(this::class.java.name, it)
+                        }
+                    }?:run{
+                        Log.e(this::class.java.name, mContext.getString(R.string.response_body_eror))
+                    }
+                }
+            }
+        })
     }
 
     override fun onConnectionFailed(p0: ConnectionResult) {
