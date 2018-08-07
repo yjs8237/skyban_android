@@ -25,7 +25,7 @@
             android:layout_marginTop="10dp"
             android:text="@string/title_inorder"
             android:textColor="@android:color/background_light"
-            android:textSize="18sp"
+            android:textSize="@dimen/title_size"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -39,7 +39,7 @@
             android:layout_marginEnd="8dp"
             android:text="Cash : 0 원"
             android:textColor="@android:color/background_light"
-            android:textSize="14sp"
+            android:textSize="14dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

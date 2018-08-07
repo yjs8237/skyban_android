@@ -184,6 +184,45 @@ class OrderDetailActivity : FragmentActivity(), OnMapReadyCallback {
                 }
             })
         }
+
+        Button_OrderCancel.setOnClickListener {
+            val OderParam = JSONObject()
+            OderParam.put("cell_no", cell_no)
+            OderParam.put("order_seq", orderseq)
+
+            val reqString = OderParam.toString()
+            val server = RetrofitCreater.getMyInstance()?.create(ReqOrdercancle::class.java)
+            server?.postRequest(reqString)?.enqueue(object: Callback<CommonDTO> {
+                override fun onFailure(call: Call<CommonDTO>, t: Throwable) {
+                    val msg = if(!util.isConnected()) getString(R.string.network_eror) else t.toString()
+                    util.buildDialog("eror", msg).show()
+                }
+
+                override fun onResponse(call: Call<CommonDTO>, response: Response<CommonDTO>) {
+                    response.body()?.let {
+                        if (it.result == ResCode.Success.Code) {
+                            updateUserInfo(getUserinfo()?.cell_no, getUserinfo()?.password)
+                            val bd = util.buildDialog("성공", "취소 되었습니다 ")
+                            bd.setPositiveButton("OK", object : DialogInterface.OnClickListener {
+                                override fun onClick(p0: DialogInterface?, p1: Int) {
+                                    finish()
+                                }
+                            })
+                            bd.setCancelable(false)
+                            bd.show()
+                        } else {
+                            it.description?.let {
+                                util.buildDialog(it).show()
+                            }
+                        }?:run{
+                            Log.e(this::class.java.name, getString(R.string.response_body_eror))
+                        }
+                    }
+                }
+            })
+        }
+
+
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -260,14 +299,23 @@ class OrderDetailActivity : FragmentActivity(), OnMapReadyCallback {
                 })
             }
         }
+
+        Button_JobCancel.setOnClickListener {
+            util.buildDialog("관리자에게 문의하세요").show()
+        }
     }
 
     //fun <T> setResponseData(dto:T){
     fun setResponseData(dto:InOrderdetailDTO){
         dto?.let {
             val location = LatLng( it.work_latitude!!.toDouble(), it.work_longitude!!.toDouble())
-            textView_OrderUserNum.text = "발주자연락처 : ${it?.let { it.order_user_num }?:run { "" }}"
-            textView_WorkContact.text = "발주자연락처 : ${it?.let { it.work_contact }?:run { "" }}"
+            if(MainActivity.instance()?.getCurrentFarnment() == FragmentsAvailable.ORDER_HISTORY){
+                textView_OrderUserNum.text = "발주자연락처 : ${it?.let { it.order_user_num }?:run { "" }}"
+                textView_WorkContact.text = "현장연락처 : ${it?.let { it.work_contact }?:run { "" }}"
+            }else {
+                textView_OrderUserNum.text = "수주자연락처 : ${it?.let { it.obtain_user_num}?:run { "" }}"
+                textView_WorkContact.visibility = View.GONE
+            }
 
             mMap?.addMarker(MarkerOptions().position(location).title("work area"))
             mMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 14f))

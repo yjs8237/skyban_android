@@ -21,7 +21,7 @@
             android:layout_marginTop="10dp"
             android:text="설정"
             android:textColor="@android:color/background_light"
-            android:textSize="18sp"
+            android:textSize="@dimen/title_size"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -55,7 +55,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="알림받기"
-            android:textSize="16sp"
+            android:textSize="@dimen/setting_str_size"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
@@ -65,7 +65,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:switchMinWidth="60dp"
-            android:textSize="16sp"
+            android:textSize="@dimen/setting_str_size"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -92,7 +92,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="알림방식(소리/진동)"
-                android:textSize="16sp"
+                android:textSize="@dimen/setting_str_size"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
@@ -102,7 +102,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:switchMinWidth="60dp"
-                android:textSize="16sp"
+                android:textSize="@dimen/setting_str_size"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -127,7 +127,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="알림받기 반경(km)"
-                android:textSize="16sp"
+                android:textSize="@dimen/setting_str_size"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
@@ -224,7 +224,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="공지사항"
-            android:textSize="16sp"
+            android:textSize="@dimen/setting_str_size"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
@@ -257,7 +257,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=""
-            android:textSize="16sp"
+            android:textSize="@dimen/setting_str_size"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
@@ -266,7 +266,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="문의내역"
-            android:textSize="16sp"
+            android:textSize="@dimen/setting_str_size"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
@@ -299,7 +299,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=""
-            android:textSize="16sp"
+            android:textSize="@dimen/setting_str_size"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
@@ -308,7 +308,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="문의하기"
-            android:textSize="16sp"
+            android:textSize="@dimen/setting_str_size"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
@@ -353,7 +353,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="버전"
-            android:textSize="16sp"
+            android:textSize="@dimen/setting_str_size"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
@@ -362,7 +362,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="1.0.0"
-            android:textSize="16sp"
+            android:textSize="@dimen/setting_str_size"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>

@@ -43,7 +43,7 @@
                 android:layout_marginBottom="6dp"
                 android:text="수주하기"
                 android:textColor="@color/white"
-                android:textSize="12sp"
+                android:textSize="@dimen/bottom_str_size"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
@@ -84,7 +84,7 @@
                 android:layout_marginBottom="6dp"
                 android:text="발주하기"
                 android:textColor="@color/white"
-                android:textSize="12sp"
+                android:textSize="@dimen/bottom_str_size"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
@@ -128,7 +128,7 @@
                 android:layout_marginBottom="6dp"
                 android:text="내정보"
                 android:textColor="@color/white"
-                android:textSize="12sp"
+                android:textSize="@dimen/bottom_str_size"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
@@ -172,7 +172,7 @@
                 android:layout_marginBottom="6dp"
                 android:text="충전"
                 android:textColor="@color/white"
-                android:textSize="12sp"
+                android:textSize="@dimen/bottom_str_size"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
@@ -216,7 +216,7 @@
                 android:layout_marginBottom="6dp"
                 android:text="설정"
                 android:textColor="@color/white"
-                android:textSize="12sp"
+                android:textSize="@dimen/bottom_str_size"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />

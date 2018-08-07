@@ -190,7 +190,7 @@ class MainActivity : AppCompatActivity(), OnClickListener {
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        //퍼미션 거절 승인에따른 처리
+        //퍼미션 거절/승인에따른 처리
         if(requestCode == PermissionCode.ACCESS_FINE_LOCATION_CODE.Code){
             gps.setLocationTool()
         }

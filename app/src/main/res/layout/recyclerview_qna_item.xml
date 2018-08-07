@@ -30,7 +30,7 @@
                 android:padding="8dp"
                 android:text="답변완료"
                 android:textColor="@color/white"
-                android:textSize="14sp"
+                android:textSize="@dimen/list_item_size"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -54,7 +54,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_margin="10dp"
                 android:text="제목"
-                android:textSize="14sp"
+                android:textSize="@dimen/list_item_size"
                 android:textStyle="bold" />
 
             <TextView

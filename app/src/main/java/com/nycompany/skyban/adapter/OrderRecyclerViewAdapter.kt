@@ -34,7 +34,6 @@ class OrderRecyclerViewAdapter(private val inOrders: ArrayList<OrderList>?, Frag
         //xml 데아터 바인딩
         var util = ContextUtil(context!!)
         vh.textView_Orderseq.text = inOrders!![i].order_seq
-        vh.textViewCommission_yn.text = if (inOrders[i].commission_yn =="Y") context?.getString(R.string.commission_y)  else context?.getString(R.string.commission_n)
         //if(fType == FragmentsAvailable.ORDER_HISTORY) {vh.textViewCommission_yn.visibility = View.GONE}
         vh.textViewDate.text = inOrders[i].work_date!!.split(" ")[0]
         vh.textViewTime.text = inOrders[i].work_date!!.split(" ")[1]
@@ -65,7 +64,13 @@ class OrderRecyclerViewAdapter(private val inOrders: ArrayList<OrderList>?, Frag
                     (vh.linearLayout_left.getChildAt(j) as TextView)?.let { it.setTextColor(context?.resources?.getColor(R.color.black)!!) }
                 }
             } else {
-                vh.linearLayout_left.setBackgroundResource(R.color.sky)
+                if (inOrders[i].commission_yn =="Y") {
+                    vh.linearLayout_left.setBackgroundResource(R.color.pink)
+                    vh.textViewCommission_yn.text =  context?.getString(R.string.commission_y)
+                } else{
+                    vh.linearLayout_left.setBackgroundResource(R.color.sky)
+                    vh.textViewCommission_yn.text = context?.getString(R.string.commission_n)
+                }
                 vh.linearLayout_right.setBackgroundResource(R.color.white)
                 for (j in 0..(vh.linearLayout_left.childCount - 1)) {
                     (vh.linearLayout_left.getChildAt(j) as TextView)?.let { it.setTextColor(context?.resources?.getColor(R.color.white)!!) }

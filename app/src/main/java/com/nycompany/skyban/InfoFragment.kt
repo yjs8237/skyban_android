@@ -1,13 +1,24 @@
 package com.nycompany.skyban
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.app.Fragment
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.nycompany.skyban.dto.LoginDTO
+import com.nycompany.skyban.enums.ResCode
+import com.nycompany.skyban.network.ReqLogin
+import com.nycompany.skyban.network.RetrofitCreater
 import com.nycompany.skyban.util.ContextUtil
+import dmax.dialog.SpotsDialog
 import kotlinx.android.synthetic.main.fragment_info.*
+import org.json.JSONObject
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -42,6 +53,10 @@ class InfoFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
+        setDataUI()
+    }
+
+    fun setDataUI(){
         val userinfo = getUserinfo()
         if(userinfo?.cash.toString() != "") textView_cash.text = String.format("%s cash",userinfo?.cash)
         textView_InorderPoint.text = String.format("%s 수주 point",userinfo?.obtain_point)
@@ -85,6 +100,43 @@ class InfoFragment : Fragment() {
 
         Button_Cash.setOnClickListener {
             startActivity(Intent(activity, CashListActivity::class.java))
+        }
+
+        imageView_Refresh.setOnClickListener {
+            val loading: AlertDialog = SpotsDialog.Builder().setContext(activity).build()
+            loading.show()
+
+            val server = RetrofitCreater.getMyInstance()?.create(ReqLogin::class.java)
+            val paramObject = JSONObject()
+            val cUtil = ContextUtil(activity)
+
+            paramObject.put("cell_no", getUserinfo()?.cell_no)
+            paramObject.put("user_pwd", getUserinfo()?.password)
+
+            val reqString = paramObject.toString()
+
+            server?.postRequest(reqString)?.enqueue(object: Callback<LoginDTO> {
+                override fun onFailure(call: Call<LoginDTO>, t: Throwable) {
+                    val msg = if(!cUtil.isConnected()) activity?.getString(R.string.network_eror) else t.toString()
+                    cUtil.buildDialog("eror", msg).show()
+                    loading.dismiss()
+                }
+
+                override fun onResponse(call: Call<LoginDTO>, response: Response<LoginDTO>) {
+                    response.body()?.let {
+                        if(it.result == ResCode.Success.Code) {
+                            resetUserinfoRealm(it, getUserinfo()?.password!!)
+                            setDataUI()
+                        }else{
+                            Log.e(this::class.java.name, it.description)
+                        }
+                        loading.dismiss()
+                    }?:run{
+                        loading.dismiss()
+                        Log.e(this::class.java.name, "response body eror")
+                    }
+                }
+            })
         }
     }
 

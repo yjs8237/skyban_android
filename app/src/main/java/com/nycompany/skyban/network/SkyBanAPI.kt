@@ -159,3 +159,8 @@ interface ReqRegisteragain{
     fun postRequest(@Body body:String):Call<CommonDTO>
 }
 
+interface ReqOrdercancle{
+    @POST("/user/ordermngt/ordercancle")
+    @Headers("Content-Type: application/json", "Authorization: Basic YXBpdXNlcjpTa3lCYW5BcGk=")
+    fun postRequest(@Body body:String):Call<CommonDTO>
+}

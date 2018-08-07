@@ -24,12 +24,22 @@
             android:layout_marginTop="10dp"
             android:text="내정보"
             android:textColor="@android:color/background_light"
-            android:textSize="18sp"
+            android:textSize="@dimen/title_size"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
+
+        <ImageView
+            android:id="@+id/imageView_Refresh"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="8dp"
+            android:src="@android:drawable/stat_notify_sync_noanim"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </android.support.constraint.ConstraintLayout>
 
@@ -90,7 +100,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:text="적립금"
-                        android:textSize="14sp"
+                        android:textSize="14dp"
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"/>
@@ -103,7 +113,7 @@
                         android:layout_marginTop="4dp"
                         android:text="TextView"
                         android:textColor="@color/colorPrimaryDark"
-                        android:textSize="18sp"
+                        android:textSize="18dp"
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textView23"
@@ -116,7 +126,7 @@
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="4dp"
                         android:text="0 수주 point"
-                        android:textSize="14sp"
+                        android:textSize="14dp"
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textView_cash"/>
@@ -127,7 +137,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:text="0 발주 point"
-                        android:textSize="14sp"
+                        android:textSize="14dp"
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textView_InorderPoint"/>
@@ -170,7 +180,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:text="TextView"
-                android:textSize="14sp"
+                android:textSize="14dp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout4"

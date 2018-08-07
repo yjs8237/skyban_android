@@ -44,10 +44,10 @@ class QnaDetailActivity : AppCompatActivity() {
                 response.body()?.let {
                     loading.dismiss()
                     if (it.result == ResCode.Success.Code) {
-                        textView_title.text = it?.title
-                        textView_reg_date.text = it?.reg_date
-                        textView_content.text = it?.content
-                        textView_reply.text = it?.reply
+                        textView_title.text = it?.title?:run { "" }
+                        textView_reg_date.text = it?.reg_date?:run { "" }
+                        textView_content.text = it?.content?:run { "" }
+                        textView_reply.text = it?.reply?:run { "" }
 
                     } else {
                         it.description?.let {

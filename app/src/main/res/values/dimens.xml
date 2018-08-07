@@ -1,3 +1,8 @@
 <resources>
-    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="title_size">18dp</dimen>
+    <dimen name="bottom_str_size">12dp</dimen>
+    <dimen name="noti_detail_str_size">16dp</dimen>
+    <dimen name="qna_detail_str_size">16dp</dimen>
+    <dimen name="setting_str_size">16dp</dimen>
+    <dimen name="list_item_size">14dp</dimen>
 </resources>

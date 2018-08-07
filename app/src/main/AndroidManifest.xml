@@ -20,7 +20,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LauncherActivity">
+        <activity android:name=".LauncherActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,16 +29,21 @@
             </intent-filter>
         </activity>
         <activity android:name=".LoginActivity"
-            android:windowSoftInputMode="adjustResize"/>
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateHidden "/>
         <activity
             android:name=".MainActivity"
-            android:windowSoftInputMode="" />
-        <activity android:name=".termsActivity" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateHidden "/>
+        <activity android:name=".termsActivity"
+            android:screenOrientation="portrait"/>
         <activity android:name=".RegisterActivity"
-            android:windowSoftInputMode="adjustResize"/>
+            android:windowSoftInputMode="adjustResize"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".OrderDetailActivity"
-            android:label="@string/title_activity_inorder_detail" />
+            android:label="@string/title_activity_inorder_detail"
+            android:screenOrientation="portrait"/>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -50,21 +56,33 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".AddrSearchActivity" />
-        <activity android:name=".PremiumActivity" />
+        <activity android:name=".AddrSearchActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".PremiumActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".UpdatePersonalActivity"
             android:label="@string/title_activity_update_personal"
-            android:theme="@style/AppTheme" />
-        <activity android:name=".UpdatePasswordActivity" />
-        <activity android:name=".UpdateCarActivity" />
-        <activity android:name=".PointListActivity" />
-        <activity android:name=".CashListActivity" />
-        <activity android:name=".NotificationActivity" />
-        <activity android:name=".NotificationDetailActivity" />
-        <activity android:name=".QnaActivity" />
-        <activity android:name=".QnaDetailActivity" />
-        <activity android:name=".QnaRegisterActivity" />
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".UpdatePasswordActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".UpdateCarActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".PointListActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".CashListActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".NotificationActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".NotificationDetailActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".QnaActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".QnaDetailActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".QnaRegisterActivity"
+            android:screenOrientation="portrait"/>
 
         <service
             android:name=".service.CustomFirebaseMessagingService"

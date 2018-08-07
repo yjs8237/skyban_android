@@ -16,7 +16,7 @@
         android:text="SkyBan"
         android:textAlignment="center"
         android:textColor="@color/white"
-        android:textSize="50sp"
+        android:textSize="50dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/imageView"
         app:layout_constraintEnd_toEndOf="parent"
