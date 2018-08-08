@@ -62,6 +62,20 @@ class OutorderFragment : Fragment(), View.OnClickListener{
 
         //발주버튼
         Button_Order.setOnClickListener{
+            val ad = util.buildDialog( "발주 하시겠습니까?")
+            ad.setNegativeButton("아니요", object : DialogInterface.OnClickListener {
+                override fun onClick(p0: DialogInterface?, p1: Int) {
+                    return
+                }
+            })
+            ad.setPositiveButton("예", object : DialogInterface.OnClickListener {
+                override fun onClick(p0: DialogInterface?, p1: Int) {
+                    return
+                }
+            })
+            ad.show()
+
+
             setJsonParmFromUI()
             val reqString = paramObject.toString()
             val server = RetrofitCreater.getMyInstance()?.create(ReqOrderRegister::class.java)
@@ -192,7 +206,7 @@ class OutorderFragment : Fragment(), View.OnClickListener{
             }
         }
 
-        //get 작업수당
+        //get 작업금액
         val pay = EditWorkPay.text.toString()
         if(pay != ""){
             paramObject.put("work_pay", pay)

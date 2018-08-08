@@ -246,7 +246,7 @@
                 android:layout_marginTop="16dp"
                 app:bootstrapBrand="info"
                 app:bootstrapHeading="h6"
-                app:bootstrapText="{fa_circle_o} 작업수당"
+                app:bootstrapText="{fa_circle_o} 작업금액"
                 app:layout_constraintStart_toStartOf="@+id/ButtonGroup_JobTimeBottom"
                 app:layout_constraintTop_toBottomOf="@+id/ButtonGroup_JobTimeBottom" />
 
@@ -257,7 +257,7 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:hint="작업수당"
+                android:hint="작업금액(원)"
                 android:inputType="number"
                 android:imeOptions="actionDone"
                 app:bootstrapBrand="info"

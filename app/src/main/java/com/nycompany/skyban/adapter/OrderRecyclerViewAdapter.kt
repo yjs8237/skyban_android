@@ -52,7 +52,7 @@ class OrderRecyclerViewAdapter(private val inOrders: ArrayList<OrderList>?, Frag
         var op_danchuk =  if (inOrders[i].op_danchuk == "Y") "단축" else null
         vh.textView_work_option.text = "옵션 : ${op_invertor?.let{it +" "}?:run{""}} ${op_guljul?.let{it +" "}?:run{""}} " +
                 "${op_winchi?.let{it +" "}?:run{""}} ${op_danchuk?.let{it +" "}?:run{""}}"
-        vh.textView_work_pay.text = "수당 : ${inOrders[i].work_pay}"
+        vh.textView_work_pay.text = "금액 : ${inOrders[i].work_pay}"
         var payDateMap = util.getHashmapFromResoureces(R.array.pay_date)
         vh.textView_word_duration.text = "결재기간 : ${payDateMap[inOrders[i].pay_date]?.let{it}?:run{""}}"
 

@@ -39,7 +39,7 @@ class PointRecyclerViewAdapter(private val points: ArrayList<PointList>?) : Recy
         vh.textView_work_contact.text = "현장 연락처 : ${points[i].work_contact}"
         vh.textView_work_location.text = "작업장소 : ${points[i].work_location}"
         vh.textView_work_date.text = "작업일시 : ${points[i].work_date}"
-        vh.textView_work_pay.text = "작업수당 : ${points[i].work_pay}"
+        vh.textView_work_pay.text = "작업금액 : ${points[i].work_pay}"
     }
 
     override fun getItemCount(): Int {
