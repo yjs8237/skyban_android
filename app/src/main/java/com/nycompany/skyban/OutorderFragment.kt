@@ -70,41 +70,38 @@ class OutorderFragment : Fragment(), View.OnClickListener{
             })
             ad.setPositiveButton("예", object : DialogInterface.OnClickListener {
                 override fun onClick(p0: DialogInterface?, p1: Int) {
-                    return
+                    setJsonParmFromUI()
+                    val reqString = paramObject.toString()
+                    val server = RetrofitCreater.getMyInstance()?.create(ReqOrderRegister::class.java)
+                    server?.postRequest(reqString)?.enqueue(object: Callback<OrderRegisterDTO> {
+                        override fun onFailure(call: Call<OrderRegisterDTO>, t: Throwable) {
+                            val msg = if(!util.isConnected()) getString(R.string.network_eror) else t.toString()
+                            util.buildDialog("eror", msg).show()
+                        }
+
+                        override fun onResponse(call: Call<OrderRegisterDTO>, response: Response<OrderRegisterDTO>) {
+                            response.body()?.let {
+                                if(it.result == ResCode.Success.Code) {
+                                    util.buildDialog("완료","성공적으로 발주 되었습니다").show()
+
+                                    val fm = fragmentManager.beginTransaction()
+                                    fm.remove(this@OutorderFragment).replace(R.id.fragmentContainer , OutorderFragment.newInstance()).commit()
+                                    updateUserInfo(userinfo?.cell_no, userinfo?.password)
+                                    //발주리스트로 이동
+                                    //startActivity(Intent().setClass(this@LoginActivity, MainActivity::class.java))
+                                }else{
+                                    it.description?.let {
+                                        util.buildDialog(it).show()
+                                    }
+                                }
+                            }?:run{
+                                Log.e(this::class.java.name, getString(R.string.response_body_eror))
+                            }
+                        }
+                    })
                 }
             })
             ad.show()
-
-
-            setJsonParmFromUI()
-            val reqString = paramObject.toString()
-            val server = RetrofitCreater.getMyInstance()?.create(ReqOrderRegister::class.java)
-            server?.postRequest(reqString)?.enqueue(object: Callback<OrderRegisterDTO> {
-                override fun onFailure(call: Call<OrderRegisterDTO>, t: Throwable) {
-                    val msg = if(!util.isConnected()) getString(R.string.network_eror) else t.toString()
-                    util.buildDialog("eror", msg).show()
-                }
-
-                override fun onResponse(call: Call<OrderRegisterDTO>, response: Response<OrderRegisterDTO>) {
-                    response.body()?.let {
-                        if(it.result == ResCode.Success.Code) {
-                            util.buildDialog("완료","성공적으로 발주 되었습니다").show()
-
-                            val fm = fragmentManager.beginTransaction()
-                            fm.remove(this@OutorderFragment).replace(R.id.fragmentContainer , OutorderFragment.newInstance()).commit()
-                            //발주리스트로 이동
-                            //startActivity(Intent().setClass(this@LoginActivity, MainActivity::class.java))
-                        }else{
-                            it.description?.let {
-                                util.buildDialog(it).show()
-                            }
-                        }
-                    }?:run{
-                        Log.e(this::class.java.name, getString(R.string.response_body_eror))
-                    }
-                }
-            })
-            updateUserInfo(userinfo?.cell_no, userinfo?.password)
         }
     }
 
@@ -148,6 +145,24 @@ class OutorderFragment : Fragment(), View.OnClickListener{
             startActivityForResult(intent, REQUEST_MAP)
         }
 
+        //작업금액
+        Button_WorkPay1.setOnClickListener{
+            EditWorkPay.setText((EditWorkPay.text.toString().toIntOrNull()?.let { it +  10000}?:run { 10000 }).toString())
+        }
+
+        Button_WorkPay5.setOnClickListener{
+            EditWorkPay.setText((EditWorkPay.text.toString().toIntOrNull()?.let { it +  50000}?:run { 50000 }).toString())
+        }
+
+        Button_WorkPay10.setOnClickListener{
+            EditWorkPay.setText((EditWorkPay.text.toString().toIntOrNull()?.let { it +  100000}?:run { 100000 }).toString())
+        }
+
+        Button_WorkPayDelete.setOnClickListener{
+            EditWorkPay.setText("")
+        }
+
+
         //차량정보
         Button_SelectMaxType.setOnClickListener {
             makeCarTypelengthDialog(true).show()
@@ -169,8 +184,14 @@ class OutorderFragment : Fragment(), View.OnClickListener{
             dialogHeight.show()
         }
 
-        //결제기간
         val pay_dates = util.getValueArryFromResoureces(R.array.pay_date)
+        Button_RadioPay.setOnCheckedChangedListener { bootstrapButton, isChecked ->
+            if(isChecked){
+
+            }
+        }
+
+        //결제기간
         val dialogDate = android.support.v7.app.AlertDialog.Builder(activity).apply {
             setTitle("결제기간")
             setItems(pay_dates, DialogInterface.OnClickListener { dialogInterface, i ->
@@ -293,6 +314,8 @@ class OutorderFragment : Fragment(), View.OnClickListener{
         paramObject.put("work_det_6", strXY)
         if(Button_work_det_7.isSelected) strXY = "Y" else strXY = "N"
         paramObject.put("work_det_7", strXY)
+        if(Button_work_det_8.isSelected) strXY = "Y" else strXY = "N"
+        paramObject.put("work_det_8", strXY)
 
         //메모
         val content = EditText_WorkContent.text.toString()

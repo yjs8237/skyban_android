@@ -267,6 +267,67 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/BootstrapLabel" />
 
+            <LinearLayout
+                android:id="@+id/linearLayout4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/EditWorkPay">
+
+                <com.beardedhen.androidbootstrap.BootstrapButton
+                    android:id="@+id/Button_WorkPay1"
+                    android:layout_margin="1dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="+1만원"
+                    app:bootstrapBrand="primary"
+                    app:bootstrapSize="md"
+                    app:buttonMode="regular"
+                    app:roundedCorners="false" />
+
+                <com.beardedhen.androidbootstrap.BootstrapButton
+                    android:id="@+id/Button_WorkPay5"
+                    android:layout_margin="1dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="+5만원"
+                    app:bootstrapBrand="primary"
+                    app:bootstrapSize="md"
+                    app:buttonMode="regular"
+                    app:roundedCorners="false" />
+
+                <com.beardedhen.androidbootstrap.BootstrapButton
+                    android:id="@+id/Button_WorkPay10"
+                    android:layout_margin="1dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="+10만원"
+                    app:bootstrapBrand="primary"
+                    app:bootstrapSize="md"
+                    app:buttonMode="regular"
+                    app:roundedCorners="false" />
+
+                <com.beardedhen.androidbootstrap.BootstrapButton
+                    android:id="@+id/Button_WorkPayDelete"
+                    android:layout_margin="1dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="삭제"
+                    app:bootstrapBrand="primary"
+                    app:bootstrapSize="md"
+                    app:buttonMode="regular"
+                    app:roundedCorners="false" />
+
+            </LinearLayout>
+
             <com.beardedhen.androidbootstrap.BootstrapLabel
                 android:id="@+id/bootstrapLabel4"
                 android:layout_width="wrap_content"
@@ -276,7 +337,7 @@
                 app:bootstrapHeading="h6"
                 app:bootstrapText="{fa_circle_o} 추가요금"
                 app:layout_constraintStart_toStartOf="@+id/EditWorkPay"
-                app:layout_constraintTop_toBottomOf="@+id/EditWorkPay" />
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout4" />
 
             <com.beardedhen.androidbootstrap.BootstrapButtonGroup
                 android:id="@+id/ButtonGroup_Charge"
@@ -749,12 +810,17 @@
                     app:roundedCorners="false"
                     app:showOutline="true" />
 
-                <LinearLayout
+                <com.beardedhen.androidbootstrap.BootstrapButton
+                    android:id="@+id/Button_work_det_8"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="@color/bootstrap_gray"
-                    android:visibility="invisible" />
+                    android:text="초보사절"
+                    app:bootstrapBrand="primary"
+                    app:bootstrapSize="md"
+                    app:buttonMode="checkbox"
+                    app:roundedCorners="false"
+                    app:showOutline="true" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
