@@ -151,6 +151,7 @@
     </string-array>
 
     <string-array name="pay_date">
+        <item>S000|결제기간</item>
         <item>S001|당일</item>
         <item>S002|1주이내</item>
         <item>S003|2주이내</item>

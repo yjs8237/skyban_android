@@ -27,6 +27,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -184,14 +185,15 @@ class OutorderFragment : Fragment(), View.OnClickListener{
             dialogHeight.show()
         }
 
-        val pay_dates = util.getValueArryFromResoureces(R.array.pay_date)
-        Button_RadioPay.setOnCheckedChangedListener { bootstrapButton, isChecked ->
-            if(isChecked){
-
-            }
+        //결제기간
+        Button_RadioPaySign.setOnCheckedChangedListener { bootstrapButton, isChecked ->
+            Button_SelectPayDate.isEnabled = !Button_SelectPayDate.isEnabled
+            if(!isChecked) Button_SelectPayDate.text = "결제기간"
         }
 
-        //결제기간
+        val arryList = util.getValueArryFromResoureces(R.array.pay_date).toCollection(ArrayList())
+        arryList.removeAt(0)
+        val pay_dates = arryList.toArray(arrayOfNulls<String>(arryList.size))
         val dialogDate = android.support.v7.app.AlertDialog.Builder(activity).apply {
             setTitle("결제기간")
             setItems(pay_dates, DialogInterface.OnClickListener { dialogInterface, i ->

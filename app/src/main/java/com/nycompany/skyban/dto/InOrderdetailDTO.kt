@@ -33,6 +33,7 @@ data class InOrderdetailDTO(
         var work_det_5: String? = null,
         var work_det_6: String? = null,
         var work_det_7: String? = null,
+        var work_det_8: String? = null,
         var reg_date: String? = null,
         var work_contact: String? = null,
         var order_user_num: String? = null,

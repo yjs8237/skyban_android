@@ -72,41 +72,52 @@ class OrderDetailActivity : FragmentActivity(), OnMapReadyCallback {
         }
 
         ButtonOrder.setOnClickListener {
-            val OderParam = JSONObject()
-            OderParam.put("order_seq", orderseq)
-            OderParam.put("cell_no", cell_no)
-
-            val reqString = OderParam.toString()
-            val server = RetrofitCreater.getMyInstance()?.create(ReqObtaInorder::class.java)
-            server?.postRequest(reqString)?.enqueue(object: Callback<CommonDTO> {
-                override fun onFailure(call: Call<CommonDTO>, t: Throwable) {
-                    val msg = if(!util.isConnected()) getString(R.string.network_eror) else t.toString()
-                    util.buildDialog("eror", msg).show()
-                }
-
-                override fun onResponse(call: Call<CommonDTO>, response: Response<CommonDTO>) {
-                    response.body()?.let {
-                        if (it.result == ResCode.Success.Code) {
-                            updateUserInfo(getUserinfo()?.cell_no, getUserinfo()?.password)
-                            val db = util.buildDialog("성공", "성공적으로 수주 되었습니다 ")
-                            db.setPositiveButton("OK", object : DialogInterface.OnClickListener {
-                                override fun onClick(p0: DialogInterface?, p1: Int) {
-                                    MainActivity.instance()?.moveOrderHistory()
-                                    finish()
-                                }
-                            })
-                            db.setCancelable(false)
-                            db.show()
-                        } else {
-                            it.description?.let {
-                                util.buildDialog(it).show()
-                            }
-                        }?:run{
-                            Log.e(this::class.java.name, getString(R.string.response_body_eror))
-                        }
-                    }
+            val ad = util.buildDialog( "수주 하시겠습니까?")
+            ad.setNegativeButton("아니요", object : DialogInterface.OnClickListener {
+                override fun onClick(p0: DialogInterface?, p1: Int) {
+                    return
                 }
             })
+            ad.setPositiveButton("예", object : DialogInterface.OnClickListener {
+                override fun onClick(p0: DialogInterface?, p1: Int) {
+                    val OderParam = JSONObject()
+                    OderParam.put("order_seq", orderseq)
+                    OderParam.put("cell_no", cell_no)
+
+                    val reqString = OderParam.toString()
+                    val server = RetrofitCreater.getMyInstance()?.create(ReqObtaInorder::class.java)
+                    server?.postRequest(reqString)?.enqueue(object: Callback<CommonDTO> {
+                        override fun onFailure(call: Call<CommonDTO>, t: Throwable) {
+                            val msg = if(!util.isConnected()) getString(R.string.network_eror) else t.toString()
+                            util.buildDialog("eror", msg).show()
+                        }
+
+                        override fun onResponse(call: Call<CommonDTO>, response: Response<CommonDTO>) {
+                            response.body()?.let {
+                                if (it.result == ResCode.Success.Code) {
+                                    updateUserInfo(getUserinfo()?.cell_no, getUserinfo()?.password)
+                                    val db = util.buildDialog("성공", "성공적으로 수주 되었습니다 ")
+                                    db.setPositiveButton("OK", object : DialogInterface.OnClickListener {
+                                        override fun onClick(p0: DialogInterface?, p1: Int) {
+                                            MainActivity.instance()?.moveOrderHistory()
+                                            finish()
+                                        }
+                                    })
+                                    db.setCancelable(false)
+                                    db.show()
+                                } else {
+                                    it.description?.let {
+                                        util.buildDialog(it).show()
+                                    }
+                                }?:run{
+                                    Log.e(this::class.java.name, getString(R.string.response_body_eror))
+                                }
+                            }
+                        }
+                    })
+                }
+            })
+            ad.show()
         }
 
         Button_Complete.setOnClickListener {
@@ -345,6 +356,7 @@ class OrderDetailActivity : FragmentActivity(), OnMapReadyCallback {
             var work_det_5=  if (it.work_det_5== "Y") "이삿짐" else null
             var work_det_6=  if (it.work_det_6== "Y") "거리작업" else null
             var work_det_7=  if (it.work_det_7== "Y") "전지작업" else null
+            var work_det_8=  if (it.work_det_8== "Y") "초보사절" else null
 
             textView_Detail.text = "작업상세 : ${work_det_1?.let{it +" "}?:run{""}} ${work_det_2?.let{it +" "}?:run{""}} " +
                     "${work_det_3?.let{it +" "}?:run{""}} ${work_det_4?.let{it +" "}?:run{""}}" +

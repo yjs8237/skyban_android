@@ -14,6 +14,7 @@ import com.beardedhen.androidbootstrap.BootstrapButton
 import com.nycompany.skyban.dto.CommonDTO
 import com.nycompany.skyban.dto.RealmUserInfo
 import com.nycompany.skyban.enums.ResCode
+import com.nycompany.skyban.network.ReqLeave
 import com.nycompany.skyban.network.ReqLogout
 import com.nycompany.skyban.network.ReqUpdateDistance
 import com.nycompany.skyban.network.RetrofitCreater
@@ -217,6 +218,48 @@ class SettingFragment : Fragment() {
 
         ConstraintLayout_register_qna.setOnClickListener {
             startActivity(Intent().setClass(activity, QnaRegisterActivity::class.java))
+        }
+
+        ConstraintLayout_Leave.setOnClickListener {
+            ContextUtil(activity).buildDialog("정말 회원탈퇴 하시겠습니까?")?.apply {
+                setPositiveButton("OK", object : DialogInterface.OnClickListener {
+                    override fun onClick(p0: DialogInterface?, p1: Int) {
+                        val paramObject = JSONObject()
+                        paramObject.put("cell_no", getUserinfo()?.cell_no)
+                        paramObject.put("user_pwd", getUserinfo()?.password)
+                        val reqString = paramObject.toString()
+
+                        val server = RetrofitCreater.getMyInstance()?.create(ReqLeave::class.java)
+                        server?.postRequest(reqString)?.enqueue(object : Callback<CommonDTO> {
+                            override fun onFailure(call: Call<CommonDTO>, t: Throwable) {
+                                val msg = if (!util.isConnected()) getString(R.string.network_eror) else t.toString()
+                                util.buildDialog("eror", msg).show()
+                            }
+
+                            override fun onResponse(call: Call<CommonDTO>, response: Response<CommonDTO>) {
+                                response.body()?.let {
+                                    if (it.result == ResCode.Success.Code) {
+                                        MainActivity.instance()?.logout()
+                                    } else {
+                                        it.description?.let {
+                                            Log.e(this::class.java.name, it)
+                                        }
+                                    }
+                                } ?: run {
+                                    Log.e(this::class.java.name, getString(R.string.response_body_eror))
+                                }
+                            }
+                        })
+                    }
+                })
+                setNegativeButton("cancel", object :DialogInterface.OnClickListener{
+                    override fun onClick(p0: DialogInterface?, p1: Int) {
+                        return
+                    }
+                })
+                //setCancelable(false)
+                show()
+            }
         }
     }
 
