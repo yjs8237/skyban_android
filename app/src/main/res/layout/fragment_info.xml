@@ -195,7 +195,7 @@
                 android:layout_marginTop="8dp"
                 android:text="프리미엄 회원 신청하기"
                 app:bootstrapBrand="primary"
-                app:bootstrapSize="md"
+                app:bootstrapSize="lg"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.412"
                 app:layout_constraintStart_toStartOf="parent"

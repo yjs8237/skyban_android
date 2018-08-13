@@ -54,7 +54,7 @@ class OrderRecyclerViewAdapter(private val inOrders: ArrayList<OrderList>?, Frag
         else "장소 : ${inOrders[i].work_location}  ${inOrders[i].work_location_detail}"
         vh.textView_work_location.text = location
 
-        var op_invertor =  if (inOrders[i].op_danchuk == "Y") "인버터 " else ""
+        var op_invertor =  if (inOrders[i].op_invertor == "Y") "인버터 " else ""
         var op_guljul =  if (inOrders[i].op_guljul == "Y") "굴절 " else ""
         var op_winchi =  if (inOrders[i].op_winchi == "Y") "윈찌 " else ""
         var op_danchuk =  if (inOrders[i].op_danchuk == "Y") "단축" else ""
@@ -76,26 +76,25 @@ class OrderRecyclerViewAdapter(private val inOrders: ArrayList<OrderList>?, Frag
         //var payDateMap = util.getHashmapFromResoureces(R.array.pay_date)
         //vh.textView_word_duration.text = "결재기간 : ${payDateMap[inOrders[i].pay_date]?.let{it}?:run{""}}"
         var payPayMap = util.getHashmapFromResoureces(R.array.pay_type)
-        vh.textView_pay_type.text = "결재방식 : ${payPayMap[inOrders[i].pay_type]?.let{it}?:run{""}}"
+        vh.textView_pay_type.text = "결제방식 : ${payPayMap[inOrders[i].pay_type]?.let{it}?:run{""}}"
 
+        if (inOrders[i].commission_yn =="Y") {
+            vh.linearLayout_left.setBackgroundResource(R.color.pink)
+            vh.textViewCommission_yn.text =  context?.getString(R.string.commission_y)
+        } else{
+            vh.linearLayout_left.setBackgroundResource(R.color.sky)
+            vh.textViewCommission_yn.text = context?.getString(R.string.commission_n)
+        }
+        vh.linearLayout_right.setBackgroundResource(R.color.white)
+        for (j in 0..(vh.linearLayout_left.childCount - 1)) {
+            (vh.linearLayout_left.getChildAt(j) as TextView)?.let { it.setTextColor(context?.resources?.getColor(R.color.white)!!) }
+        }
         inOrders[i].work_proc?.let {
             if ("WP04" == it) {
                 vh.linearLayout_left.setBackgroundResource(R.color.grey)
                 vh.linearLayout_right.setBackgroundResource(R.color.grey)
                 for (j in 0..(vh.linearLayout_left.childCount - 1)) {
                     (vh.linearLayout_left.getChildAt(j) as TextView)?.let { it.setTextColor(context?.resources?.getColor(R.color.black)!!) }
-                }
-            } else {
-                if (inOrders[i].commission_yn =="Y") {
-                    vh.linearLayout_left.setBackgroundResource(R.color.pink)
-                    vh.textViewCommission_yn.text =  context?.getString(R.string.commission_y)
-                } else{
-                    vh.linearLayout_left.setBackgroundResource(R.color.sky)
-                    vh.textViewCommission_yn.text = context?.getString(R.string.commission_n)
-                }
-                vh.linearLayout_right.setBackgroundResource(R.color.white)
-                for (j in 0..(vh.linearLayout_left.childCount - 1)) {
-                    (vh.linearLayout_left.getChildAt(j) as TextView)?.let { it.setTextColor(context?.resources?.getColor(R.color.white)!!) }
                 }
             }
         }

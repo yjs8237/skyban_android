@@ -96,16 +96,32 @@ class OrderDetailActivity : FragmentActivity(), OnMapReadyCallback {
                             response.body()?.let {
                                 if (it.result == ResCode.Success.Code) {
                                     updateUserInfo(getUserinfo()?.cell_no, getUserinfo()?.password)
-                                    val db = util.buildDialog("성공", "성공적으로 수주 되었습니다 ")
-                                    db.setPositiveButton("OK", object : DialogInterface.OnClickListener {
+                                    val ad = util.buildDialog("성공", "성공적으로 수주 되었습니다 ")
+                                    ad.setPositiveButton("OK", object : DialogInterface.OnClickListener {
                                         override fun onClick(p0: DialogInterface?, p1: Int) {
                                             MainActivity.instance()?.moveOrderHistory()
                                             finish()
                                         }
                                     })
-                                    db.setCancelable(false)
-                                    db.show()
-                                } else {
+                                    ad.setCancelable(false)
+                                    ad.show()
+                                }else if(it.result == ResCode.PremiumError.Code){
+                                    val ad = util.buildDialog("프리미엄 회원이 아닙니다. 프리미엄회원 신청하시겠습니까?")
+                                    ad.setPositiveButton("OK", object : DialogInterface.OnClickListener {
+                                        override fun onClick(p0: DialogInterface?, p1: Int) {
+                                            MainActivity.instance()?.movePremium()
+                                            finish()
+                                        }
+                                    })
+                                    ad.setNegativeButton("cancel", object : DialogInterface.OnClickListener{
+                                        override fun onClick(p0: DialogInterface?, p1: Int) {
+                                            return
+                                        }
+                                    })
+                                    ad.setCancelable(false)
+                                    ad.show()
+                                }
+                                else {
                                     it.description?.let {
                                         util.buildDialog(it).show()
                                     }
@@ -124,7 +140,7 @@ class OrderDetailActivity : FragmentActivity(), OnMapReadyCallback {
             val OderParam = JSONObject()
             OderParam.put("cell_no", cell_no)
             OderParam.put("order_seq", orderseq)
-            OderParam.put("work_proc", "WP04 ")
+            OderParam.put("work_proc", "WP04")
 
             val reqString = OderParam.toString()
             val server = RetrofitCreater.getMyInstance()?.create(ReqUpdateorder::class.java)
@@ -141,7 +157,6 @@ class OrderDetailActivity : FragmentActivity(), OnMapReadyCallback {
                             val bd = util.buildDialog("성공", "작업완료 처리되었습니다 ")
                             bd.setPositiveButton("OK", object : DialogInterface.OnClickListener {
                                 override fun onClick(p0: DialogInterface?, p1: Int) {
-                                    MainActivity.instance()?.moveOrderHistory()
                                     finish()
                                 }
                             })
@@ -312,7 +327,7 @@ class OrderDetailActivity : FragmentActivity(), OnMapReadyCallback {
         }
 
         Button_JobCancel.setOnClickListener {
-            util.buildDialog("관리자에게 문의하세요").show()
+            util.buildDialog("관리자에게 문의하세요 010-9638-0456").show()
         }
     }
 
@@ -337,34 +352,35 @@ class OrderDetailActivity : FragmentActivity(), OnMapReadyCallback {
                     "${carLengthMap[it.min_car_length]?.let{ " - " + it}?:run{ "" }} ~ " +
                     "${carTypeMap[it.max_car_type]}" +
                     "${carLengthMap[it.min_car_length]?.let{ " - " + it}?:run{ "" }}"
-            textView_WorkLocation.text = "장소 : ${it.work_location}"
+
+            var addr = if (MainActivity.instance()?.getCurrentFarnment() == FragmentsAvailable.ORDER) "장소 : ${it.work_location}"
+            else "장소 : ${it.work_location}  ${it.work_location_detail}"
+            textView_WorkLocation.text = addr
+
             textView_WorkDate.text = "작업일시 : ${it.work_date}"
             var durationypeMap = util.getHashmapFromResoureces(R.array.work_duration)
             textView_WorkDuration.text = "작업시간 : ${durationypeMap[it.work_duration]}"
 
-            var op_invertor =  if (it.op_danchuk == "Y") "인버터" else null
-            var op_guljul =  if (it.op_guljul == "Y") "굴절" else null
-            var op_winchi =  if (it.op_winchi == "Y") "윈찌" else null
-            var op_danchuk =  if (it.op_danchuk == "Y") "단축" else null
-            textView_Option.text = "옵션 : ${op_invertor?.let{it +" "}?:run{""}} ${op_guljul?.let{it +" "}?:run{""}} " +
-                    "${op_winchi?.let{it +" "}?:run{""}} ${op_danchuk?.let{it +" "}?:run{""}}"
+            var op_invertor =  if (it.op_invertor == "Y") "인버터 " else ""
+            var op_guljul =  if (it.op_guljul == "Y") "굴절 " else ""
+            var op_winchi =  if (it.op_winchi == "Y") "윈찌 " else ""
+            var op_danchuk =  if (it.op_danchuk == "Y") "단축" else ""
+            var strOption = "${op_invertor}${op_guljul}${op_winchi}${op_danchuk}"
+            if(strOption  == "") textView_Option.visibility = View.GONE else textView_Option.text = "옵션 : " + strOption
 
-            var work_det_1=  if (it.work_det_1== "Y") "기타작업" else null
-            var work_det_2=  if (it.work_det_2== "Y") "뿜칠(후끼)" else null
-            var work_det_3=  if (it.work_det_3== "Y") "양중작업" else null
-            var work_det_4=  if (it.work_det_4== "Y") "철거작업" else null
-            var work_det_5=  if (it.work_det_5== "Y") "이삿짐" else null
-            var work_det_6=  if (it.work_det_6== "Y") "거리작업" else null
-            var work_det_7=  if (it.work_det_7== "Y") "전지작업" else null
-            var work_det_8=  if (it.work_det_8== "Y") "초보사절" else null
+            var work_det_1=  if (it.work_det_1== "Y") "기타작업 " else ""
+            var work_det_2=  if (it.work_det_2== "Y") "뿜칠(후끼) " else ""
+            var work_det_3=  if (it.work_det_3== "Y") "양중작업 " else ""
+            var work_det_4=  if (it.work_det_4== "Y") "철거작업 " else ""
+            var work_det_5=  if (it.work_det_5== "Y") "이삿짐 " else ""
+            var work_det_6=  if (it.work_det_6== "Y") "거리작업 " else ""
+            var work_det_7=  if (it.work_det_7== "Y") "전지작업 " else ""
+            var work_det_8=  if (it.work_det_8== "Y") "초보사절" else ""
+            var strWorkDetail = "${work_det_1}${work_det_2}${work_det_3}${work_det_4}${work_det_5}${work_det_6}${work_det_7}${work_det_8}"
+            if(strWorkDetail  == "") textView_Detail.visibility = View.GONE else textView_Detail.text = "작업상세 : " + strWorkDetail
 
-            textView_Detail.text = "작업상세 : ${work_det_1?.let{it +" "}?:run{""}} ${work_det_2?.let{it +" "}?:run{""}} " +
-                    "${work_det_3?.let{it +" "}?:run{""}} ${work_det_4?.let{it +" "}?:run{""}}" +
-                    "${work_det_5?.let{it +" "}?:run{""}} ${work_det_6?.let{it +" "}?:run{""}}" +
-                    "${work_det_7?.let{it +" "}?:run{""}}"
-
-            var paydateMap = util.getHashmapFromResoureces(R.array.pay_date)
-            textView_PayDate.text ="결제기간 : ${paydateMap[it.pay_date]}"
+            var payPayMap = util.getHashmapFromResoureces(R.array.pay_type)
+            textView_pay_type.text = "결제방식 : ${payPayMap[it.pay_type]?.let{it}?:run{""}}"
 
             textView_WorkContent.text =it.work_content
         }

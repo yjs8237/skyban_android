@@ -166,6 +166,12 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         selectMenu(FragmentsAvailable.INFO)
     }
 
+    fun movePremium(){
+        changeCurrentFragment(FragmentsAvailable.INFO , null)
+        startActivity(Intent().setClass(this, PremiumActivity::class.java))
+        selectMenu(FragmentsAvailable.INFO)
+    }
+
     fun logout(){
         Realm.getDefaultInstance().use {
             it.beginTransaction()

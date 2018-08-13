@@ -10,6 +10,7 @@ data class InOrderdetailDTO(
         var work_pay: String? = null,
         var ext_charge: String? = null,
         var work_location: String? = null,
+        var work_location_detail: String? = null,
         var work_latitude: String? = null,
         var work_longitude: String? = null,
         var min_car_type: String? = null,

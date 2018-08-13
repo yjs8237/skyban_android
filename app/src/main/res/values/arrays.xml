@@ -35,7 +35,7 @@
         <item>T002|2.5T 차량</item>
         <item>T003|3.5T 차량</item>
         <item>T004|5T 단축</item>
-        <item>T005|5T 40장축</item>
+        <item>T005|5T</item>
         <item>T006|5T 이상</item>
     </string-array>
 
@@ -44,7 +44,7 @@
         <item>2.5T 차량</item>
         <item>3.5T 차량</item>
         <item>5T 단축</item>
-        <item>5T 40장축</item>
+        <item>5T</item>
         <item>5T 이상</item>
     </string-array>
 
@@ -78,6 +78,7 @@
         <item>45M</item>
         <item>48M</item>
         <item>50M</item>
+        <item>50M이상</item>
     </string-array>
     <string-array name="car_length_T006">
         <item>58M</item>
@@ -109,11 +110,12 @@
         <item>L019|45M</item>
         <item>L020|48M</item>
         <item>L021|50M</item>
-        <item>L022|58M</item>
-        <item>L023|60M</item>
-        <item>L024|65M</item>
-        <item>L025|70M</item>
-        <item>L026|75M</item>
+        <item>L022|50M이상</item>
+        <item>L023|58M</item>
+        <item>L024|60M</item>
+        <item>L025|65M</item>
+        <item>L026|70M</item>
+        <item>L027|75M</item>
     </string-array>
 
     <string-array name="car_height">

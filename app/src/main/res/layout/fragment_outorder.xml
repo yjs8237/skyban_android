@@ -250,23 +250,6 @@
                 app:layout_constraintStart_toStartOf="@+id/ButtonGroup_JobTimeBottom"
                 app:layout_constraintTop_toBottomOf="@+id/ButtonGroup_JobTimeBottom" />
 
-            <com.beardedhen.androidbootstrap.BootstrapEditText
-                android:id="@+id/EditWorkPay"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:hint="작업금액(원)"
-                android:inputType="number"
-                android:imeOptions="actionDone"
-                app:bootstrapBrand="info"
-                app:bootstrapSize="md"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/BootstrapLabel" />
-
             <LinearLayout
                 android:id="@+id/linearLayout4"
                 android:layout_width="match_parent"
@@ -276,7 +259,7 @@
                 android:layout_marginTop="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/EditWorkPay">
+                app:layout_constraintTop_toBottomOf="@+id/BootstrapLabel">
 
                 <com.beardedhen.androidbootstrap.BootstrapButton
                     android:id="@+id/Button_WorkPay1"
@@ -328,6 +311,23 @@
 
             </LinearLayout>
 
+            <com.beardedhen.androidbootstrap.BootstrapEditText
+                android:id="@+id/EditWorkPay"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:hint="작업금액(원)"
+                android:inputType="number"
+                android:imeOptions="actionDone"
+                app:bootstrapBrand="info"
+                app:bootstrapSize="md"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout4" />
+
             <com.beardedhen.androidbootstrap.BootstrapLabel
                 android:id="@+id/bootstrapLabel4"
                 android:layout_width="wrap_content"
@@ -337,7 +337,7 @@
                 app:bootstrapHeading="h6"
                 app:bootstrapText="{fa_circle_o} 추가요금"
                 app:layout_constraintStart_toStartOf="@+id/EditWorkPay"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout4" />
+                app:layout_constraintTop_toBottomOf="@+id/EditWorkPay" />
 
             <com.beardedhen.androidbootstrap.BootstrapButtonGroup
                 android:id="@+id/ButtonGroup_Charge"

@@ -13,7 +13,7 @@
     <string name="title_inorder">수주하기</string>
     <string name="title_order_history">내 수주내역</string>
     <string name="title_outorder_history">내 발주내역</string>
-    <string name="commission_y">수수료 있음</string>
+    <string name="commission_y">수수료10% 있음</string>
     <string name="commission_n">수수료 없음</string>
 
     <!-- 충전 -->
