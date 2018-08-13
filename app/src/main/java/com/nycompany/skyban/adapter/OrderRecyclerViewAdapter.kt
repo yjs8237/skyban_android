@@ -59,7 +59,10 @@ class OrderRecyclerViewAdapter(private val inOrders: ArrayList<OrderList>?, Frag
         var op_winchi =  if (inOrders[i].op_winchi == "Y") "윈찌 " else ""
         var op_danchuk =  if (inOrders[i].op_danchuk == "Y") "단축" else ""
         var strOption = "${op_invertor}${op_guljul}${op_winchi}${op_danchuk}"
-        if(strOption  == "") vh.textView_work_option.visibility = View.GONE else vh.textView_work_option.text = "옵션 : " + strOption
+        if(strOption  == "") vh.textView_work_option.visibility = View.GONE else {
+            vh.textView_work_option.text = "옵션 : " + strOption
+            vh.textView_work_option.visibility = View.VISIBLE
+        }
 
         var work_det_1=  if (inOrders[i].work_det_1== "Y") "기타작업 " else ""
         var work_det_2=  if (inOrders[i].work_det_2== "Y") "뿜칠(후끼) " else ""
@@ -70,7 +73,10 @@ class OrderRecyclerViewAdapter(private val inOrders: ArrayList<OrderList>?, Frag
         var work_det_7=  if (inOrders[i].work_det_7== "Y") "전지작업 " else ""
         var work_det_8=  if (inOrders[i].work_det_8== "Y") "초보사절" else ""
         var strWorkDetail = "${work_det_1}${work_det_2}${work_det_3}${work_det_4}${work_det_5}${work_det_6}${work_det_7}${work_det_8}"
-        if(strWorkDetail  == "") vh.textView_work_detail.visibility = View.GONE else vh.textView_work_detail.text = "작업상세 : " + strWorkDetail
+        if(strWorkDetail  == "") vh.textView_work_detail.visibility = View.GONE else {
+            vh.textView_work_detail.text = "작업상세 : " + strWorkDetail
+            vh.textView_work_detail.visibility = View.VISIBLE
+        }
 
         vh.textView_work_pay.text = "금액 : ${inOrders[i].work_pay}"
         //var payDateMap = util.getHashmapFromResoureces(R.array.pay_date)

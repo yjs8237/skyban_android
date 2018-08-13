@@ -107,13 +107,13 @@ class OrderDetailActivity : FragmentActivity(), OnMapReadyCallback {
                                     ad.show()
                                 }else if(it.result == ResCode.PremiumError.Code){
                                     val ad = util.buildDialog("프리미엄 회원이 아닙니다. 프리미엄회원 신청하시겠습니까?")
-                                    ad.setPositiveButton("OK", object : DialogInterface.OnClickListener {
+                                    ad.setPositiveButton("예", object : DialogInterface.OnClickListener {
                                         override fun onClick(p0: DialogInterface?, p1: Int) {
                                             MainActivity.instance()?.movePremium()
                                             finish()
                                         }
                                     })
-                                    ad.setNegativeButton("cancel", object : DialogInterface.OnClickListener{
+                                    ad.setNegativeButton("아니오", object : DialogInterface.OnClickListener{
                                         override fun onClick(p0: DialogInterface?, p1: Int) {
                                             return
                                         }
