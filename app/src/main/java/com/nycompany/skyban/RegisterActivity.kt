@@ -38,8 +38,15 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         Button_commission_y.setOnCheckedChangedListener { bootstrapButton, isChecked ->
-            if(isChecked) ConstraintLayout_CarType.visibility = View.VISIBLE
-            else ConstraintLayout_CarType.visibility = View.GONE
+            if(isChecked){
+                ConstraintLayout_CarType.visibility = View.VISIBLE
+                EditText_Addr.visibility = View.VISIBLE
+                EditText_CopNumber.visibility = View.VISIBLE
+            } else {
+                ConstraintLayout_CarType.visibility = View.GONE
+                EditText_Addr.visibility = View.GONE
+                EditText_CopNumber.visibility = View.GONE
+            }
         }
 
         //주소 init
@@ -72,13 +79,13 @@ class RegisterActivity : AppCompatActivity() {
                 paramObject.put("user_name", EditText_Name.text.toString().trim())
                 paramObject.put("cell_no", EditText_CellNo.text.toString().trim())
                 paramObject.put("user_pwd", EditText_Pass.text.toString().trim())
-                paramObject.put("cop_number", EditText_CopNumber.text.toString().trim())
                 paramObject.put("email", EditText_Email.text.toString().trim())
                 paramObject.put("token", instanceIdResult.token)
-                latitude?.let { paramObject.put("latitude", it)}
-                longitude?.let { paramObject.put("longitude", it)}
 
                 if(Button_commission_y.isSelected){
+                    paramObject.put("cop_number", EditText_CopNumber.text.toString().trim())
+                    latitude?.let { paramObject.put("latitude", it)}
+                    longitude?.let { paramObject.put("longitude", it)}
                     paramObject.put("user_type", "1")
                     //차량정보
                     var dic = util.getHashmapFromResoureces(R.array.car_type)
