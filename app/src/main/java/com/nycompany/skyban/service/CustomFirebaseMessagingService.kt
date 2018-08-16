@@ -7,6 +7,8 @@ import android.content.Intent
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.media.RingtoneManager
 import android.os.Build
@@ -57,11 +59,16 @@ class CustomFirebaseMessagingService : FirebaseMessagingService() {
                 .setAutoCancel(true)
                 .setContentIntent(contentIntent)
 
-        if (!getUserinfo()?.isAlarmSound!! && (Build.VERSION.SDK_INT < Build.VERSION_CODES.O)) {
+        if (getUserinfo()?.isAlarmSound!! && (Build.VERSION.SDK_INT < Build.VERSION_CODES.O)) {
             val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
             nBuilder.setSound(defaultSoundUri)
                     .setVibrate(longArrayOf(1000, 1000))
                     .setLights(Color.WHITE, 1500, 1500)
+                    .setContentTitle(tile)
+                    .setContentText(msg)
+                    .setSmallIcon(R.mipmap.ic_launcher)
+                    .setAutoCancel(true)
+                    .setContentIntent(contentIntent)
         }
         return nBuilder
     }

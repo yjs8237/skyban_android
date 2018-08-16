@@ -105,7 +105,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_margin="4dp"
-                            android:text="우리은행"
+                            android:text="농협"
                             android:textStyle="bold"/>
 
                         <TextView
@@ -113,7 +113,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_margin="4dp"
-                            android:text="123-123456-78941"
+                            android:text="449-02-254371"
                             android:textStyle="bold"/>
 
                         <TextView
@@ -121,7 +121,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_margin="4dp"
-                            android:text="예금주 : 예금주"
+                            android:text="예금주 : 홍진영"
                             android:textStyle="bold"/>
                     </LinearLayout>
 
