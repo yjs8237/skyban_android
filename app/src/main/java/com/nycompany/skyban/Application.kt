@@ -25,6 +25,7 @@ class Application: Application() {
             notificationChannel.enableVibration(true)
             notificationChannel.vibrationPattern = longArrayOf(100, 200, 100, 200)
             notificationChannel.lockscreenVisibility = Notification.VISIBILITY_PRIVATE
+
             notificationManager!!.createNotificationChannel(notificationChannel)
         }
     }
