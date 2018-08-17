@@ -11,6 +11,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.media.RingtoneManager
+import android.net.Uri
 import android.os.Build
 import android.util.Log
 import com.nycompany.skyban.MainActivity
@@ -30,11 +31,11 @@ import retrofit2.Response
 class CustomFirebaseMessagingService : FirebaseMessagingService() {
     override fun onMessageReceived(remoteMessage:RemoteMessage) {
         try {
+            val nManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             val pushDataMap = remoteMessage.data
-            makeBuilder(pushDataMap["title"], pushDataMap["message"]).apply {
-                val nManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-                nManager?.notify(0 /* ID of notification */, build())
-            }
+            val notiBd = makeBuilder(pushDataMap["title"], pushDataMap["message"])
+            nManager.notify(0 /* ID of notification */, notiBd.build())
+
             //sendNotification(remoteMessage.notification?.title!!, remoteMessage.notification?.body!!)
         }catch (e:NullPointerException){
             Log.e(this::class.java.name, e.toString())
@@ -46,22 +47,17 @@ class CustomFirebaseMessagingService : FirebaseMessagingService() {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
 
         lateinit var nBuilder: Notification.Builder
+        val contentIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT)
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             nBuilder = Notification.Builder(this, "order_01")
+            nBuilder.setContentTitle(tile)
+                    .setContentText(msg)
+                    .setSmallIcon(R.mipmap.ic_launcher)
+                    .setAutoCancel(true)
+                    .setContentIntent(contentIntent)
         } else {
             nBuilder = Notification.Builder(this)
-        }
-
-        val contentIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT)
-        nBuilder.setContentTitle(tile)
-                .setContentText(msg)
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setAutoCancel(true)
-                .setContentIntent(contentIntent)
-
-        if (getUserinfo()?.isAlarmSound!! && (Build.VERSION.SDK_INT < Build.VERSION_CODES.O)) {
-            val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
-            nBuilder.setSound(defaultSoundUri)
+            nBuilder.setSound(Uri.parse("android.resource://" + this.getPackageName() + "/" + R.raw.alret))
                     .setVibrate(longArrayOf(1000, 1000))
                     .setLights(Color.WHITE, 1500, 1500)
                     .setContentTitle(tile)
@@ -70,6 +66,7 @@ class CustomFirebaseMessagingService : FirebaseMessagingService() {
                     .setAutoCancel(true)
                     .setContentIntent(contentIntent)
         }
+
         return nBuilder
     }
 
