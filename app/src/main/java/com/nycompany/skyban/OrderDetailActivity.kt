@@ -2,6 +2,8 @@ package com.nycompany.skyban
 
 import android.app.AlertDialog
 import android.content.DialogInterface
+import android.content.Intent
+import android.net.Uri
 import android.support.v4.app.FragmentActivity
 import android.os.Bundle
 import android.util.Log
@@ -337,9 +339,22 @@ class OrderDetailActivity : FragmentActivity(), OnMapReadyCallback {
             val location = LatLng( it.work_latitude!!.toDouble(), it.work_longitude!!.toDouble())
             if(MainActivity.instance()?.getCurrentFarnment() == FragmentsAvailable.ORDER_HISTORY){
                 textView_OrderUserNum.text = "발주자연락처 : ${it?.let { it.order_user_num }?:run { "" }}"
+                textView_OrderUserNum.setOnClickListener { view ->
+                    val callIntent = Intent(Intent.ACTION_VIEW, Uri.parse("tel:" + it.order_user_num))
+                    startActivity(callIntent)
+                }
+
                 textView_WorkContact.text = "현장연락처 : ${it?.let { it.work_contact }?:run { "" }}"
+                textView_WorkContact.setOnClickListener { view ->
+                    val callIntent = Intent(Intent.ACTION_VIEW, Uri.parse("tel:" + it.work_contact))
+                    startActivity(callIntent)
+                }
             }else {
-                textView_OrderUserNum.text = "수주자연락처 : ${it?.let { it.obtain_user_num}?:run { "" }}"
+                textView_OrderUserNum.text = "수주자연락처 : ${it?.let { it.obtain_user_num }?:run { "" }}"
+                textView_OrderUserNum.setOnClickListener { view ->
+                    val callIntent = Intent(Intent.ACTION_VIEW, Uri.parse("tel:" + it.obtain_user_num))
+                    startActivity(callIntent)
+                }
                 textView_WorkContact.visibility = View.GONE
             }
 
