@@ -89,20 +89,20 @@ class AddrSearchActivity : AppCompatActivity(), OnMapReadyCallback {
             mOptions.position(LatLng(latlng.latitude, latlng.longitude))
             mMap?.addMarker(mOptions)
             val addr = geocoder.getFromLocation(latlng.latitude, latlng.longitude, 1)
+            var strAddr:String = ""
 
-            if(addr.size == 0 || addr[0].locality == null){
+            if(addr.size < 1 || addr[0].locality == null){
                 mIntent.removeExtra("addr")
                 mIntent.removeExtra("latitude")
                 mIntent.removeExtra("longitude")
                 EditText_Result.setText("")
             }else{
-                var locality:String = ""
                 if(addr[0].adminArea != addr[0].locality) {
-                    locality = addr[0].locality  + " "
+                    strAddr = addr[0].adminArea
                 }
+                addr[0].locality?.let { strAddr = strAddr + " " + it  }
+                addr[0].thoroughfare?.let { strAddr = strAddr + " " + it  }
 
-                val strAddr = addr[0].adminArea + " " + locality + addr[0].subLocality?.let { it }?:run { "" } + " " +
-                        addr[0].thoroughfare?.let { it }?:run { "" }
                 mIntent.putExtra("addr", strAddr.trim())
                 mIntent.putExtra("latitude", latlng.latitude)
                 mIntent.putExtra("longitude", latlng.longitude)
