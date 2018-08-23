@@ -50,7 +50,7 @@ class QnaRegisterActivity : AppCompatActivity() {
                         if(it.result == ResCode.Success.Code) {
                             updateUserInfo(userInfo?.cell_no, userInfo?.password)
                             val bd = cUtil.buildDialog("완료", "등록 되었습니다")
-                            bd.setPositiveButton("OK", object : DialogInterface.OnClickListener {
+                            bd.setPositiveButton("확인", object : DialogInterface.OnClickListener {
                                 override fun onClick(p0: DialogInterface?, p1: Int) {
                                     finish()
                                 }

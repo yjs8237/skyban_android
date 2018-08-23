@@ -32,7 +32,7 @@ class ContextUtil(context: Context) {
         builder.setTitle(title)
         builder.setMessage(msg)
 
-        builder.setPositiveButton("Ok") { dialog, which -> dialog.dismiss() }
+        builder.setPositiveButton("확인") { dialog, which -> dialog.dismiss() }
 
         return builder
     }
@@ -41,7 +41,7 @@ class ContextUtil(context: Context) {
         val builder = AlertDialog.Builder(mContext!!)
         builder.setMessage(msg)
 
-        builder.setPositiveButton("Ok") { dialog, which -> dialog.dismiss() }
+        builder.setPositiveButton("확인") { dialog, which -> dialog.dismiss() }
 
         return builder
     }

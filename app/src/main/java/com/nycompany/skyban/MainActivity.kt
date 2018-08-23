@@ -128,12 +128,12 @@ class MainActivity : AppCompatActivity(), OnClickListener {
 
     override fun onBackPressed() {
         ContextUtil(this).buildDialog("종료 하시겠습니까?")?.apply {
-            setPositiveButton("OK", object : DialogInterface.OnClickListener {
+            setPositiveButton("확인", object : DialogInterface.OnClickListener {
                 override fun onClick(p0: DialogInterface?, p1: Int) {
                     finish()
                 }
             })
-            setNegativeButton("cancel", object : DialogInterface.OnClickListener{
+            setNegativeButton("취소", object : DialogInterface.OnClickListener{
                 override fun onClick(p0: DialogInterface?, p1: Int) {
                     return
                 }

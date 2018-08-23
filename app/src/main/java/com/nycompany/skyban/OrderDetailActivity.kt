@@ -99,7 +99,7 @@ class OrderDetailActivity : FragmentActivity(), OnMapReadyCallback {
                                 if (it.result == ResCode.Success.Code) {
                                     updateUserInfo(getUserinfo()?.cell_no, getUserinfo()?.password)
                                     val ad = util.buildDialog("성공", "성공적으로 수주 되었습니다 ")
-                                    ad.setPositiveButton("OK", object : DialogInterface.OnClickListener {
+                                    ad.setPositiveButton("확인", object : DialogInterface.OnClickListener {
                                         override fun onClick(p0: DialogInterface?, p1: Int) {
                                             MainActivity.instance()?.moveOrderHistory()
                                             finish()
@@ -157,7 +157,7 @@ class OrderDetailActivity : FragmentActivity(), OnMapReadyCallback {
                         if (it.result == ResCode.Success.Code) {
                             updateUserInfo(getUserinfo()?.cell_no, getUserinfo()?.password)
                             val bd = util.buildDialog("성공", "작업완료 처리되었습니다 ")
-                            bd.setPositiveButton("OK", object : DialogInterface.OnClickListener {
+                            bd.setPositiveButton("확인", object : DialogInterface.OnClickListener {
                                 override fun onClick(p0: DialogInterface?, p1: Int) {
                                     finish()
                                 }
@@ -194,7 +194,7 @@ class OrderDetailActivity : FragmentActivity(), OnMapReadyCallback {
                         if (it.result == ResCode.Success.Code) {
                             updateUserInfo(getUserinfo()?.cell_no, getUserinfo()?.password)
                             val bd = util.buildDialog("성공", "재발주 되었습니다 ")
-                            bd.setPositiveButton("OK", object : DialogInterface.OnClickListener {
+                            bd.setPositiveButton("확인", object : DialogInterface.OnClickListener {
                                 override fun onClick(p0: DialogInterface?, p1: Int) {
                                     finish()
                                 }
@@ -231,7 +231,7 @@ class OrderDetailActivity : FragmentActivity(), OnMapReadyCallback {
                         if (it.result == ResCode.Success.Code) {
                             updateUserInfo(getUserinfo()?.cell_no, getUserinfo()?.password)
                             val bd = util.buildDialog("성공", "취소 되었습니다 ")
-                            bd.setPositiveButton("OK", object : DialogInterface.OnClickListener {
+                            bd.setPositiveButton("확인", object : DialogInterface.OnClickListener {
                                 override fun onClick(p0: DialogInterface?, p1: Int) {
                                     finish()
                                 }

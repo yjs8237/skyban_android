@@ -168,7 +168,7 @@ class SettingFragment : Fragment() {
 
         ConstraintLayout_Logout.setOnClickListener {
             ContextUtil(activity).buildDialog("로그아웃 하시겠습니까?")?.apply {
-                setPositiveButton("OK", object : DialogInterface.OnClickListener {
+                setPositiveButton("확인", object : DialogInterface.OnClickListener {
                     override fun onClick(p0: DialogInterface?, p1: Int) {
                         val paramObject = JSONObject()
                         paramObject.put("cell_no", getUserinfo()?.cell_no)
@@ -198,7 +198,7 @@ class SettingFragment : Fragment() {
                         })
                     }
                 })
-                setNegativeButton("cancel", object :DialogInterface.OnClickListener{
+                setNegativeButton("취소", object :DialogInterface.OnClickListener{
                     override fun onClick(p0: DialogInterface?, p1: Int) {
                         return
                     }
@@ -222,7 +222,7 @@ class SettingFragment : Fragment() {
 
         ConstraintLayout_Leave.setOnClickListener {
             ContextUtil(activity).buildDialog("정말 회원탈퇴 하시겠습니까?")?.apply {
-                setPositiveButton("OK", object : DialogInterface.OnClickListener {
+                setPositiveButton("확인", object : DialogInterface.OnClickListener {
                     override fun onClick(p0: DialogInterface?, p1: Int) {
                         val paramObject = JSONObject()
                         paramObject.put("cell_no", getUserinfo()?.cell_no)
@@ -252,7 +252,7 @@ class SettingFragment : Fragment() {
                         })
                     }
                 })
-                setNegativeButton("cancel", object :DialogInterface.OnClickListener{
+                setNegativeButton("취소", object :DialogInterface.OnClickListener{
                     override fun onClick(p0: DialogInterface?, p1: Int) {
                         return
                     }

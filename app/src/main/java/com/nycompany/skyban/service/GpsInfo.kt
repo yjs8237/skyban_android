@@ -106,7 +106,7 @@ class GpsInfo(private val mContext: Context): GoogleApiClient.ConnectionCallback
             val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
             mContext.startActivity(intent)
         }
-        alertDialog.setNegativeButton("Cancel") { dialog, which -> dialog.cancel() }
+        alertDialog.setNegativeButton("취소") { dialog, which -> dialog.cancel() }
         alertDialog.show()
     }
 

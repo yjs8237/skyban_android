@@ -53,7 +53,7 @@ class UpdatePasswordActivity : AppCompatActivity() {
                             if (it.result == ResCode.Success.Code) {
                                 updateUserInfo(getUserinfo()?.cell_no, getUserinfo()?.password)
                                 val db = util.buildDialog("완료", "변경 되었습니다")
-                                db.setPositiveButton("OK", object : DialogInterface.OnClickListener {
+                                db.setPositiveButton("확인", object : DialogInterface.OnClickListener {
                                     override fun onClick(p0: DialogInterface?, p1: Int) {
                                         finish()
                                     }

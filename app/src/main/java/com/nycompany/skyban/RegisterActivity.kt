@@ -131,7 +131,7 @@ class RegisterActivity : AppCompatActivity() {
                             if(it.result == ResCode.Success.Code) {
                                 val bd = util.buildDialog("완료", "가입 되었습니다")
                                 bd.run {
-                                    setPositiveButton("OK", object : DialogInterface.OnClickListener {
+                                    setPositiveButton("확인", object : DialogInterface.OnClickListener {
                                         override fun onClick(p0: DialogInterface?, p1: Int) {
                                             startActivity(Intent().setClass(this@RegisterActivity, LoginActivity::class.java))
                                             finish()
