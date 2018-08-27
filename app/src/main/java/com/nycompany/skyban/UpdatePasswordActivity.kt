@@ -51,7 +51,7 @@ class UpdatePasswordActivity : AppCompatActivity() {
                     override fun onResponse(call: Call<CommonDTO>, response: Response<CommonDTO>) {
                         response.body()?.let {
                             if (it.result == ResCode.Success.Code) {
-                                updateUserInfo(getUserinfo()?.cell_no, getUserinfo()?.password)
+                                updateUserInfo(getUserinfo()?.cell_no, paramObject.get("user_pwd").toString())
                                 val db = util.buildDialog("완료", "변경 되었습니다")
                                 db.setPositiveButton("확인", object : DialogInterface.OnClickListener {
                                     override fun onClick(p0: DialogInterface?, p1: Int) {

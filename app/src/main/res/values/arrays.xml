@@ -9,7 +9,7 @@
 
     <string-array name="work_proc">
         <item>WP00|수주자매칭전</item>
-        <item>WP01|작업전</item>
+        <item>WP01|수주완료</item>
         <item>WP02|현장도착</item>
         <item>WP03|작업중</item>
         <item>WP04|작업완료</item>

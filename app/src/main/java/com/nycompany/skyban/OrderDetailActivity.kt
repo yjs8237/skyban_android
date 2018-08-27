@@ -33,6 +33,7 @@ class OrderDetailActivity : FragmentActivity(), OnMapReadyCallback {
     private var mMap: GoogleMap? = null
     private val util = ContextUtil(this)
     private val paramObject = JSONObject()
+    private lateinit var detailDTO: InOrderdetailDTO
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_inorder_detail)
@@ -176,7 +177,11 @@ class OrderDetailActivity : FragmentActivity(), OnMapReadyCallback {
             })
         }
 
+        //재발주 버튼
         Button_reorder.setOnClickListener {
+            MainActivity.instance()?.moveOutoder()
+            finish()
+            /*
             val OderParam = JSONObject()
             OderParam.put("cell_no", cell_no)
             OderParam.put("order_seq", orderseq)
@@ -211,6 +216,7 @@ class OrderDetailActivity : FragmentActivity(), OnMapReadyCallback {
                     }
                 }
             })
+            */
         }
 
         Button_OrderCancel.setOnClickListener {
@@ -290,7 +296,8 @@ class OrderDetailActivity : FragmentActivity(), OnMapReadyCallback {
                         response.body()?.let {
                             loading.dismiss()
                             if(it.result == ResCode.Success.Code) {
-                                setResponseData(it)
+                                detailDTO = it
+                                setResponseData()
                             }else{
                                 it.description?.let { util.buildDialog(it).show()
                                 }
@@ -315,7 +322,8 @@ class OrderDetailActivity : FragmentActivity(), OnMapReadyCallback {
                         response.body()?.let {
                             loading.dismiss()
                             if(it.result == ResCode.Success.Code) {
-                                setResponseData(it)
+                                detailDTO = it
+                                setResponseData()
                             }else{
                                 it.description?.let { util.buildDialog(it).show()
                                 }
@@ -334,8 +342,8 @@ class OrderDetailActivity : FragmentActivity(), OnMapReadyCallback {
     }
 
     //fun <T> setResponseData(dto:T){
-    fun setResponseData(dto:InOrderdetailDTO){
-        dto?.let {
+    fun setResponseData(){
+        detailDTO?.let {
             val location = LatLng( it.work_latitude!!.toDouble(), it.work_longitude!!.toDouble())
             if(MainActivity.instance()?.getCurrentFarnment() == FragmentsAvailable.ORDER_HISTORY){
                 textView_OrderUserNum.text = "발주자연락처 : ${it?.let { it.order_user_num }?:run { "" }}"
