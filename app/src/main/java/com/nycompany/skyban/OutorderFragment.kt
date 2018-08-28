@@ -40,11 +40,11 @@ private const val ARG_PARAM2 = "param2"
 
 class OutorderFragment : Fragment(), View.OnClickListener{
     private val REQUEST_MAP = 101
-    private  val paramObject by lazy{JSONObject()}
-    private  val util by lazy{ ContextUtil(activity) }
-    private  val mLoading by lazy{ SpotsDialog.Builder().setContext(activity).build()}
+    private val paramObject by lazy{JSONObject()}
+    private val util by lazy{ ContextUtil(activity) }
+    private val mLoading by lazy{ SpotsDialog.Builder().setContext(activity).build()}
     private val userinfo by lazy{ getUserinfo() }
-    private  var oldOrderDTO:InOrderdetailDTO? = null
+    private var oldOrderDTO:InOrderdetailDTO? = null
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         mLoading.show()
@@ -63,7 +63,6 @@ class OutorderFragment : Fragment(), View.OnClickListener{
 
         inttUI()
         oldOrderDTO?.let { setOldOredData(it) }
-        setOrderButton()
     }
 
     private fun inttUI(){
@@ -163,14 +162,11 @@ class OutorderFragment : Fragment(), View.OnClickListener{
         Button_SelectPayDate.setOnClickListener {
             dialogDate.show()
         }
-    }
-
-    private fun setOrderButton(){
-        paramObject.put("cell_no", userinfo?.cell_no)
-        setJsonParmFromUI()
 
         //발주버튼
         Button_Order.setOnClickListener{
+            paramObject.put("cell_no", userinfo?.cell_no)
+            setJsonParmFromUI()
             val ad = util.buildDialog( "발주 하시겠습니까?")
             ad.setNegativeButton("아니요", object : DialogInterface.OnClickListener {
                 override fun onClick(p0: DialogInterface?, p1: Int) {
@@ -193,7 +189,13 @@ class OutorderFragment : Fragment(), View.OnClickListener{
 
     fun setOldOredData(data:InOrderdetailDTO){
         Button_commission_y.isSelected = (data.commission_yn == "Y")
-        EditTextDay.setText(data.work_date)
+        val date = data.work_date?.split(" ")?.get(0)?.trim()
+        var time = data.work_date?.split(" ")?.get(1)?.trim()
+        time = time?.removeRange(5, time?.length)
+        EditTextDay.setText(date)
+        EditTextTime.setText(time)
+
+        Button_RadioDay.isSelected = false
         when(data.work_duration){
             "A001" -> Button_RadioDay.isSelected = true
             "A002" -> Button_RadioMorning.isSelected = true
@@ -202,6 +204,62 @@ class OutorderFragment : Fragment(), View.OnClickListener{
             "A005" -> Button_Radio2h.isSelected = true
             "A006" -> Button_RadioNight.isSelected = true
         }
+        EditWorkPay.setText(data.work_pay)
+
+        Button_RadioNo.isSelected = false
+        when(data.ext_charge){
+            "C001" -> Button_RadioNo.isSelected = true
+            "C002" -> Button_Radio5.isSelected = true
+            "C003" -> Button_Radio10.isSelected = true
+        }
+
+        EditText_Addr.setText(data.work_location)
+        EditText_AddrD.setText(data.work_location_detail)
+
+        var dic = util.getHashmapFromResoureces(R.array.car_type)
+        Button_SelectMinType.text = dic.get(data.min_car_type)
+        Button_SelectMaxType.text = dic.get(data.max_car_type)
+
+        dic = util.getHashmapFromResoureces(R.array.car_length)
+        Button_SelectMinLength.text = dic.get(data.min_car_length)
+        Button_SelectMaxLength.text = dic.get(data.max_car_length)
+
+        dic = util.getHashmapFromResoureces(R.array.car_height)
+        Button_SelectHeight.text = dic.get(data.car_height)
+
+        Button_CheckInvertor.isSelected = (data.op_invertor == "Y")
+        Button_CheckGuljul.isSelected = (data.op_guljul == "Y")
+        Button_CheckWinchi.isSelected = (data.op_winchi == "Y")
+        Button_CheckDanchuk.isSelected = (data.op_danchuk == "Y")
+
+        Button_RadioPay.isSelected = false
+        when(data.pay_type){
+            "M001" -> Button_RadioPay.isSelected = true
+            "M002" -> {
+                Button_SelectPayDate.isEnabled = true
+                Button_RadioPaySign.isSelected = true
+                dic = util.getHashmapFromResoureces(R.array.pay_date)
+                Button_SelectPayDate.text = dic.get (data.pay_date)
+            }
+        }
+
+        EditText_WorkContact.setText(data.work_contact)
+
+        //추가옵션
+        Button_work_det_1.isSelected = (data.work_det_1 == "Y")
+        Button_work_det_2.isSelected = (data.work_det_2 == "Y")
+        Button_work_det_3.isSelected = (data.work_det_3 == "Y")
+        Button_work_det_4.isSelected = (data.work_det_4 == "Y")
+        Button_work_det_5.isSelected = (data.work_det_5 == "Y")
+        Button_work_det_6.isSelected = (data.work_det_6 == "Y")
+        Button_work_det_7.isSelected = (data.work_det_7 == "Y")
+        Button_work_det_8.isSelected = (data.work_det_8 == "Y")
+
+        //메모
+        EditText_WorkContent.setText(data.work_content)
+
+        paramObject.put("work_latitude", data.work_latitude)
+        paramObject.put("work_longitude", data.work_longitude)
     }
 
     fun setJsonParmFromUI(){
@@ -242,10 +300,13 @@ class OutorderFragment : Fragment(), View.OnClickListener{
         }
 
         //get 장소
-        val addr = EditText_Addr.text.toString()
-        val addrD = EditText_AddrD.text.toString()
-        if(addr != "" && addrD != ""){
-            paramObject.put("work_location", addr + " " + addrD )
+        val addr = EditText_Addr.text.toString().trim()
+        if(addr != ""){
+            paramObject.put("work_location", addr)
+        }
+        val addrD = EditText_AddrD.text.toString().trim()
+        if(addrD != ""){
+            paramObject.put("work_location_detail", addrD )
         }
 
         //차량정보
@@ -397,6 +458,7 @@ class OutorderFragment : Fragment(), View.OnClickListener{
                         updateUserInfo(userinfo?.cell_no, userinfo?.password)
                         //발주리스트로 이동
                         //startActivity(Intent().setClass(this@LoginActivity, MainActivity::class.java))
+                        MainActivity.instance()?.moveOutorderHistory()
                     }else{
                         it.description?.let {
                             util.buildDialog(it).show()
@@ -427,6 +489,7 @@ class OutorderFragment : Fragment(), View.OnClickListener{
                         updateUserInfo(userinfo?.cell_no, userinfo?.password)
                         //발주리스트로 이동
                         //startActivity(Intent().setClass(this@LoginActivity, MainActivity::class.java))
+                        MainActivity.instance()?.moveOutorderHistory()
                     }else{
                         it.description?.let {
                             util.buildDialog(it).show()

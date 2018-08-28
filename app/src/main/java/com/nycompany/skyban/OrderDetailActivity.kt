@@ -184,7 +184,7 @@ class OrderDetailActivity : FragmentActivity(), OnMapReadyCallback {
             val bundle = Bundle()
             bundle.putParcelable("detailDTO", detailDTO)
             intent.putExtras(bundle)
-            setResult(100, intent)
+            setResult(RESULT_OK, intent)
             finish()
             //MainActivity.instance()?.moveOutoder()
             /*
@@ -378,7 +378,7 @@ class OrderDetailActivity : FragmentActivity(), OnMapReadyCallback {
             textView_Car.text = "차량 : ${carTypeMap[it.min_car_type]}" +
                     "${carLengthMap[it.min_car_length]?.let{ " - " + it}?:run{ "" }} ~ " +
                     "${carTypeMap[it.max_car_type]}" +
-                    "${carLengthMap[it.min_car_length]?.let{ " - " + it}?:run{ "" }}"
+                    "${carLengthMap[it.max_car_length]?.let{ " - " + it}?:run{ "" }}"
 
             var addr = if (MainActivity.instance()?.getCurrentFarnment() == FragmentsAvailable.ORDER) "장소 : ${it.work_location}"
             else "장소 : ${it.work_location}  ${it.work_location_detail}"

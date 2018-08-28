@@ -1,5 +1,6 @@
 package com.nycompany.skyban
 
+import android.app.Activity
 import android.app.Fragment
 import android.app.FragmentManager
 import android.app.FragmentTransaction
@@ -165,13 +166,13 @@ class MainActivity : AppCompatActivity(), OnClickListener {
     }
 
     fun moveOrderHistory(){
-        //changeCurrentFragment(FragmentsAvailable.INFO , null)
+        changeCurrentFragment(FragmentsAvailable.INFO , null)
         changeCurrentFragment(FragmentsAvailable.ORDER_HISTORY, null)
         selectMenu(FragmentsAvailable.INFO)
     }
 
     fun moveOutorderHistory(){
-        //changeCurrentFragment(FragmentsAvailable.INFO , null)
+        changeCurrentFragment(FragmentsAvailable.INFO , null)
         changeCurrentFragment(FragmentsAvailable.OUTORDER_HISTORY, null)
         selectMenu(FragmentsAvailable.INFO)
     }
@@ -214,14 +215,21 @@ class MainActivity : AppCompatActivity(), OnClickListener {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data:Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        val bundle:Bundle? = data?.extras
-        //val detailDTO = bundle?.getParcelable("detailDTO") as InOrderdetailDTO
-        changeCurrentFragment(FragmentsAvailable.OUTORDER, bundle)
-        selectMenu(FragmentsAvailable.OUTORDER)
+        if(requestCode != REQUEST_REORDER)
+            return
+
+        if(resultCode == RESULT_OK) {
+            //code enum정리 필요
+            val bundle: Bundle? = data?.extras
+            //val detailDTO = bundle?.getParcelable("detailDTO") as InOrderdetailDTO
+            changeCurrentFragment(FragmentsAvailable.OUTORDER, bundle)
+            selectMenu(FragmentsAvailable.OUTORDER)
+        }
     }
 
     companion object {
         private var instance: MainActivity? = null
+        const val REQUEST_REORDER = 100
 
         fun instance():MainActivity?{
             return instance

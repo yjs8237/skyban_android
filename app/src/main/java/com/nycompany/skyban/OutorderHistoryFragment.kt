@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.nycompany.skyban.MainActivity.Companion.REQUEST_REORDER
 import com.nycompany.skyban.dto.OrderList
 import com.nycompany.skyban.dto.OderDTO
 import com.nycompany.skyban.enums.ResCode
@@ -131,7 +132,7 @@ class OutorderHistoryFragment : Fragment() {
             val intent = Intent(activity, OrderDetailActivity::class.java)
             intent.putExtra("orderseq", view.textView_Orderseq.text.toString())
             //startActivity(intent)
-            activity.startActivityForResult(intent, 100)
+            activity.startActivityForResult(intent, REQUEST_REORDER)
         })
     }
 }
