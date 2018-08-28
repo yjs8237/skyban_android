@@ -130,7 +130,8 @@ class OutorderHistoryFragment : Fragment() {
             Toast.makeText(view.getContext(), "주문번호 ${view.textView_Orderseq.text.toString()}", Toast.LENGTH_SHORT).show()
             val intent = Intent(activity, OrderDetailActivity::class.java)
             intent.putExtra("orderseq", view.textView_Orderseq.text.toString())
-            startActivity(intent)
+            //startActivity(intent)
+            activity.startActivityForResult(intent, 100)
         })
     }
 }

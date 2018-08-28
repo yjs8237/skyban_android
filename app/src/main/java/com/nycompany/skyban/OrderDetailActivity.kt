@@ -6,6 +6,7 @@ import android.content.Intent
 import android.net.Uri
 import android.support.v4.app.FragmentActivity
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.util.Log
 import android.view.View
 
@@ -179,8 +180,13 @@ class OrderDetailActivity : FragmentActivity(), OnMapReadyCallback {
 
         //재발주 버튼
         Button_reorder.setOnClickListener {
-            MainActivity.instance()?.moveOutoder()
+            val intent = Intent()
+            val bundle = Bundle()
+            bundle.putParcelable("detailDTO", detailDTO)
+            intent.putExtras(bundle)
+            setResult(100, intent)
             finish()
+            //MainActivity.instance()?.moveOutoder()
             /*
             val OderParam = JSONObject()
             OderParam.put("cell_no", cell_no)
@@ -255,8 +261,6 @@ class OrderDetailActivity : FragmentActivity(), OnMapReadyCallback {
                 }
             })
         }
-
-
     }
 
     override fun onMapReady(googleMap: GoogleMap) {

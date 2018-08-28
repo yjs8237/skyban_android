@@ -162,7 +162,7 @@ interface ReqUpdateorder{
 interface ReqRegisteragain{
     @POST("/user/ordermngt/registeragain")
     @Headers("Content-Type: application/json", "Authorization: Basic YXBpdXNlcjpTa3lCYW5BcGk=")
-    fun postRequest(@Body body:String):Call<CommonDTO>
+    fun postRequest(@Body body:String):Call<RegisteragainDTO>
 }
 
 interface ReqOrdercancle{

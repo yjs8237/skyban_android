@@ -1,6 +1,9 @@
 package com.nycompany.skyban.dto
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class InOrderdetailDTO(
         var result: String? = null,
         var description: String? = null,
@@ -38,5 +41,6 @@ data class InOrderdetailDTO(
         var reg_date: String? = null,
         var work_contact: String? = null,
         var order_user_num: String? = null,
-        var obtain_user_num: String? = null
-)
+        var obtain_user_num: String? = null,
+        var commission_yn: String? = null
+):Parcelable

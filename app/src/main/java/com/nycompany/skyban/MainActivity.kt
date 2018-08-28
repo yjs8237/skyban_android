@@ -14,6 +14,7 @@ import android.widget.Toast
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.iid.InstanceIdResult
+import com.nycompany.skyban.dto.InOrderdetailDTO
 import com.nycompany.skyban.enums.PermissionCode
 import com.nycompany.skyban.service.GpsInfo
 import com.nycompany.skyban.util.ContextUtil
@@ -57,13 +58,16 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         super.onSaveInstanceState(outState, outPersistentState)
     }
 
-    private fun changeCurrentFragment(newFragmentType: FragmentsAvailable?, extras: Bundle?) {
+    private fun changeCurrentFragment(newFragmentType: FragmentsAvailable?, bundle:Bundle?) {
         lateinit var fragment:Fragment
         currentFragment = newFragmentType
 
         when(newFragmentType){
             FragmentsAvailable.ORDER -> fragment = OrderFragment()
-            FragmentsAvailable.OUTORDER -> fragment = OutorderFragment()
+            FragmentsAvailable.OUTORDER ->{
+                fragment = OutorderFragment()
+                fragment.arguments =  bundle
+            }
             FragmentsAvailable.INFO -> fragment = InfoFragment()
             FragmentsAvailable.CHARGE -> fragment = ChargeFragment()
             FragmentsAvailable.SETTING -> fragment = SettingFragment()
@@ -161,13 +165,13 @@ class MainActivity : AppCompatActivity(), OnClickListener {
     }
 
     fun moveOrderHistory(){
-        changeCurrentFragment(FragmentsAvailable.INFO , null)
+        //changeCurrentFragment(FragmentsAvailable.INFO , null)
         changeCurrentFragment(FragmentsAvailable.ORDER_HISTORY, null)
         selectMenu(FragmentsAvailable.INFO)
     }
 
     fun moveOutorderHistory(){
-        changeCurrentFragment(FragmentsAvailable.INFO , null)
+        //changeCurrentFragment(FragmentsAvailable.INFO , null)
         changeCurrentFragment(FragmentsAvailable.OUTORDER_HISTORY, null)
         selectMenu(FragmentsAvailable.INFO)
     }
@@ -176,11 +180,6 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         changeCurrentFragment(FragmentsAvailable.INFO , null)
         startActivity(Intent().setClass(this, PremiumActivity::class.java))
         selectMenu(FragmentsAvailable.INFO)
-    }
-
-    fun moveOutoder(){
-        changeCurrentFragment(FragmentsAvailable.SETTING, null)
-        selectMenu(FragmentsAvailable.SETTING)
     }
 
     fun logout(){
@@ -211,6 +210,14 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         if(requestCode == PermissionCode.ACCESS_FINE_LOCATION_CODE.Code){
             gps.setLocationTool()
         }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data:Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        val bundle:Bundle? = data?.extras
+        //val detailDTO = bundle?.getParcelable("detailDTO") as InOrderdetailDTO
+        changeCurrentFragment(FragmentsAvailable.OUTORDER, bundle)
+        selectMenu(FragmentsAvailable.OUTORDER)
     }
 
     companion object {

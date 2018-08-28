@@ -14,9 +14,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.beardedhen.androidbootstrap.BootstrapButton
+import com.nycompany.skyban.dto.InOrderdetailDTO
 import com.nycompany.skyban.dto.OrderRegisterDTO
+import com.nycompany.skyban.dto.RegisteragainDTO
 import com.nycompany.skyban.enums.ResCode
 import com.nycompany.skyban.network.ReqOrderRegister
+import com.nycompany.skyban.network.ReqRegisteragain
 import com.nycompany.skyban.network.RetrofitCreater
 import com.nycompany.skyban.util.ContextUtil
 import com.nycompany.skyban.util.MyUtil
@@ -40,7 +43,8 @@ class OutorderFragment : Fragment(), View.OnClickListener{
     private  val paramObject by lazy{JSONObject()}
     private  val util by lazy{ ContextUtil(activity) }
     private  val mLoading by lazy{ SpotsDialog.Builder().setContext(activity).build()}
-
+    private val userinfo by lazy{ getUserinfo() }
+    private  var oldOrderDTO:InOrderdetailDTO? = null
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         mLoading.show()
@@ -48,6 +52,7 @@ class OutorderFragment : Fragment(), View.OnClickListener{
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
+         arguments?.let{ oldOrderDTO = it.getParcelable("detailDTO") as InOrderdetailDTO }
         return inflater.inflate(R.layout.fragment_outorder, container, false)
     }
 
@@ -56,57 +61,12 @@ class OutorderFragment : Fragment(), View.OnClickListener{
         mLoading.dismiss()
         if(!util.isConnected()) util.buildDialog("eror",getString(R.string.network_eror)).show()
 
-        val userinfo = getUserinfo()
-        paramObject.put("cell_no", userinfo?.cell_no)
-
         inttUI()
-
-        //발주버튼
-        Button_Order.setOnClickListener{
-            val ad = util.buildDialog( "발주 하시겠습니까?")
-            ad.setNegativeButton("아니요", object : DialogInterface.OnClickListener {
-                override fun onClick(p0: DialogInterface?, p1: Int) {
-                    return
-                }
-            })
-            ad.setPositiveButton("예", object : DialogInterface.OnClickListener {
-                override fun onClick(p0: DialogInterface?, p1: Int) {
-                    setJsonParmFromUI()
-                    val reqString = paramObject.toString()
-                    val server = RetrofitCreater.getMyInstance()?.create(ReqOrderRegister::class.java)
-                    server?.postRequest(reqString)?.enqueue(object: Callback<OrderRegisterDTO> {
-                        override fun onFailure(call: Call<OrderRegisterDTO>, t: Throwable) {
-                            val msg = if(!util.isConnected()) getString(R.string.network_eror) else t.toString()
-                            util.buildDialog("eror", msg).show()
-                        }
-
-                        override fun onResponse(call: Call<OrderRegisterDTO>, response: Response<OrderRegisterDTO>) {
-                            response.body()?.let {
-                                if(it.result == ResCode.Success.Code) {
-                                    util.buildDialog("완료","성공적으로 발주 되었습니다").show()
-
-                                    val fm = fragmentManager.beginTransaction()
-                                    fm.remove(this@OutorderFragment).replace(R.id.fragmentContainer , OutorderFragment.newInstance()).commit()
-                                    updateUserInfo(userinfo?.cell_no, userinfo?.password)
-                                    //발주리스트로 이동
-                                    //startActivity(Intent().setClass(this@LoginActivity, MainActivity::class.java))
-                                }else{
-                                    it.description?.let {
-                                        util.buildDialog(it).show()
-                                    }
-                                }
-                            }?:run{
-                                Log.e(this::class.java.name, getString(R.string.response_body_eror))
-                            }
-                        }
-                    })
-                }
-            })
-            ad.show()
-        }
+        oldOrderDTO?.let { setOldOredData(it) }
+        setOrderButton()
     }
 
-    fun inttUI(){
+    private fun inttUI(){
         val cal = GregorianCalendar()
         val mYear = cal.get(Calendar.YEAR)
         val mMonth = cal.get(Calendar.MONTH)
@@ -205,6 +165,45 @@ class OutorderFragment : Fragment(), View.OnClickListener{
         }
     }
 
+    private fun setOrderButton(){
+        paramObject.put("cell_no", userinfo?.cell_no)
+        setJsonParmFromUI()
+
+        //발주버튼
+        Button_Order.setOnClickListener{
+            val ad = util.buildDialog( "발주 하시겠습니까?")
+            ad.setNegativeButton("아니요", object : DialogInterface.OnClickListener {
+                override fun onClick(p0: DialogInterface?, p1: Int) {
+                    return
+                }
+            })
+            ad.setPositiveButton("예", object : DialogInterface.OnClickListener {
+                override fun onClick(p0: DialogInterface?, p1: Int) {
+                    oldOrderDTO?.let {
+                        paramObject.put("order_seq", it.order_seq)
+                        reqRegisterAgain(paramObject.toString())
+                    }?:run {
+                        reqRegister(paramObject.toString())
+                    }
+                }
+            })
+            ad.show()
+        }
+    }
+
+    fun setOldOredData(data:InOrderdetailDTO){
+        Button_commission_y.isSelected = (data.commission_yn == "Y")
+        EditTextDay.setText(data.work_date)
+        when(data.work_duration){
+            "A001" -> Button_RadioDay.isSelected = true
+            "A002" -> Button_RadioMorning.isSelected = true
+            "A003" -> Button_RadioSunset.isSelected = true
+            "A004" -> Button_Radio1h.isSelected = true
+            "A005" -> Button_Radio2h.isSelected = true
+            "A006" -> Button_RadioNight.isSelected = true
+        }
+    }
+
     fun setJsonParmFromUI(){
         //수수료
         val paramYN = if (Button_commission_y.isSelected) "Y" else "N"
@@ -217,7 +216,7 @@ class OutorderFragment : Fragment(), View.OnClickListener{
             paramObject.put("work_date", day + " " + time + ":00" )
         }
 
-        //작업기간
+        //작업시간
         var dic = util.getHashmapFromResoureces(R.array.work_duration)
         (getSelectedView(ButtonGroup_JobTimeTop))?.let {
             var value = MyUtil.getDicKeyFromValue(dic, (it as BootstrapButton).text.toString())
@@ -378,6 +377,66 @@ class OutorderFragment : Fragment(), View.OnClickListener{
             })
         }
         return dilog
+    }
+
+    private fun reqRegister(reqString:String){
+        val server = RetrofitCreater.getMyInstance()?.create(ReqOrderRegister::class.java)
+        server?.postRequest(reqString)?.enqueue(object: Callback<OrderRegisterDTO> {
+            override fun onFailure(call: Call<OrderRegisterDTO>, t: Throwable) {
+                val msg = if(!util.isConnected()) getString(R.string.network_eror) else t.toString()
+                util.buildDialog("eror", msg).show()
+            }
+
+            override fun onResponse(call: Call<OrderRegisterDTO>, response: Response<OrderRegisterDTO>) {
+                response.body()?.let {
+                    if(it.result == ResCode.Success.Code) {
+                        util.buildDialog("완료","성공적으로 발주 되었습니다").show()
+
+                        val fm = fragmentManager.beginTransaction()
+                        fm.remove(this@OutorderFragment).replace(R.id.fragmentContainer , OutorderFragment.newInstance()).commit()
+                        updateUserInfo(userinfo?.cell_no, userinfo?.password)
+                        //발주리스트로 이동
+                        //startActivity(Intent().setClass(this@LoginActivity, MainActivity::class.java))
+                    }else{
+                        it.description?.let {
+                            util.buildDialog(it).show()
+                        }
+                    }
+                }?:run{
+                    Log.e(this::class.java.name, getString(R.string.response_body_eror))
+                }
+            }
+        })
+    }
+
+    private fun reqRegisterAgain(reqString:String){
+        val server = RetrofitCreater.getMyInstance()?.create(ReqRegisteragain::class.java)
+        server?.postRequest(reqString)?.enqueue(object: Callback<RegisteragainDTO> {
+            override fun onFailure(call: Call<RegisteragainDTO>, t: Throwable) {
+                val msg = if(!util.isConnected()) getString(R.string.network_eror) else t.toString()
+                util.buildDialog("eror", msg).show()
+            }
+
+            override fun onResponse(call: Call<RegisteragainDTO>, response: Response<RegisteragainDTO>) {
+                response.body()?.let {
+                    if(it.result == ResCode.Success.Code) {
+                        util.buildDialog("완료","성공적으로 발주 되었습니다").show()
+
+                        val fm = fragmentManager.beginTransaction()
+                        fm.remove(this@OutorderFragment).replace(R.id.fragmentContainer , OutorderFragment.newInstance()).commit()
+                        updateUserInfo(userinfo?.cell_no, userinfo?.password)
+                        //발주리스트로 이동
+                        //startActivity(Intent().setClass(this@LoginActivity, MainActivity::class.java))
+                    }else{
+                        it.description?.let {
+                            util.buildDialog(it).show()
+                        }
+                    }
+                }?:run{
+                    Log.e(this::class.java.name, getString(R.string.response_body_eror))
+                }
+            }
+        })
     }
 
     override fun onClick(btn: View?) {

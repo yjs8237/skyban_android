@@ -20,28 +20,11 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-/**
- * A simple [Fragment] subclass.
- * Activities that contain this fragment must implement the
- * [InfoFragment.OnFragmentInteractionListener] interface
- * to handle interaction events.
- * Use the [InfoFragment.newInstance] factory method to
- * create an instance of this fragment.
- *
- */
 class InfoFragment : Fragment() {
-    private var param1: String? = null
-    private var param2: String? = null
     private  val util by lazy{ ContextUtil(activity) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
         if(!util.isConnected()) util.buildDialog("eror",getString(R.string.network_eror)).show()
     }
 
@@ -138,25 +121,5 @@ class InfoFragment : Fragment() {
                 }
             })
         }
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment OrderFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-                OrderFragment().apply {
-                    arguments = Bundle().apply {
-                        putString(ARG_PARAM1, param1)
-                        putString(ARG_PARAM2, param2)
-                    }
-                }
     }
 }
