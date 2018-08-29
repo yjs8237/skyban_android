@@ -146,7 +146,7 @@ class OutorderFragment : Fragment(), View.OnClickListener{
 
         //결제기간
         Button_RadioPaySign.setOnCheckedChangedListener { bootstrapButton, isChecked ->
-            Button_SelectPayDate.isEnabled = !Button_SelectPayDate.isEnabled
+            Button_SelectPayDate.isEnabled = isChecked
             if(!isChecked) Button_SelectPayDate.text = "결제기간"
         }
 

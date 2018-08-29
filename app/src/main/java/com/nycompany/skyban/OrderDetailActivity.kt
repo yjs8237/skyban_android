@@ -410,6 +410,10 @@ class OrderDetailActivity : FragmentActivity(), OnMapReadyCallback {
             textView_pay_type.text = "결제방식 : ${payPayMap[it.pay_type]?.let{it}?:run{""}}"
 
             textView_WorkContent.text =it.work_content
+
+            if(it.work_proc != "WP00"){
+                LinearLayout_order.visibility = View.GONE
+            }
         }
     }
 }

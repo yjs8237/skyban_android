@@ -54,7 +54,7 @@ class AddrSearchActivity : AppCompatActivity(), OnMapReadyCallback {
 
                     mIntent.putExtra("addr", addr)
                     mIntent.putExtra("latitude", latitude)
-                    intent.putExtra("longitude", longitude)
+                    mIntent.putExtra("longitude", longitude)
                 }else{
                     util.buildDialog("주소없음", "올바른 주소값이 아닙니다 다른 읍면동 명으로 검색하세요").show()
                 }
