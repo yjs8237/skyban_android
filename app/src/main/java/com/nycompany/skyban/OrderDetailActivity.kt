@@ -35,6 +35,9 @@ class OrderDetailActivity : FragmentActivity(), OnMapReadyCallback {
     private val util = ContextUtil(this)
     private val paramObject = JSONObject()
     private lateinit var detailDTO: InOrderdetailDTO
+
+    private var my_cell_no = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_inorder_detail)
@@ -46,6 +49,8 @@ class OrderDetailActivity : FragmentActivity(), OnMapReadyCallback {
         imageView_Back.setOnClickListener { finish() }
 
         val cell_no = getUserinfo()?.cell_no!!
+        my_cell_no = cell_no
+
 
         var intent = intent
         var orderseq = intent.getStringExtra("orderseq")
@@ -57,6 +62,7 @@ class OrderDetailActivity : FragmentActivity(), OnMapReadyCallback {
             FragmentsAvailable.ORDER -> {
                 LinearLayout_order.visibility = View.VISIBLE
                 textView_DetailTitle.text = "작업 상세정보"
+                paramObject.put("cell_no", cell_no)
             }
         //내 수주화면
             FragmentsAvailable.ORDER_HISTORY -> {
@@ -100,7 +106,7 @@ class OrderDetailActivity : FragmentActivity(), OnMapReadyCallback {
                             response.body()?.let {
                                 if (it.result == ResCode.Success.Code) {
                                     updateUserInfo(getUserinfo()?.cell_no, getUserinfo()?.password)
-                                    val ad = util.buildDialog("성공", "성공적으로 수주 되었습니다 ")
+                                    val ad = util.buildDialog("성공", "성공적으로 수주 되었습니다. \n수주 내역은 내정보->수주완료 버튼을 눌러 확인하실 수 있습니다.")
                                     ad.setPositiveButton("확인", object : DialogInterface.OnClickListener {
                                         override fun onClick(p0: DialogInterface?, p1: Int) {
                                             MainActivity.instance()?.moveOrderHistory()
@@ -362,12 +368,45 @@ class OrderDetailActivity : FragmentActivity(), OnMapReadyCallback {
                     startActivity(callIntent)
                 }
             }else {
-                textView_OrderUserNum.text = "수주자연락처 : ${it?.let { it.obtain_user_num }?:run { "" }}"
-                textView_OrderUserNum.setOnClickListener { view ->
-                    val callIntent = Intent(Intent.ACTION_VIEW, Uri.parse("tel:" + it.obtain_user_num))
-                    startActivity(callIntent)
+                var obtain_user_num = it.obtain_user_num ?: ""
+                var order_user_num = it.order_user_num ?: ""
+
+                Log.d("api" , "my_cell_no : " + my_cell_no)
+                Log.d("api" , "obtain_user_num : " + obtain_user_num)
+                Log.d("api" , "order_user_num : " + order_user_num)
+
+                if(my_cell_no == obtain_user_num){
+                    ConstraintLayout_Contract.visibility = View.VISIBLE
+
+                    textView_OrderUserNum.text = "발주자연락처 : ${it?.let { it.order_user_num }?:run { "" }}"
+                    textView_OrderUserNum.setOnClickListener { view ->
+                        val callIntent = Intent(Intent.ACTION_VIEW, Uri.parse("tel:" + it.order_user_num))
+                        startActivity(callIntent)
+                    }
+
+                    textView_WorkContact.text = "현장연락처 : ${it?.let { it.work_contact }?:run { "" }}"
+                    textView_WorkContact.setOnClickListener { view ->
+                        val callIntent = Intent(Intent.ACTION_VIEW, Uri.parse("tel:" + it.work_contact))
+                        startActivity(callIntent)
+                    }
+
+                } else if(my_cell_no == order_user_num) {
+                    ConstraintLayout_Contract.visibility = View.VISIBLE
+                    textView_OrderUserNum.text = "수주자연락처 : ${it?.let { it.obtain_user_num }?:run { "" }}"
+                    textView_OrderUserNum.setOnClickListener { view ->
+                        val callIntent = Intent(Intent.ACTION_VIEW, Uri.parse("tel:" + it.obtain_user_num))
+                        startActivity(callIntent)
+                    }
+
+                } else {
+                    textView_OrderUserNum.text = "수주자연락처 : ${it?.let { it.obtain_user_num }?:run { "" }}"
+                    textView_OrderUserNum.setOnClickListener { view ->
+                        val callIntent = Intent(Intent.ACTION_VIEW, Uri.parse("tel:" + it.obtain_user_num))
+                        startActivity(callIntent)
+                    }
+                    textView_WorkContact.visibility = View.GONE
                 }
-                textView_WorkContact.visibility = View.GONE
+
             }
 
             mMap?.addMarker(MarkerOptions().position(location).title("work area"))

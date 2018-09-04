@@ -8,6 +8,7 @@ class RetrofitCreater private constructor(){
     companion object {
         private var instance: Retrofit? = null
         private const val URL_BASE = "https://skyban.co.kr"
+//        private const val URL_BASE = "http://192.168.0.6:8090"
 
         @JvmStatic @Synchronized fun getMyInstance():Retrofit? {
             instance ?:run { instance = Retrofit.Builder()
